@@ -17,7 +17,11 @@ app.use(express.static(__dirname + '/public'));
 
 //라우터 설정
 var notice = require('./routes/notice');
+var user = require('./routes/notice');
+var transfer = require('./routes/transfer');
 app.use('/notice', notice);
+app.use('/user', user);
+app.use('/transfer', transfer);
 
 //템플렛 추가
 app.set('views', __dirname + '/views');
