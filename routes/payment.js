@@ -4,9 +4,9 @@ var router = express.Router();
 //database
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : '192.168.30.54',
-  user     : 'dana',
-  password : 'dana1234!',
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
   database : 'wroom'
 });
 connection.connect();
@@ -14,24 +14,10 @@ connection.connect();
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
 router.get('/', function(req, res) {
-    var temp;
     connection.query('SELECT * FROM pay', function (error, results) {
         if (error) throw error;
-        //temp = results;
-        //res.send(temp);
         console.log(results);
     });
-});
-
-//납부할 내역
-//http://localhost:3000/payment/{userId}
-router.get('/bfList', function(req, res) {
-    res.render('bfList');
-});
-
-//납부된 내역
-router.get('/aftList', function(req, res) {
-    res.render('aftList');
 });
 
 //납부 내역 조회, 카테고리 id
@@ -40,10 +26,21 @@ router.get('/category/:id', function(req, res) {
 
 });
 
-//납부 내역 조회, 납부 여부
-//http://localhost:3000/payment/{0|1}
-router.get('/:id', function(req, res) {
-
+//납부 내역 조회
+//0, 납부 미완 | 1, 납부 완료
+//http://localhost:3000/payment/{flag}
+router.get('/:flag', function(req, res) {
+    var flag = req.params.flag;
+    var userId = 5; //임시
+    connection.query('SELECT * FROM dutchpayyn WHERE User_userID = ? AND dutchpayYN = ?',
+    [userId, flag],
+    function (error, results) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(results);
+        }
+    });
 });
 
 //납부 내역 삭제
@@ -63,6 +60,7 @@ router.post('/', function(req, res) {
         if(error) {
             throw error;
         } else { //유저번호 임시
+            var insertId = results.insertId;
             connection.query('SELECT User_userID FROM roomshare_has_user ' +
             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
             'FROM roomshare_has_user WHERE User_userID = 5)',
@@ -70,16 +68,16 @@ router.post('/', function(req, res) {
                 if(error) {
                     throw error;
                 } else {
-                    var queries = [];
                     Object.keys(result).forEach(function(key) {
                         var row = result[key];
-                        //console.log(row.User_userID);
-                        connection.query('',
+                        connection.query('INSERT INTO dutchpayyn(payID, User_userID) VALUES (?,?)',
+                        [insertId, row.User_userID],
                         function (error, results) {
-                            if (error) throw error;
-                            //temp = results;
-                            //res.send(temp);
-                            console.log(results);
+                            if(error) {
+                                throw error;
+                            } else {
+                                console.log(row.User_userID+' 작업 완료');
+                            }
                         });
                     });
                 }

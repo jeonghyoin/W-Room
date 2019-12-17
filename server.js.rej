@@ -1,8 +1,0 @@
-diff a/server.js b/server.js	(rejected hunks)
-@@ -1,4 +0,5 @@
--//db
-+//database
-+//database
- var mysql = require('mysql');
- var connection = mysql.createConnection({
-   host     : '192.168.30.54',
