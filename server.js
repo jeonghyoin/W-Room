@@ -28,6 +28,7 @@ app.use('/transfer', transfer);
 app.use('/payment', payment);
 
 //템플렛 추가
+app.set('views', __dirname + '/views');
 app.set('views', __dirname + '/view');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
