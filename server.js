@@ -1,9 +1,15 @@
 //db
 var mysql = require('mysql');
 var connection = mysql.createConnection({
+<<<<<<< HEAD
   host     : 'localhost',
   user     : 'root',
   password : 'jmyc1921',
+=======
+  host     : '192.168.30.54',
+  user     : 'jeongin',
+  password : 'jeongin1234',
+>>>>>>> 630c47fade4d57640d247ef70fe6afac611c9b62
   database : 'wroom'
 });
 connection.connect();
@@ -20,10 +26,13 @@ var notice = require('./routes/notice');
 var user = require('./routes/user');
 var transfer = require('./routes/transfer');
 var payment = require('./routes/payment');
+var main = require('./routes/main');
+
 app.use('/notice', notice);
 app.use('/user', user);
 app.use('/transfer', transfer);
 app.use('/payment', payment);
+app.use('/main', main);
 
 
 //템플렛 추가
