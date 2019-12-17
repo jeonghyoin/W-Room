@@ -13,7 +13,6 @@ connection.connect();
 
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
-
 router.get('/', function(req, res) {
     var temp;
     connection.query('SELECT * FROM pay', function (error, results) {
@@ -26,17 +25,11 @@ router.get('/', function(req, res) {
 
 //납부 내역 조회, 유저 id
 //http://localhost:3000/payment/{userId}
-<<<<<<< HEAD
 router.get('/user/:id', function(req, res) {
-=======
-router.get('/:id', function(req, res) {
-    res.render('bfList');
->>>>>>> bc9b7b73893082c7d97c69526b9397894952b465
 });
 
 //납부 내역 조회, 카테고리 id
 //http://localhost:3000/payment/{categoryId}
-<<<<<<< HEAD
 router.get('/category/:id', function(req, res) {
 
 });
@@ -52,16 +45,6 @@ router.get('/:id', function(req, res) {
 router.get('/:id', function(req, res) {
 
 });
-=======
-//router.get('/:id', function(req, res) {
-//});
-
-//납부 내역 삭제
-//http://localhost:3000/payment/{id}
-//router.get('/:id', function(req, res) {
-
-///});
->>>>>>> bc9b7b73893082c7d97c69526b9397894952b465
 
 //납부 내역 등록
 //http://localhost:3000/payment
@@ -90,17 +73,8 @@ router.post('/', function(req, res) {
 
 //납부 내역 수정
 //http://localhost:3000/payment/{id}
-<<<<<<< HEAD
 router.post('/:id', function(req, res) {
 
 });
-=======
-//router.post('/:id', function(req, res) {
-    
-//});
-
-//납부 내역 조회 post
-//router.post()
->>>>>>> bc9b7b73893082c7d97c69526b9397894952b465
 
 module.exports = router;
