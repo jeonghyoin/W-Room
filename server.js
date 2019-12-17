@@ -1,18 +1,14 @@
-//db
+//database
+//database
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-<<<<<<< HEAD
-  host     : 'localhost',
-  user     : 'root',
-  password : 'jmyc1921',
-=======
   host     : '192.168.30.54',
-  user     : 'jeongin',
-  password : 'jeongin1234',
->>>>>>> 630c47fade4d57640d247ef70fe6afac611c9b62
+  user     : 'dana',
+  password : 'dana1234!',
   database : 'wroom'
 });
 connection.connect();
+
 
 //express.js
 var express = require("express");
@@ -21,17 +17,23 @@ var app = express();
 var port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
 
+//body parser
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
 //라우터 설정
 var notice = require('./routes/notice');
 var user = require('./routes/user');
 var transfer = require('./routes/transfer');
 var payment = require('./routes/payment');
+var nhapi = require('./routes/nhapi');
 var main = require('./routes/main');
 
 app.use('/notice', notice);
 app.use('/user', user);
 app.use('/transfer', transfer);
 app.use('/payment', payment);
+app.use('/nh', nhapi);
 app.use('/main', main);
 
 

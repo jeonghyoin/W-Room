@@ -15,11 +15,8 @@ connection.connect();
 //http://localhost:3000/payment
 router.get('/', function(req, res) {
     var temp;
-    connection.query('SELECT * FROM wroom.pay', function (error, results) {
     connection.query('SELECT * FROM pay', function (error, results) {
         if (error) throw error;
-        temp = results;
-        res.send(temp);
         //temp = results;
         //res.send(temp);
         console.log(results);
@@ -28,7 +25,6 @@ router.get('/', function(req, res) {
 
 //납부 내역 조회, 유저 id
 //http://localhost:3000/payment/{userId}
-router.get('/:id', function(req, res) {
 router.get('/user/:id', function(req, res) {
 });
 
@@ -53,25 +49,13 @@ router.get('/:id', function(req, res) {
 //납부 내역 등록
 //http://localhost:3000/payment
 router.post('/', function(req, res) {
-    /* var payCategory = req.body.email;
-    var payAmount = req.body.password;
-    var payDate = req.body.accessToken;
-    var dueDate = req.body.refreshToken;
-    var memo = req.body.userseqno;
-    var payYN = req.body.userseqno; */
-    const data = req.body;
-
     var data = req.body;
     connection.query('INSERT INTO pay ' +
-    '(payCategory, payAmount, payDate, dueDate, memo, payYN) VALUES (?,?,?,?,?,?)',
-    [data.payCategory, data.payAmount, data.payDate, data.dueDate, data.memo, data.payYN],
     '(payCategory, payAmount, payDate, dueDate, memo, payYN, RoomShare_roomID) VALUES (?,?,?,?,?,?,?)',
     [data.payCategory, data.payAmount, data.payDate, data.dueDate, data.memo, data.payYN, data.RoomShare_roomID],
     function (error, results) {
         if(error) {
             throw error;
-        } else {
-            res.redirect('/'); //업데이트 후 메인 화면 이동
         } else { //유저번호 임시
             connection.query('SELECT User_userID FROM roomshare_has_user ' +
             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
@@ -92,8 +76,7 @@ router.post('/', function(req, res) {
 //납부 내역 수정
 //http://localhost:3000/payment/{id}
 router.post('/:id', function(req, res) {
-    
 
 });
 
-module.exports = router; 
+module.exports = router;
