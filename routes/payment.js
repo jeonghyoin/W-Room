@@ -56,15 +56,17 @@ router.post('/', function(req, res) {
     function (error, results) {
         if(error) {
             throw error;
-        } else {
-            var result = connection.query('SELECT User_userID FROM roomshare_has_user' +
-            'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID' +
-            'FROM wroom.roomshare_has_user WHERE User_userID = 5)',
+        } else { //유저번호 임시
+            connection.query('SELECT User_userID FROM roomshare_has_user ' +
+            'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
+            'FROM roomshare_has_user WHERE User_userID = 5)',
             function (error, results) {
                 if(error) {
                     throw error;
                 } else {
-                    console.log(result);
+                    var userIdList = [];
+                    userIdList = results.Row;
+                    console.log(userIdList);
                 }
             });
          }
