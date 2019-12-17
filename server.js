@@ -1,10 +1,10 @@
-//db
+//database
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'fintech'
+  host     : '192.168.30.54',
+  user     : 'dana',
+  password : 'dana1234!',
+  database : 'wroom'
 });
 connection.connect();
 
@@ -14,6 +14,10 @@ var app = express();
 
 var port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
+
+//body parser
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 //라우터 설정
 var notice = require('./routes/notice');
@@ -26,7 +30,7 @@ app.use('/transfer', transfer);
 app.use('/payment', payment);
 
 //템플렛 추가
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/view');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
