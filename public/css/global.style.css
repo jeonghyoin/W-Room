@@ -1,4 +1,4 @@
-/*** 
+/***
 ====================================================================
   Table of contents
 ====================================================================
@@ -11,30 +11,30 @@
 - [5. Header]
 - [6. main]
 - [7. Container]
-- [8. Form Elements] 
-- [9. Accordion] 
-- [10. Wizards] 
-- [11. Tab Control] 
-- [12. Popup] 
-- [13. Lists] 
-- [14. Search] 
-- [15. Divider] 
-- [16. Posts] 
-- [17. Profile Page] 
-- [18. Post Author Page] 
-- [19. Gallery and Album] 
-- [20. Contact] 
-- [21. Product Pages] 
-- [22. Panel] 
+- [8. Form Elements]
+- [9. Accordion]
+- [10. Wizards]
+- [11. Tab Control]
+- [12. Popup]
+- [13. Lists]
+- [14. Search]
+- [15. Divider]
+- [16. Posts]
+- [17. Profile Page]
+- [18. Post Author Page]
+- [19. Gallery and Album]
+- [20. Contact]
+- [21. Product Pages]
+- [22. Panel]
 - [23. Bouble Menu]
-- [24. Page Loader] 
-- [25. Responsive Media Queries] 
-- [26. Background Color Helpers] 
-- [27. Text Helpers] 
-- [28. Text Animations] 
-- [29. CUSTOMIZE THE CAROUSEL] 
-- [30. Home Tabs] 
-- [31. Content Styles] 
+- [24. Page Loader]
+- [25. Responsive Media Queries]
+- [26. Background Color Helpers]
+- [27. Text Helpers]
+- [28. Text Animations]
+- [29. CUSTOMIZE THE CAROUSEL]
+- [30. Home Tabs]
+- [31. Content Styles]
 - [32. Home Tabs]
 
 ***/
@@ -124,7 +124,7 @@ body{
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
-	
+
 }
 
 /*end of part 2----------------------------------------------------*/
@@ -155,9 +155,9 @@ nav.menu{
 	width: 70%;
 	background-color: #fff;
 	-webkit-transition: left 200ms cubic-bezier(0.000, 0.655, 0.000, 1); /* older webkit */
--webkit-transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990); 
-   -moz-transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990); 
-     -o-transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990); 
+-webkit-transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990);
+   -moz-transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990);
+     -o-transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990);
         transition: left 200ms cubic-bezier(0.025, 0.685, 0.000, 0.990); /* custom */
 }
 .image-round{
@@ -430,21 +430,21 @@ header.with-search-icon .page-title{
 	border-radius: 30px;
 	right: 0;
 
-	-webkit-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
-   -moz-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
-     -o-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+	-webkit-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+   -moz-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+     -o-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
         transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */
 }
 .navi-menu-button em:nth-child(1){
 	top: 7px;
-	width: 20px;
+	width: 24px;
 }
 .navi-menu-button em:nth-child(2){
 	top: 14px;
 }
 .navi-menu-button em:nth-child(3){
 	top: 21px;
-	width: 20px;
+	width: 24px;
 }
 
 .navi-menu-button.focused em:nth-child(1){
@@ -541,7 +541,7 @@ div.container{
 	outline: none;
 	line-height: 40px;
 	background-color: #FFF;
-	
+
 }
 select.form-element{
 	-webkit-appearance: none;
@@ -674,9 +674,9 @@ select.form-element{
 	-webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.1);
 	-moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.1);
 	box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.1);
-	-webkit-transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
-   -moz-transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
-     -o-transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+	-webkit-transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+   -moz-transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+     -o-transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
         transition: background-color 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */
 }
 .sweet-check input{
@@ -695,9 +695,9 @@ select.form-element{
 	background-color: #FFF;
 	position: absolute;
 	left: 0;
-	-webkit-transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
-   -moz-transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
-     -o-transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+	-webkit-transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+   -moz-transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+     -o-transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
         transition: left 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */
 }
 .sweet-check.checked{
@@ -1107,7 +1107,7 @@ header.no-background.set-bg .search-button .not-icon1{
 }
 .search-form .form-element:focus{
 	border-bottom-color: #2eb18d;
-	
+
 }
 .search-form .search-input-btn{
 	position: absolute;
@@ -1414,7 +1414,7 @@ header.no-background.set-bg .search-button .not-icon1{
 	margin: 0;
 	padding: 0;
 }
-.post-comments ul li{	
+.post-comments ul li{
 	display: block;
 	width: 100%;
 }
@@ -1526,7 +1526,7 @@ header.no-background.set-bg .search-button .not-icon1{
 	font-size: 14px;
 	line-height: 16px;
 	height: 32px;
-	
+
 }
 .news-list-item .list-author, .news-list-item .list-time{
 	font-size: 12px;
@@ -1973,7 +1973,7 @@ header.no-background.set-bg .search-button .not-icon1{
 	list-style-type: none;
 	float: left;
 	margin: 0px 10px;
-	
+
 }
 .product-size li a{
 	text-align: center;
@@ -1997,7 +1997,7 @@ header.no-background.set-bg .search-button .not-icon1{
 	width: 50px;
     height: 50px;
     line-height: 50px;
-    color: #fff !important; 
+    color: #fff !important;
 }
 /*end of part 21----------------------------------------------------*/
 
@@ -2108,10 +2108,10 @@ header.no-background.set-bg .search-button .not-icon1{
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
+  0%, 80%, 100% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 40% { 
+  } 40% {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
   }
@@ -2449,7 +2449,7 @@ h1 .button{
 [30. Home Tabs]
 *------------------------------------------------------------------*/
 
-#content-body {  
+#content-body {
   flex:1;
   min-height:170px;
   flex-direction: column;
@@ -2511,14 +2511,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
 	padding: 15px;
 }
 
-.content-row {  
+.content-row {
   display:flex;
-  flex:1;  
+  flex:1;
 }
-.content-col {  
+.content-col {
   padding:23px 0px;
   width:33.33%;
-  text-align:center;  
+  text-align:center;
   font-size:14px;
   float: left;
   clear: both;
@@ -2527,12 +2527,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
   border-right: none;
 }
 .content-row:last-child {
-  border-bottom:none;  
+  border-bottom:none;
 }
 .content-col>i {
   width:55px;
 
-  font-size:25px;  
+  font-size:25px;
   color: #fff;
   margin-bottom:10px;
 }
@@ -2546,7 +2546,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
 [31. Content Styles]
 *------------------------------------------------------------------*/
 .dash-balance{
-	background: url(../img/content/dash-bg.jpg) no-repeat center center;
 	background-size: cover;
 	position: relative;
 	overflow: hidden;
@@ -2560,7 +2559,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
     left: -3px;
     right: 0px;
     bottom: -1px;
-    background: url(../img/content/curve.svg) no-repeat bottom;
     z-index: 0;
 }
 .dash-content h3{
@@ -2576,9 +2574,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
     flex-grow: 1;
 }
 .balance-card{
-	background: url(../img/content/b1-bg.png) no-repeat;
+	background: #0c124d;
     background-size: cover;
-    padding: 30px 20px;
+    padding: 10px 20px;
     border-radius: 10px
 }
 @media(min-width: 992px){
@@ -2674,7 +2672,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
     padding: 15px 13px
 }
 @media(max-width: 400px){
-	
+
 	.crypto-b{
 		margin-right: 10px;
     	flex: 1;
@@ -2898,7 +2896,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
 .recent-trans .time{
 	display: block;
 	margin-top: 5px;
-	color: #ede6e6 
+	color: #ede6e6
 }
 .recent-trans .notice-icon i {
     border-radius: 50%;
@@ -3143,7 +3141,7 @@ ul.adv-stats li:nth-child(5), ul.adv-stats li:nth-child(5) .fa {
 		margin-top: 15px
 	}
 	.b-val{
-		font-size: 22px 
+		font-size: 22px
 	}
 	.balance-card {
 	    padding: 30px 15px;
