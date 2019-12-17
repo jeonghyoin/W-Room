@@ -3,8 +3,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'root',
-  database : 'fintech'
+  password : 'jmyc1921',
+  database : 'wroom'
 });
 connection.connect();
 
@@ -25,8 +25,9 @@ app.use('/user', user);
 app.use('/transfer', transfer);
 app.use('/payment', payment);
 
+
 //템플렛 추가
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/view');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
