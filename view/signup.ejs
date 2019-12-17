@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<title>WROOM</title>
+
+	<!-- Google font file. If you want you can change. -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
+
+	<!-- Fontawesome font file css -->
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+
+	<!-- Template global css file. Requared all pages -->
+	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+
+<body>
+	
+		<div class="wrapper-inline">
+			<!-- Header area start -->
+			<header> <!-- extra class no-background -->
+				<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
+				<h1 class="page-title">회원가입</h1>
+				<div class="navi-menu-button">
+					<em></em>
+					<em></em>
+					<em></em>
+				</div>
+			</header>
+			<!-- Header area end -->
+			<!-- Page content start -->
+			<main>
+				<div class="container"  id="form_area_div">
+					<div class="form-divider"></div>
+					<div class="form-divider"></div>
+					<div class="form-label-divider"><span>OR</span></div>
+					<div class="form-divider"></div>
+
+					<div class="form-row-group with-icons">
+						<div class="form-row no-padding">
+							<i class="fa fa-envelope"></i>
+							<input type="email" id="userEmail" class="form-element" placeholder="카카오톡 이메일을 적어주세요">
+						</div>
+						<div class="form-row no-padding">
+							<i class="fa fa-lock"></i>
+							<input type="password" id="userPassword" class="form-element" placeholder="Password">
+						</div>
+					</div>
+
+					<div class="form-row">	
+						<button id="authBtn" class="button circle block red">오픈뱅킹 인증하기</button>
+					</div>
+
+                    <div class="form-divider"></div>
+
+					<div class="form-row">
+						<button id="signupBtn" class="button circle block orange">회원 가입 완료하기</button>
+					</div>
+
+					<div class="form-row txt-center mt-15">
+						Already have an account? <a href="login.html" data-loader="show">Login</a>
+					</div>
+					
+
+				</div>
+			</main>
+			<!-- Page content end -->
+		</div>
+	</div>
+
+
+	<!--Page loader DOM Elements. Requared all pages-->
+	<div class="sweet-loader">
+		<div class="box">
+		  	<div class="circle1"></div>
+		  	<div class="circle2"></div>
+		  	<div class="circle3"></div>
+		</div>
+	</div>
+
+	<!-- JQuery library file. requared all pages -->
+	<script src="/js/jquery-3.2.1.min.js"></script>
+
+	<!-- Template global script file. requared all pages -->
+	<script src="/js/global.script.js"></script>
+	
+    <script>
+    $('#authBtn').click(function(){
+        // alert('auth btn clicked');
+        var tmpWindow = window.open("about:blank");
+// 강사님 앱 키
+		//tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=q7kH44ThJwjpvNRg0BbJvE1yxvx5X53DKz1rNgPF&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0"
+// 수지언니 앱 키	
+		tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0"
+	})
+
+	$('#signupBtn').click(function(){
+		var email = $('#userEmail').val();
+		var password = $('#userPassword').val();
+			
+		$.ajax({
+          url:'http://localhost:3000/user/passwdUpdate',
+          type : 'POST',
+              data : {
+    			  password : password,
+    			  email : email,
+   		       },
+          success:function(data){
+    			if(data == 1){
+    		    	alert("가입 완료");
+      			}
+     		 }
+		})
+	});
+	</script>
+</body>
+
+</html>
