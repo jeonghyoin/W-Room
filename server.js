@@ -1,10 +1,10 @@
 //db
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'fintech'
+  host     : '192.168.30.54',
+  user     : 'dana',
+  password : 'dana1234!',
+  database : 'wroom'
 });
 connection.connect();
 
@@ -20,13 +20,15 @@ var notice = require('./routes/notice');
 var user = require('./routes/user');
 var transfer = require('./routes/transfer');
 var payment = require('./routes/payment');
+var nhapi = require('./routes/nhapi');
 app.use('/notice', notice);
 app.use('/user', user);
 app.use('/transfer', transfer);
 app.use('/payment', payment);
+app.use('/nh', nhapi);
 
 //템플렛 추가
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/view');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
