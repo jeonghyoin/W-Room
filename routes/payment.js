@@ -23,9 +23,15 @@ router.get('/', function(req, res) {
     });
 });
 
-//납부 내역 조회, 유저 id
+//납부할 내역
 //http://localhost:3000/payment/{userId}
-router.get('/user/:id', function(req, res) {
+router.get('/bfList', function(req, res) {
+    res.render('bfList');
+});
+
+//납부된 내역
+router.get('/aftList', function(req, res) {
+    res.render('aftList');
 });
 
 //납부 내역 조회, 카테고리 id
@@ -60,13 +66,22 @@ router.post('/', function(req, res) {
             connection.query('SELECT User_userID FROM roomshare_has_user ' +
             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
             'FROM roomshare_has_user WHERE User_userID = 5)',
-            function (error, results) {
+            function (error, result) {
                 if(error) {
                     throw error;
                 } else {
-                    var userIdList = [];
-                    userIdList = results.Row;
-                    console.log(userIdList);
+                    var queries = [];
+                    Object.keys(result).forEach(function(key) {
+                        var row = result[key];
+                        //console.log(row.User_userID);
+                        connection.query('',
+                        function (error, results) {
+                            if (error) throw error;
+                            //temp = results;
+                            //res.send(temp);
+                            console.log(results);
+                        });
+                    });
                 }
             });
          }
