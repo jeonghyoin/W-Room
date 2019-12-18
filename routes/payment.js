@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('../mysql-db');
+var moment = require('moment');
 
 router.get('/bill', function(req, res) {
     res.render('bill');
@@ -14,8 +15,11 @@ router.get('/check', function(req, res) {
 //http://localhost:3000/payment
 router.get('/', function(req, res) {
     connection.query('SELECT * FROM pay', function (error, results) {
-        if (error) throw error;
-        console.log(results);
+        if (error) {
+            throw error;
+        } else {
+            res.render('main', {items : results});
+        }
     });
 });
 
@@ -39,7 +43,7 @@ router.get('/:flag', function(req, res) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
+            res.render('payment', {items : results});
         }
     });
 });
