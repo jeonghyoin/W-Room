@@ -14,6 +14,7 @@ var mysql = require('./mysql-db');
 mysql.connect();
 
 //라우터 설정
+var invite = require('./routes/invite');
 var notice = require('./routes/notice');
 var user = require('./routes/user');
 var transfer = require('./routes/transfer');
