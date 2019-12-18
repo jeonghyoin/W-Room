@@ -22,6 +22,7 @@ var payment = require('./routes/payment');
 var nhapi = require('./routes/nhapi');
 var main = require('./routes/main');
 var invite = require('./routes/invite');
+var makeRoom = require('./routes/makeRoom');
 
 app.use('/invite', invite);
 app.use('/notice', notice);
@@ -30,6 +31,7 @@ app.use('/transfer', transfer);
 app.use('/payment', payment);
 app.use('/nh', nhapi);
 app.use('/main', main);
+app.use('/makeRoom', makeRoom);
 
 //템플렛 추가
 app.set('views', __dirname + '/view');
