@@ -86,4 +86,8 @@ router.post('/:id', function(req, res) {
 
 });
 
+router.get('/bill', function(req, res) {
+    res.render('bill');
+});
+
 module.exports = router;

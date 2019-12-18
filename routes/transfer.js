@@ -2,15 +2,6 @@ var express = require('express');
 var request = require('request');
 var router = express.Router();
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host     : '192.168.30.54',
-  user     : 'dana',
-  password : 'dana1234!',
-  database : 'wroom'
-});
-connection.connect();
-
 router.get('/', function(req, res) {
     res.send('respond with a resource');
 });
