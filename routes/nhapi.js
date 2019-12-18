@@ -24,6 +24,7 @@ router.post('/efpayment', function (req, res) {
 
     console.log(today);
 
+    // sql 로그인 id 수정
     var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5)';
 
     connection.query(rMember,
@@ -61,24 +62,51 @@ router.post('/efpayment', function (req, res) {
                 console.log(" >> resultObject.price : " + resultObject.price);
                 var payCategory = 2;
                 var dueDate = moment().add("1", "M").format("YYYYMMDD");
+
+                // sql 로그인 id 수정
+                // 테이블 pay 전기세 삽입
                 var sql1 = 'SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5';
-                var sql2 = 'INSERT INTO wroom.pay(payCategory, payAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
-                    ' VALUES (?,?,?,?,?,?,?)';
-                // ' + payCategory + ',' + resultObject.Tram + ', null , ' + "\'" + resultObject.PbtxPayExdt + "\'" + ', null, 1, ' + results.RoomShare_roomID + '
-                
+                var sql2 = 'INSERT INTO wroom.pay(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
+                    ' VALUES (?,?,?,?,?,?,?,?)';
+
+                // sql 로그인 id 수정
+                // 테이블 dutchpayyn 룸메이트 개별 전기세 삽입
+                var sql3 = 'SELECT User_userID FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = 5)';
+                var sql4 = 'INSERT INTO wroom.dutchpayyn(payID, User_userID) VALUES (?,?)';
+
                 connection.query(sql1, [], function (error, sql1Result, fields) {
                     console.log("this.sql : " + this.sql);
                     console.log("sql1 :" + sql1Result[0].RoomShare_roomID);
-                    
+
                     if (error) throw error;
                     else {
-                        connection.query(sql2, [payCategory, resultObject.Tram, null, resultObject.PbtxPayExdt, null, 1, sql1Result[0].RoomShare_roomID], function (error, results, fields) {
-                            console.log("this.sql : " + this.sql);
-                            if (error) throw error;
-                            else {
-                                res.json(resultObject);
-                            }
-                        });
+                        connection.query(sql2, [payCategory, resultObject.Tram, resultObject.price, null, resultObject.PbtxPayExdt, null, 0, sql1Result[0].RoomShare_roomID],
+                            function (error, sql2Results, fields) {
+                                console.log("this.sql : " + this.sql);
+                                if (error) throw error;
+                                else {
+                                    var insertId = sql2Results.insertId;
+                                    connection.query(sql3, function (error, sql3Result) {
+                                        if (error) {
+                                            throw error;
+                                        } else {
+                                            Object.keys(sql3Result).forEach(function (key) {
+                                                var row = sql3Result[key];
+                                                connection.query(sql4, [insertId, row.User_userID],
+                                                    function (error, results) {
+                                                        if (error) {
+                                                            throw error;
+                                                        } else {
+                                                            console.log('전기세 dutchpayyn 삽입 완료');
+                                                        }
+                                                    });
+                                            });
+                                        }
+                                    });
+                                    res.json(resultObject);
+                                }
+                            });
+
                     }
                 });
             });
