@@ -54,36 +54,46 @@ router.get('/:id', function(req, res) {
 //http://localhost:3000/payment
 router.post('/', function(req, res) {
     var data = req.body;
-    connection.query('INSERT INTO pay ' +
-    '(payCategory, payAmount, payDate, dueDate, memo, payYN, RoomShare_roomID) VALUES (?,?,?,?,?,?,?)',
-    [data.payCategory, data.payAmount, data.payDate, data.dueDate, data.memo, data.payYN, data.RoomShare_roomID],
+    connection.query('SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user ' + 
+    'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
+    'FROM wroom.roomshare_has_user WHERE User_userID = 5)',
     function (error, results) {
-        if(error) {
+        if (error) {
             throw error;
-        } else { //유저번호 임시
-            var insertId = results.insertId;
-            connection.query('SELECT User_userID FROM roomshare_has_user ' +
-            'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
-            'FROM roomshare_has_user WHERE User_userID = 5)',
-            function (error, result) {
+        } else {
+            var shareAmount = data.payAmount / results[0].share;
+            connection.query('INSERT INTO pay ' +
+            '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID) VALUES (?,?,?,?,?,?,?,?)',
+            [data.payCategory, data.payAmount, shareAmount, data.payDate, data.dueDate, data.memo, data.payYN, data.RoomShare_roomID],
+            function (error, results) {
                 if(error) {
                     throw error;
-                } else {
-                    Object.keys(result).forEach(function(key) {
-                        var row = result[key];
-                        connection.query('INSERT INTO dutchpayyn(payID, User_userID) VALUES (?,?)',
-                        [insertId, row.User_userID],
-                        function (error, results) {
-                            if(error) {
-                                throw error;
-                            } else {
-                                console.log(row.User_userID+' 작업 완료');
-                            }
-                        });
+                } else { //유저번호 임시
+                    var insertId = results.insertId;
+                    connection.query('SELECT User_userID FROM roomshare_has_user ' +
+                    'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
+                    'FROM roomshare_has_user WHERE User_userID = 5)',
+                    function (error, result) {
+                        if(error) {
+                            throw error;
+                        } else {
+                            Object.keys(result).forEach(function(key) {
+                                var row = result[key];
+                                connection.query('INSERT INTO dutchpayyn(payID, User_userID) VALUES (?,?)',
+                                [insertId, row.User_userID],
+                                function (error, results) {
+                                    if(error) {
+                                        throw error;
+                                    } else {
+                                        console.log(row.User_userID+' 작업 완료');
+                                    }
+                                });
+                            });
+                        }
                     });
                 }
             });
-         }
+        }
     });
 });
 
