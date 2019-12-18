@@ -101,8 +101,12 @@
     			userPassword : password
    		       },
           success:function(data){
+			  if (data == 0){
+				  alert("올바르지 않은 사용자 정보입니다.");
+			  } else{
 				sessionStorage.setItem("jwtToken", data);
-                window.location = '/main';
+				window.location = '/main';
+			  }
      		 }
 		})
     })
