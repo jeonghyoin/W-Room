@@ -20,7 +20,9 @@ var transfer = require('./routes/transfer');
 var payment = require('./routes/payment');
 var nhapi = require('./routes/nhapi');
 var main = require('./routes/main');
+var invite = require('./routes/invite');
 
+app.use('/invite', invite);
 app.use('/notice', notice);
 app.use('/user', user);
 app.use('/transfer', transfer);
