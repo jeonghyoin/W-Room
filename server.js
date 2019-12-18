@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+//database
+//database
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  host     : '192.168.30.54',
+  user     : 'dana',
+  password : 'dana1234!',
+  database : 'wroom'
+});
+connection.connect();
+
+=======
+>>>>>>> dd86446e842c21c2304a6081d8893caa808bf06a
 //express.js
 var express = require("express");
 var app = express();
@@ -20,7 +34,9 @@ var transfer = require('./routes/transfer');
 var payment = require('./routes/payment');
 var nhapi = require('./routes/nhapi');
 var main = require('./routes/main');
+var invite = require('./routes/invite');
 
+app.use('/invite', invite);
 app.use('/notice', notice);
 app.use('/user', user);
 app.use('/transfer', transfer);
