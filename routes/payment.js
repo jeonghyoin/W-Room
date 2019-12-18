@@ -4,7 +4,11 @@ var connection = require('../mysql-db');
 
 router.get('/bill', function(req, res) {
     res.render('bill');
-  });
+});
+
+router.get('/check', function(req, res) {
+    res.render('check');
+});
 
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
