@@ -35,7 +35,7 @@ router.get('/:flag', function(req, res) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
+            res.render('payment', {items : results});
         }
     });
 });
@@ -81,7 +81,7 @@ router.post('/', function(req, res) {
                                     if(error) {
                                         throw error;
                                     } else {
-                                        console.log(row.User_userID+' 작업 완료');
+                                        //console.log(row.User_userID+' 작업 완료');
                                     }
                                 });
                             });
