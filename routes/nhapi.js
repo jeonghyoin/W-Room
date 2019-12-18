@@ -13,7 +13,7 @@ router.get('/efpayment', function (req, res) {
     res.render('test');
 });
 
-router.post('/efpayment', function (req, res) {
+router.post('/efpayment', auth, function (req, res) {
     var userId = req.decoded.userId;
     var today = moment().format("YYYYMMDD");
     var num = Math.floor(Math.random() * 9000) + 1000;
