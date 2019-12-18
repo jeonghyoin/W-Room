@@ -1,14 +1,3 @@
-//database
-/* const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host     : '192.168.30.54',
-  user     : 'dana',
-  password : 'dana1234!',
-  database : 'wroom'
-});
-//connect to database
-connection.connect(); */
-
 //express.js
 var express = require("express");
 var app = express();
