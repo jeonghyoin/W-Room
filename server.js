@@ -13,6 +13,7 @@ var mysql = require('./mysql-db');
 mysql.connect();
 
 //라우터 설정
+var invite = require('./routes/invite');
 var notice = require('./routes/notice');
 var user = require('./routes/user');
 var transfer = require('./routes/transfer');
@@ -20,6 +21,7 @@ var payment = require('./routes/payment');
 var nhapi = require('./routes/nhapi');
 var main = require('./routes/main');
 
+app.use('/invite', invite);
 app.use('/notice', notice);
 app.use('/user', user);
 app.use('/transfer', transfer);

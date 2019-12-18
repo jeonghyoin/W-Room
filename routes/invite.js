@@ -2,6 +2,10 @@ var express = require('express');
 var request = require('request');
 var router = express.Router();
 
+var jwt = require('jsonwebtoken'); // 토큰용 
+var tokenKey = "fintech123456789danahkim"; // 토큰용
+var auth = require("../lib/auth"); // 토큰용
+
 var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : '192.168.30.54',
@@ -40,7 +44,8 @@ router.post('/', function(req, res){
     });  
 });
 
-router.post('/add', function(req, res){
+router.post('/add', auth, function(req, res){
+    var myEmail = req.decoded.userEmail;
     // console.log(req.body.findEmail);
      var addEmail = req.body.findEmail;
   //   var userToken = sessionStorage.getItem('jwtToken')
@@ -48,24 +53,22 @@ router.post('/add', function(req, res){
      var findimg;
      var resultObject;
      var userRoomID;
-    connection.query('SELECT * FROM user WHERE roomID=?',
+    connection.query('SELECT * FROM user WHERE email=?',
      [addEmail], function (error, results, fields) {
         if (error) throw error;
         if(result[0].roomID!='NULL'){console.log("이미 다른 룸쉐어 중");
     }else{
         connection.query('SELECT * FROM user WHERE email=?',
-        [userToken], function (error, results, fields) {
+        [myEmail], function (error, results, fields) {
             if (error) throw error;
             else{
                 userRoomID = results[0].roomID;
             }
-        },
-        connection.query('INSERT INTO user.roomID SELECT roomID FROM user WHERE email=?',
-        [addEmail], function (error, results, fields) {
-
-    }
-    
-     })
+        }),
+        connection.query('UPDATE user.roomID '+'SET '+ userRoomID + 'WHERE email='+addEmail);
+        console.log('추가 완료');
+     }
+});
 });
 
 module.exports = router;
