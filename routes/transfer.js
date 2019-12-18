@@ -22,8 +22,14 @@ router.post('/withdraw', auth, function(req, res){
     console.log(req.body.transferVal)
     var transferVal = req.body.transferVal.replace(",","");
     console.log(transferVal);
-
-    var countnum = Math.floor(Math.random() * 1000000000) + 1;
+    var countnum; 
+    var nine = true;
+    while (nine)
+    { countnum = Math.floor(Math.random() * 1000000000) + 1;
+      if ((countnum >= 100000000) && (countnum <= 999999999)){
+            nine = false;
+        }
+    }
     var transId = "T991599860U" + countnum; // 회원정보 이용기관코드
     connection.query('SELECT * FROM user WHERE userID = ?', [userId], function (error, results, fields) {
         if (error) throw error;
@@ -85,11 +91,15 @@ router.post('/withdraw', auth, function(req, res){
   // 입금이체 - 정인한테 300,000 입금하기
 router.post('/deposit', auth, function(req, res){
     var userId = req.decoded.userId;
-    console.log(req.body.transferVal)
     var transferVal = req.body.transferVal.replace(",","");
-    console.log(transferVal);
-
-  var countnum = Math.floor(Math.random() * 1000000000) + 1;
+    var countnum; 
+    var nine = true;
+    while (nine)
+    { countnum = Math.floor(Math.random() * 1000000000) + 1;
+      if ((countnum >= 100000000) && (countnum <= 999999999)){
+            nine = false;
+        }
+    }
   var transId = "T991599860U" + countnum;
 
   var option = {
