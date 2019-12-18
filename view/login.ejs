@@ -101,7 +101,11 @@
     			userPassword : password
    		       },
           success:function(data){
+<<<<<<< HEAD
                 console.log(data);
+=======
+				sessionStorage.setItem("jwtToken", data);
+>>>>>>> 91c5a70252326c715d04f05cf9fbc11476b93def
                 window.location = '/main';
      		 }
 		})
@@ -138,10 +142,11 @@
 							gender : res.kakao_account.gender
    		    			   },
 					  success:function(data){
-						if(data == 1){ // 사용자 이미 존재
-		    		    	window.location.href = '/main';
-      					} else { // 회원가입 미완료 시 인증 페이지로 이동
+						if(data == 0){ // 회원가입 미완료 시 인증 페이지로 이동
 							window.location.href = 'signup';
+      					} else { 
+							sessionStorage.setItem("jwtToken", data);
+							window.location.href = '/main';
 						  }
      				}
 					})

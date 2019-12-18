@@ -134,12 +134,12 @@
 	                        <div class="d-flex flex-grow">
 	                          <div class="mr-auto">
 															<h5 class="w-text"> 19/11/16 </h5></br></br>
-	                            <h1 class="b-val"> $7,168.90 </h1>
-	                            <p class="g-text mb-10">송금해야할 금액</p>
+	                            <h1 class="b-won">￦ </h1> <h1 class="b-val" id="transferVal">300,000</h1>
+	                            <p class="g-text mb-10" id="transferNEED">송금해야할 금액</p>
 	                          </div>
 	                        </div>
 	                     </div>
-											 <a href= "/payment/check"><button width="">송금하기</button></a>
+							<button id="transferBtn">송금하기</button>
 					</div>
 
 				</section>
@@ -275,8 +275,68 @@
 	<script src="/js/app-charts.js"></script>
 	<script src="/js/global.script.js"></script>
 
+	<script>
+		var jwtToken = sessionStorage.getItem('jwtToken');
+		var transferVal = $('#transferVal').text();
 
-      
+		// 로딩될 때 미리 이체용 토큰 받아오기
+	$(function() {
+		$.ajax({
+			url:'http://localhost:3000/transfer/token',
+			type : 'GET',
+			headers : {
+			  'x-access-token' : jwtToken
+			},
+			data : {
+				transferVal : transferVal
+			 },
+			success:function(data){
+			  console.log("토큰 받아오기 완료");
+			}
+		});
+	}); 
+
+		$('#transferBtn').click(function(){
+			console.log("버튼 눌림");
+			$.ajax({
+			  url:'http://localhost:3000/transfer/withdraw',
+			  type : 'POST',
+				headers : {
+				  'x-access-token' : jwtToken
+				},
+				  data : {
+					transferVal : transferVal
+					  },
+				async: false,
+			  success:function(data){
+				  if (data == 1){  // 출금이체 완료시 입금이체
+					$.ajax({
+						  url:'http://localhost:3000/transfer/deposit',
+						  type : 'POST',
+						headers : {
+						  'x-access-token' : jwtToken
+						},
+						  data : {
+							transferVal : transferVal
+							  },
+						async: false,
+					  success:function(data){
+						  if (data == 1){
+						  console.log("송금 완료");
+						  document.getElementById('transferNEED').innerHTML = "송금완료된 금액";
+						  document.getElementById('transferBtn').style.display = "none";
+						  } else { // 송금이체 미완료시
+							alert("송금 실패! 다시 시도해주세요.");
+						  }
+					  }
+					})
+				  } else { // 출금이체 미완료시
+					alert("송금 실패! 다시 시도해주세요.");
+				  }
+				}
+			})
+		})
+		</script>
 </body>
 
 </html>
