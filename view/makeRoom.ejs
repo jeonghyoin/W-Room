@@ -120,7 +120,7 @@
 					<div class="form-row-group with-icons">
 						<div class="form-row no-padding">
 							<i class="fa fa-home"></i>
-							<input type="text" name="aaa" class="form-element" placeholder="모임명 입력하기">
+							<input type="roomName" id="roomName" class="form-element" placeholder="모임명을 입력해주세요.">
 						</div>
 					</div>
 
@@ -154,7 +154,8 @@
 					<div class="form-row-group with-icons">
 						<div class="form-row no-padding">
 							<i class="fa fa-sticky-note"></i>
-							<input type="text" name="aaa" class="form-element" placeholder="모임 계좌 입력">
+							<input type="account" id="account" class="form-element" placeholder="모임 계좌를 입력해 주세요.">
+						
 						</div>
 					</div>
 					
@@ -162,7 +163,7 @@
 					<div class="form-mini-divider"></div>
 
 					<div class="form-row">
-						<a href="#" class="button circle block yellow">개설하기</a>
+						<button id="makeBtn" class="button circle block yellow">개설하기</button>
 					</div>
 
 					<div class="form-mini-divider"></div>
@@ -192,6 +193,27 @@
 	<!-- Template global script file. requared all pages -->
 	<script src="js/global.script.js"></script>
 
+	<script>
+	$('#makeBtn').click(function(){
+		var roomName = $('#roomName').val();
+		var account = $('#account').val();
+			
+		$.ajax({
+          url:'http://localhost:3000/makeRoom/update',
+          type : 'POST',
+              data : {
+				roomName : roomName,
+				account : account,
+   		       },
+          success:function(data){
+    			if(data == 1){
+					alert("모임 개설이 완료되었습니다.");
+					window.location.href = '/main';
+      			}
+     		 }
+		})
+	});
+	</script>
 	
 </body>
 
