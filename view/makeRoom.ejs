@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -194,13 +193,19 @@
 	<script src="js/global.script.js"></script>
 
 	<script>
+	
+    var jwtToken = sessionStorage.getItem('jwtToken');
+
 	$('#makeBtn').click(function(){
 		var roomName = $('#roomName').val();
 		var account = $('#account').val();
 			
 		$.ajax({
           url:'http://localhost:3000/makeRoom/update',
-          type : 'POST',
+		  type : 'POST',
+		  headers : {
+           'x-access-token' : jwtToken
+         	},
               data : {
 				roomName : roomName,
 				account : account,
