@@ -29,9 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="plugins/turbo-slider/turbo.css">
 
 	<style>
-	#refreshBtn {
-
-	}
+	
 	</style>
 
 </head>
@@ -174,9 +172,8 @@
 
 							<div class="swiper-slide">
 								<div class="money-receiver">
-									<a href="/invite"><img src="img/plus.png" alt=""></a>
+									<a href="/main/makeRoom"><img src="img/plus.png" alt=""></a>
 									<h4>모임개설</h4>
-
 								</div>
 							</div>
 							<!--<div class="swiper-slide">
@@ -370,7 +367,6 @@
 				var str = String(str);
 				return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 			}
-
 			$.ajax({
 				url: 'http://localhost:3000/nh/efpayment',
 				type: 'POST',
