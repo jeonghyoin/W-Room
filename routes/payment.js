@@ -39,7 +39,7 @@ router.get('/:flag', function(req, res) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
+            res.render('payment', {items : results});
         }
     });
 });
