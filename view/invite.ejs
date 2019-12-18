@@ -76,8 +76,9 @@
 </body>
 <script>
 	var jwtToken = sessionStorage.getItem('jwtToken');
+	var email;
 	$('#searchBtn').click(function(){
-        var email = $('#searchEmail').val();
+        email = $('#searchEmail').val();
 
         $.ajax({
           url:'http://localhost:3000/invite',
@@ -106,15 +107,17 @@
 			});
 
 	$('#addSearch').click(function(){
+		//email = $('#searchEmail').val();
 		$.ajax({
          	url:'http://localhost:3000/invite/add',
 			 type : 'POST',
 			 headers : {
-						  'x-access-token' : jwtToken
+					'x-access-token' : jwtToken
 						},
               data : {
 				addEmail : email
-					}
+					},
+					success:function(){alert("성공");}
 				});
 });
 </script>

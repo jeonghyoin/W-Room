@@ -45,28 +45,31 @@ router.post('/', function(req, res){
 });
 
 router.post('/add', auth, function(req, res){
-    var myEmail = req.decoded.userEmail;
-    // console.log(req.body.findEmail);
-     var addEmail = req.body.findEmail;
-  //   var userToken = sessionStorage.getItem('jwtToken')
-     var findname;
-     var findimg;
-     var resultObject;
-     var userRoomID;
-    connection.query('SELECT * FROM user WHERE email=?',
+    var myEmail = req.decoded.userEmail;//내 이메일
+     var addEmail = req.body.addEmail;//친구 이메일
+     var userRoomID='';
+    console.log(req.decoded.userEmail);
+    connection.query('SELECT ISNULL(roomID) as roomID FROM user WHERE email=?', //친구 이메일의 룸아이디 확인
      [addEmail], function (error, results, fields) {
         if (error) throw error;
-        if(result[0].roomID!='NULL'){console.log("이미 다른 룸쉐어 중");
+        console.log("확인");
+        console.log(results);
+
+        if(results[0].roomID == 1){ // 룸메이트의 룸아이디가 비었으면
+            connection.query('SELECT * FROM user WHERE email=?',
+            [myEmail], function (error, results, fields) { // 리더의 룸아이디를 가져와서
+                    console.log(results);
+                    userRoomID = results[0].roomID;
+                    console.log("룸아이디"+userRoomID);
+
+                    connection.query('UPDATE user SET roomID = ? WHERE email= ?', [userRoomID, addEmail]); // 추가
+            console.log('추가 완료');
+            });
+            
+            
+            
     }else{
-        connection.query('SELECT * FROM user WHERE email=?',
-        [myEmail], function (error, results, fields) {
-            if (error) throw error;
-            else{
-                userRoomID = results[0].roomID;
-            }
-        }),
-        connection.query('UPDATE user.roomID '+'SET '+ userRoomID + 'WHERE email='+addEmail);
-        console.log('추가 완료');
+        console.log("이미 다른 룸쉐어 중");
      }
 });
 });
