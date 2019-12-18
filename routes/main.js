@@ -6,4 +6,8 @@ router.get('/', function(req, res) {
     res.render('main');
 });
 
+router.get('/makeRoom', function(req, res) {
+    res.render('makeRoom');
+});
+
 module.exports = router;
