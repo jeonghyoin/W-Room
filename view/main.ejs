@@ -141,15 +141,13 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="content-row">
-
 								<div class="content-col">
-									<a href="/payment/0"><img src="img/content/billtopay.png" class="mb-5" alt=""></a>
+									<img src="img/content/billtopay.png" class="mb-5" id="payFalseButton">
 									<span>납부 예정 청구서</span>
 								</div>
 								<div class="content-col">
-									<a href="/payment/1"><img src="img/content/payy.png" class="mb-5" alt=""></a>
+									<img src="img/content/payy.png" class="mb-5" id="payTrueButton">
 									<span>납부한 청구서</span>
 								</div>
 
@@ -157,10 +155,7 @@
 									<a href="/notice"><img src="img/content/pay.png" class="mb-5" alt=""></a>
 									<span>공지사항</span>
 								</div>
-
-
 							</div>
-
 						</div>
 					</div>
 				</section>
@@ -203,7 +198,6 @@
 							-->
 						</div>
 					</div>
-
 				</section>
 
 				<!--POPUP HTML CONTENT START -->
@@ -262,12 +256,8 @@
 					</div>
 				</div>
 
-
-
 				<section class="container">
-
 					<h4 class="title-main">모든 청구서 보기</h4>
-
 					<ul class="transaction-list list-unstyled">
 						<li>
 							<div class="d-flex align-items-center justify-content-between">
@@ -332,8 +322,6 @@
 						</li>
 					</ul>
 				</section>
-
-
 			</main>
 			<!-- Page content end -->
 		</div>
@@ -350,15 +338,14 @@
 
 	<!-- JQuery library file. requared all pages -->
 	<script src="js/jquery-3.2.1.min.js"></script>
-
 	<!-- Swiper JS -->
-
 	<script src="js/swiper.min.js"></script>
-
 	<!-- Template global script file. requared all pages -->
 	<script src="js/global.script.js"></script>
 
 	<script>
+		var jwtToken = sessionStorage.getItem('jwtToken');
+
 		function makeComma(str) {
 			var str = String(str);
 			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -368,6 +355,9 @@
 			$.ajax({
 				url: 'http://localhost:3000/nh/efpayment',
 				type: 'POST',
+				headers: {
+					'x-access-token': jwtToken
+				},
 				success: function (data) {
 					console.log("data.price :" + data.price);
 					$("#epShare").text(makeComma(data.price) + " 원");
@@ -376,6 +366,42 @@
 				error: function (request, status, error) {
 					alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
 						"error:" + error);
+				}
+			})
+		});
+
+		//납부 미완 내역 요청
+		$('#payFalseButton').click(function () {
+			$.ajax({
+				url: 'http://localhost:3000/payment/0',
+				type: 'GET',
+				headers: {
+					'x-access-token': jwtToken
+				},
+				success: function (data) {
+					console.log('납부 미완 내역 조회 완료');
+				},
+				error: function (request, status, error) {
+					alert("code:" + request.status + "\n" + "message:" +
+					request.responseText + "\n" +"error:" + error);
+				}
+			})
+		});
+
+		//납부 완료 내역 요청
+		$('#payTrueButton').click(function () {
+			$.ajax({
+				url: 'http://localhost:3000/payment/1',
+				type: 'GET',
+				headers: {
+					'x-access-token': jwtToken
+				},
+				success: function (data) {
+					console.log('납부 완료 내역 조회 완료');
+				},
+				error: function (request, status, error) {
+					alert("code:" + request.status + "\n" + "message:" +
+					request.responseText + "\n" + "error:" + error);
 				}
 			})
 		});

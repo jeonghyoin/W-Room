@@ -3,6 +3,11 @@ var router = express.Router();
 var connection = require('../mysql-db');
 var moment = require('moment');
 
+//jwt token
+var jwt = require('jsonwebtoken'); 
+var tokenKey = "fintech123456789danahkim";
+var auth = require("../lib/auth");
+
 router.get('/bill', function(req, res) {
     res.render('bill');
 });
@@ -32,9 +37,10 @@ router.get('/category/:id', function(req, res) {
 //납부 내역 조회
 //0, 납부 미완 | 1, 납부 완료
 //http://localhost:3000/payment/{flag}
-router.get('/:flag', function(req, res) {
+router.get('/:flag', auth, function(req, res) {
     var flag = req.params.flag;
-    var userId = 5; //임시
+    var userId = req.decoded.userId;
+
     connection.query('SELECT * FROM pay INNER JOIN dutchpayyn ' + 
     'ON pay.payID = dutchpayyn.dutchpayID ' +
     'WHERE dutchpayyn.User_userID = ? AND dutchpayyn.dutchpayYN = ?',
@@ -43,6 +49,8 @@ router.get('/:flag', function(req, res) {
         if (error) {
             throw error;
         } else {
+            //var dueDate = moment(results[0].dueDate).format('YYYY-MM-DD hh:mm');
+            //console.log(results);
             res.render('payment', {items : results});
         }
     });

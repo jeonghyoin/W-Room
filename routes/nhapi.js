@@ -1,6 +1,9 @@
 var express = require('express');
 var request = require('request');
 var moment = require('moment');
+var jwt = require('jsonwebtoken'); // 토큰용 
+var tokenKey = "fintech123456789danahkim"; // 토큰용
+var auth = require("../lib/auth"); // 토큰용
 var connection = require('../server');
 var connection = require('../mysql-db');
 
@@ -10,16 +13,17 @@ router.get('/efpayment', function (req, res) {
     res.render('test');
 });
 
-router.post('/efpayment', function (req, res) {
+router.post('/efpayment', auth, function (req, res) {
+    var userId = req.decoded.userId;
     var today = moment().format("YYYYMMDD");
     var num = Math.floor(Math.random() * 9000) + 1000;
 
     console.log(today);
 
     // sql 로그인 id 수정
-    var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5)';
+    var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = ?)';
 
-    connection.query(rMember,
+    connection.query(rMember,[userId],
         function (error, rMemberResults, fields) {
             if (error) throw error;
 
@@ -57,16 +61,16 @@ router.post('/efpayment', function (req, res) {
 
                 // sql 로그인 id 수정
                 // 테이블 pay 전기세 삽입
-                var sql1 = 'SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5';
+                var sql1 = 'SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = ?';
                 var sql2 = 'INSERT INTO wroom.pay(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
                     ' VALUES (?,?,?,?,?,?,?,?)';
 
                 // sql 로그인 id 수정
                 // 테이블 dutchpayyn 룸메이트 개별 전기세 삽입
-                var sql3 = 'SELECT User_userID FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = 5)';
+                var sql3 = 'SELECT User_userID FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?)';
                 var sql4 = 'INSERT INTO wroom.dutchpayyn(payID, User_userID) VALUES (?,?)';
 
-                connection.query(sql1, [], function (error, sql1Result, fields) {
+                connection.query(sql1, [userId], function (error, sql1Result, fields) {
                     console.log("this.sql : " + this.sql);
                     console.log("sql1 :" + sql1Result[0].RoomShare_roomID);
 
@@ -78,7 +82,7 @@ router.post('/efpayment', function (req, res) {
                                 if (error) throw error;
                                 else {
                                     var insertId = sql2Results.insertId;
-                                    connection.query(sql3, function (error, sql3Result) {
+                                    connection.query(sql3,[userId], function (error, sql3Result) {
                                         if (error) {
                                             throw error;
                                         } else {
