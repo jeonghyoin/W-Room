@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
-
 var connection = require('../mysql-db');
+
+router.get('/bill', function(req, res) {
+    res.render('bill');
+  });
 
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
@@ -84,10 +87,6 @@ router.post('/', function(req, res) {
 //http://localhost:3000/payment/{id}
 router.post('/:id', function(req, res) {
 
-});
-
-router.get('/bill', function(req, res) {
-    res.render('bill');
 });
 
 module.exports = router;
