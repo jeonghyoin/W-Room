@@ -160,10 +160,10 @@
 					</div>
 				</section>
 
-				<section class="container o-hidden">
+				<section  class="container o-hidden">
 					<h4 class="title-main"></h4>
 					<div class="swiper-recievers">
-						<div class="swiper-wrapper">
+						<div id ="#nameCard" class="swiper-wrapper">
 
 							<div class="swiper-slide">
 								<div class="money-receiver">
@@ -345,7 +345,7 @@
 
 	<script>
 		var jwtToken = sessionStorage.getItem('jwtToken');
-
+		displayGroup();
 		function makeComma(str) {
 			var str = String(str);
 			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -405,8 +405,26 @@
 				}
 			})
 		});
-	</script>
 
+		//룸쉐어 멤버 리스트 보여주기
+        function displayGroup(){
+			$.ajax({
+				url: 'http://localhost:3000/main',
+				type: 'POST',
+				headers: {
+					'x-access-token': jwtToken
+				},
+				success: function (data) {
+					for(var i=0; i < data.res_list.length; i++){
+                        $("#nameCard").append()
+					}
+				}
+			})
+		}
+	</script>
+	<script>
+	
+	</script>
 
 </body>
 
