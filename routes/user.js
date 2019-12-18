@@ -1,7 +1,12 @@
 var express = require('express');
-var request = require('request');
 var router = express.Router();
+var request = require('request');
+
 var connection = require('../mysql-db');
+
+var jwt = require('jsonwebtoken'); // 토큰용 
+var tokenKey = "fintech123456789danahkim"; // 토큰용
+var auth = require("../lib/auth"); // 토큰용
 
 var currentUserID; // 현재 유저 저장용(kakaoID 활용)
 
@@ -11,6 +16,7 @@ router.get('/', function(req, res) {
 
 // 로그인 페이지
 router.get("/login", function (req, res) {
+    console.log("rksl?");
     res.render('login');
 });
 
@@ -41,8 +47,24 @@ router.post("/kakao", function (req, res) {
             })
             res.json(0);
         } else { // 사용자가 있다면 1
-            console.log('사용자가 이미 존재합니다. 메인 화면으로 이동')
-            res.json(1);
+            jwt.sign( // 토큰 만드는 곳 같은뎁!
+                {
+                    userName : results[0].name,
+                    userId : results[0].userID,
+                    userEmail : results[0].email
+                },
+                tokenKey,
+                {
+                    expiresIn : '10d', // 토큰 유효기간 1d 일, 1h 시, 15m
+                    issuer : 'wroom.admin',
+                    subject : 'user.login.info'
+                },
+                function(err, token){
+                    console.log('사용자가 이미 존재합니다. 메인 화면으로 이동')
+                    res.json(token) // 우리 서비스에 로그인하기 위한 토큰
+                    // 액세스 토큰은 오픈 API를 이용하기 위한 토큰!
+                }
+            )
         } 
     });
 });
@@ -75,7 +97,7 @@ router.get("/authResult", function (req, res) {
         if (error) throw error;
         console.log(results);       
     });
-    res.end("현재 창을 닫고 회원가입을 계속 해주세요.");
+    res.send("현재 창을 닫고 회원가입을 계속 해주세요.");
   }) // 토큰과 ID 값 받아와서 DB에 저장까지 완료
 });
 
@@ -104,7 +126,24 @@ router.post("/login", function(req, res){
         }
         else {
           if (results[0].password == userPassword) { // 비밀번호 체크
-                  console.log('로그인 성공');
+            jwt.sign( // 토큰 만드는 곳 같은뎁!
+                {
+                    userName : results[0].name,
+                    userId : results[0].userID,
+                    userEmail : results[0].email
+                },
+                tokenKey,
+                {
+                    expiresIn : '10d', // 토큰 유효기간 1d 일, 1h 시, 15m
+                    issuer : 'wroom.admin',
+                    subject : 'user.login.info'
+                },
+                function(err, token){
+                    console.log('로그인 성공', token)
+                    res.json(token) // 우리 서비스에 로그인하기 위한 토큰
+                    // 액세스 토큰은 오픈 API를 이용하기 위한 토큰!
+                }
+            )
             }
           else {
             console.log('이메일 혹은 비밀번호가 맞지 않습니다.');
