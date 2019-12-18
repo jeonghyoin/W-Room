@@ -43,16 +43,25 @@ router.post('/', function(req, res){
 router.post('/add', function(req, res){
     // console.log(req.body.findEmail);
      var addEmail = req.body.findEmail;
+  //   var userToken = sessionStorage.getItem('jwtToken')
      var findname;
      var findimg;
      var resultObject;
+     var userRoomID;
     connection.query('SELECT * FROM user WHERE roomID=?',
      [addEmail], function (error, results, fields) {
         if (error) throw error;
         if(result[0].roomID!='NULL'){console.log("이미 다른 룸쉐어 중");
     }else{
-       // connection.query('INSERT INTO user.roomID WHERE email=?',
-    // [addEmail], function (error, results, fields) {
+        connection.query('SELECT * FROM user WHERE email=?',
+        [userToken], function (error, results, fields) {
+            if (error) throw error;
+            else{
+                userRoomID = results[0].roomID;
+            }
+        },
+        connection.query('INSERT INTO user.roomID SELECT roomID FROM user WHERE email=?',
+        [addEmail], function (error, results, fields) {
 
     }
     
