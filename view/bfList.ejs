@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<title>WROOM</title>
+
+	<!-- Google font file. If you want you can change. -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
+
+	<!-- Fontawesome font file css -->
+	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
+
+	<!-- Template global css file. Requared all pages -->
+	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<div class="nav-menu">
+			<nav class="menu">
+
+				<!-- Menu navigation start -->
+				<div class="nav-container">
+					<div>
+						<table>
+							<tr><th colspan = "2"></th></tr>
+							<tr>
+								<th rowspan="4">
+									<a href = "#"><img src="/img/content/profile.png" width = "80" alt=""></a>
+									<td> </td></th>
+								</tr>
+								<tr><td> </td></tr>
+								<tr>
+								<td><a href = "#"><h3 style="margin-right: 10px;">이름<h3></a></td>
+							</tr>
+							<tr>
+								<td><h5 style ="margin-top: -30px;">그룹이름</h5></td>
+								</tr>
+							</table>
+					</div>
+					<ul class="main-menu">
+						<!--블록 추가해서 프로필 넣기-->
+
+						<li class="">
+							<a href="#"><img src="/img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
+						</li>
+						<li class="">
+							<a href="#"><img src="/img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong> </a>
+						</li>
+						<li class="">
+							<a href="#"><img src="/img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
+						</li>
+						<li class="">
+							<a href="#"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
+							<!--
+							<ul>
+								<li><a href="login.html" data-loader="show">Login</a></li>
+								<li><a href="signup.html" data-loader="show">Register</a></li>
+								<li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
+							</ul>-->
+						</li>
+
+								<li><a href="#" data-loader="show">User Profile</a></li>
+								<li><a href="#" data-loader="show">Search Results</a></li>
+								<li><a href="#" data-loader="show">Contact</a></li>
+								<li class="active"><a href="#" data-loader="show">Blank Page</a></li>
+					</ul>
+				</div>
+			<!-- Menu navigation end -->
+			</nav>
+		</div>
+		<div class="wrapper-inline">
+			<!-- Header area start -->
+			<header> <!-- extra class no-background -->
+				<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
+				<h1 class="page-title">결제할 청구서</h1>
+				<div class="navi-menu-button">
+					<em></em>
+					<em></em>
+					<em></em>
+				</div>
+			</header>
+			<!-- Header area end -->
+			<!-- Page content start -->
+			<main>
+				<div class="container">
+					<div id="balanceText"></div>
+					<div id="transactionList"></div>
+				</div>
+
+				<div class="form-divider"></div>
+
+				<footer>
+					<div class="container">
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-google"></i></a></li>
+							<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+						</ul>
+						<p>Copyright © All Right Reserved</p>
+					</div>
+				</footer>
+
+			</main>
+			<!-- Page content end -->
+		</div>
+	</div>
+
+
+	<!--Page loader DOM Elements. Requared all pages-->
+	<div class="sweet-loader">
+		<div class="box">
+		  	<div class="circle1"></div>
+		  	<div class="circle2"></div>
+		  	<div class="circle3"></div>
+		</div>
+	</div>
+	<!-- JQuery library file. requared all pages -->
+	<script src="/js/jquery-3.2.1.min.js"></script>
+	<!-- Template global script file. requared all pages -->
+	<script src="/js/global.script.js"></script>
+	<script>
+		/*var Token = sessionStorage.getItem('Token')
+        fetchUserData();
+        function fetchUserData(){
+            $.ajax({
+                url:'http://localhost:3000/userData',
+                type : 'POST',
+                headers : {
+                    'x-access-token' : jwtToken
+                },
+                success:function(data){
+                    console.log(data.res_list);
+                    for(var i=0; i < data.res_list.length; i++){
+                        $("#cardList").append(
+                            '<div class="balance-card mb-15">'+
+						        '<div class="d-flex align-items-center">'+
+	                        '<div class="d-flex flex-grow">'+
+                                    '<div class="mr-auto">' +
+                                            '<h1 class="b-val">'+data.res_list[i].account_alias+'</h1>'+
+                                        '<p class="g-text mb-10">'+data.res_list[i].fintech_use_num+'</p>'+
+                                            '</div>'+
+                                    '<div class="ml-auto align-self-end">'+
+										'<a href="/balance?fin_use_num='+data.res_list[i].fintech_use_num+'">잔액조회</a>'+
+											'<a href="/qrcode?fin_use_num='+data.res_list[i].fintech_use_num+'">QR생성</a>'+
+                                            '</div>'+
+                                            '</div>'+
+                                            '</div>'+
+                                    '</div>'
+                        )
+                    }    
+                }
+            })
+        }*/
+	</script>
+
+
+</body>
+
+
+</html>

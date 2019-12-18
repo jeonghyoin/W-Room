@@ -19,7 +19,7 @@
             type: 'POST',
             success: function (data) {
                 console.log(data);
-                $("#value").text(data.Tram);
+                $("#value").text(data.price);
             },
             error: function (request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
