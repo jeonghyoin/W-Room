@@ -5,15 +5,8 @@ var router = express.Router();
 var jwt = require('jsonwebtoken'); // 토큰용 
 var tokenKey = "fintech123456789danahkim"; // 토큰용
 var auth = require("../lib/auth"); // 토큰용
-
+var connection = require('../mysql-db');
 var mysql = require('mysql');
-var connection = mysql.createConnection({
-   host     : '192.168.30.54',
-    user     : 'dana',
-    password : 'dana1234!',
-    database : 'wroom'
-});
-connection.connect();
 
 router.get('/', function(req, res) {
     res.render('invite');
