@@ -33,17 +33,19 @@
         <!-- SEARCH START -->
         <div class="search-result-header fix-searchbar"> <!-- or without .fix-searchbar -->
             <form>
-                <input type="text" name="q" class="form-element" placeholder="친구 이메일 입력..">
-                <button class="search-result-btn"><i class="fa fa-arrow-right"></i></button>
+                <input type="email" id="searchEmail" name="q" class="form-element" placeholder="친구 이메일 입력..">
+				<button type="button" id="searchBtn" class="search-result-btn"><i class="fa fa-arrow-right"></i></button><!--버튼 이미지 바꾸기-->
             </form>
         </div>
         <!-- SEARCH END -->
 </section>
-    
+<section class="container" id="nameCard" style="margin-top: 200px;">
+	<div></div>
+</section>
 
 						<div class="form-divider"></div>
 						<div class="form-row">
-							<a href="#" class="button circle block orange" id="getCheckedButton">친구추가하기</a>
+							<a id="addSearch" class="button circle block orange" id="getCheckedButton">친구추가하기</a>
 						</div>
 						<div class="form-divider"></div>
 
@@ -72,5 +74,45 @@
 	<script src="js/global.script.js"></script>
 	
 </body>
+<script>
+	$('#searchBtn').click(function(){
+        var email = $('#searchEmail').val();
+
+        $.ajax({
+          url:'http://localhost:3000/invite',
+          type : 'POST',
+              data : {
+				findEmail : email
+   		       },
+          success:function(data){
+			console.log(data);
+			  //if(data>0){
+				  $("#nameCard").append(
+					'<div class="d-flex align-items-center justify-content-between">'+
+	                          '<div class="d-flex align-items-center">'+
+	                            '<img class="img-xs" src="'+data[0].image+'">'+
+	                    	'</div>'+
+	                          '<div>'+
+	                            '<h4>'+data[0].name+'</h4>'+
+	                          '</div>'+
+							'</div>'
+				  	)
+			 // }else{
+			//	 alert("해당 사용자가 없습니다.");
+			}
+
+			  });
+			});
+
+	$('#addSearch').click(function(){
+		$.ajax({
+         	url:'http://localhost:3000/invite/add',
+         	type : 'POST',
+              data : {
+				addEmail : email
+				  }
+				});
+});
+</script>
 
 </html>
