@@ -24,12 +24,13 @@ router.post('/efpayment', function (req, res) {
 
     console.log(today);
 
-    connection.query('SELECT COUNT(RoomShare_roomID) as share' +
-        ' FROM wroom.roomshare_has_user' +
-        ' WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5)',
-        function (error, results, fields) {
+    var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5)';
 
-            console.log("룸메이트 수: " + results[0].share);
+    connection.query(rMember,
+        function (error, rMemberResults, fields) {
+            if (error) throw error;
+
+            console.log("룸메이트 수: " + rMemberResults[0].share);
 
             var options = {
                 method: 'POST',
@@ -53,17 +54,33 @@ router.post('/efpayment', function (req, res) {
                 },
                 json: true
             };
+
             request(options, function (error, response, body) {
                 var resultObject = body;
+                resultObject.price = body.Tram / rMemberResults[0].share;
+                console.log(" >> resultObject.price : " + resultObject.price);
                 var payCategory = 2;
                 var dueDate = moment().add("1", "M").format("YYYYMMDD");
-                connection.query('INSERT INTO wroom.pay(payCategory, payAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
-                    ' VALUES (' + payCategory + ',' + resultObject.Tram + ', null , ' + "\'" + dueDate + "\'" + ', null, 1, 1)',
-                    function (error, results, fields) {
-                        console.log("this.sql : " + this.sql);
-                        if (error) throw error;
-                    });
-                res.json(resultObject);
+                var sql1 = 'SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5';
+                var sql2 = 'INSERT INTO wroom.pay(payCategory, payAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
+                    ' VALUES (?,?,?,?,?,?,?)';
+                // ' + payCategory + ',' + resultObject.Tram + ', null , ' + "\'" + resultObject.PbtxPayExdt + "\'" + ', null, 1, ' + results.RoomShare_roomID + '
+                
+                connection.query(sql1, [], function (error, sql1Result, fields) {
+                    console.log("this.sql : " + this.sql);
+                    console.log("sql1 :" + sql1Result[0].RoomShare_roomID);
+                    
+                    if (error) throw error;
+                    else {
+                        connection.query(sql2, [payCategory, resultObject.Tram, null, resultObject.PbtxPayExdt, null, 1, sql1Result[0].RoomShare_roomID], function (error, results, fields) {
+                            console.log("this.sql : " + this.sql);
+                            if (error) throw error;
+                            else {
+                                res.json(resultObject);
+                            }
+                        });
+                    }
+                });
             });
         });
 });

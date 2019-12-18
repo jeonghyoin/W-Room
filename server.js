@@ -1,34 +1,17 @@
-//database
-//database
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'kisadana',
-  // host     : '192.168.30.54',
-  // user     : 'dana',
-  // password : 'dana1234!',
-  database : 'wroom'
-});
-connection.connect();
-
-
 //express.js
 var express = require("express");
 var app = express();
 
 var port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
 
 //body parser
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-//body parser
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+//database
+var mysql = require('./mysql-db');
+mysql.connect();
 
 //라우터 설정
 var notice = require('./routes/notice');
@@ -44,7 +27,6 @@ app.use('/transfer', transfer);
 app.use('/payment', payment);
 app.use('/nh', nhapi);
 app.use('/main', main);
-
 
 //템플렛 추가
 app.set('views', __dirname + '/view');

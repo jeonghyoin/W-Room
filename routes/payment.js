@@ -1,15 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-//database
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'wroom'
-});
-connection.connect();
+var connection = require('../mysql-db');
 
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
@@ -32,7 +24,9 @@ router.get('/category/:id', function(req, res) {
 router.get('/:flag', function(req, res) {
     var flag = req.params.flag;
     var userId = 5; //임시
-    connection.query('SELECT * FROM dutchpayyn WHERE User_userID = ? AND dutchpayYN = ?',
+    connection.query('SELECT * FROM pay INNER JOIN dutchpayyn ' + 
+    'ON pay.payID = dutchpayyn.dutchpayID ' +
+    'WHERE dutchpayyn.User_userID = ? AND dutchpayyn.dutchpayYN = ?',
     [userId, flag],
     function (error, results) {
         if (error) {
