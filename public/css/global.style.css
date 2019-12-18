@@ -2981,6 +2981,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
 	margin: 15px 0 0;
 	color: #fff
 }
+
+.add-member{
+	position: relative;
+    border: 1px solid #eee;
+    background: #fff;
+	border-radius: 10px;
+	margin-left: 30px;
+    margin-bottom: 0px;
+    padding: 15px 5px;
+    width: 94%;
+    text-align: center;
+}
+
+.add-member img{
+	border-radius: 20%;
+    padding: 5px;
+	max-width: 100px;
+    border: 1px solid #00b1f2;
+}
+
+.add-member h4{
+	font-size: 15px;
+	margin: 15px 0 0;
+}
+
 .money-receiver{
 	position: relative;
     border: 1px solid #eee;
