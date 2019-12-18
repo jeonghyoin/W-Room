@@ -29,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="plugins/turbo-slider/turbo.css">
 
 	<style>
-	
+
 	</style>
 
 </head>
@@ -291,15 +291,12 @@
 									<div class="ml-10">
 										<h4 class="coin-name">전기세</h4>
 										<small class="text-muted">08-24 <span class="ml-10">20.04PM</span></small>
-										<div style="display: inline; position: absolute;">
-											<img id="refreshBtn" src="img/content/icons/new.png" alt="새로고침"
-												style="position: relative; left: 500px; bottom: 15px; width: 30px; opacity: 50%;">
-										</div>
 									</div>
 								</div>
+								<img id="refreshBtn" src="img/content/icons/new.png" alt="새로고침">
 								<div>
-									<small class="d-block mb-0 txt-green"></small>
-									<small id="ePayment" class="text-muted d-block">12</small>
+									<small id="epShare" class="d-block mb-0 txt-green"></small>
+									<small id="ePTotal" class="text-muted d-block"></small>
 								</div>
 							</div>
 						</li>
@@ -362,17 +359,19 @@
 	<script src="js/global.script.js"></script>
 
 	<script>
+		function makeComma(str) {
+			var str = String(str);
+			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		}
+
 		$('#refreshBtn').click(function () {
-			function makeComma(str) {
-				var str = String(str);
-				return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-			}
 			$.ajax({
 				url: 'http://localhost:3000/nh/efpayment',
 				type: 'POST',
 				success: function (data) {
 					console.log("data.price :" + data.price);
-					$("#ePayment").text(makeComma(data.price) + " 원");
+					$("#epShare").text(makeComma(data.price) + " 원");
+					$("#ePTotal").text(makeComma(data.Tram) + " 원");
 				},
 				error: function (request, status, error) {
 					alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
