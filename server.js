@@ -2,9 +2,12 @@
 //database
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : '192.168.30.54',
-  user     : 'dana',
-  password : 'dana1234!',
+  host     : 'localhost',
+  user     : 'root',
+  password : 'kisadana',
+  // host     : '192.168.30.54',
+  // user     : 'dana',
+  // password : 'dana1234!',
   database : 'wroom'
 });
 connection.connect();
@@ -16,6 +19,10 @@ var app = express();
 
 var port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+//body parser
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
