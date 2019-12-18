@@ -2,15 +2,7 @@ var express = require('express');
 var request = require('request');
 var moment = require('moment');
 var connection = require('../server');
-
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: '192.168.30.54',
-    user: 'dana',
-    password: 'dana1234!',
-    database: 'wroom'
-});
-connection.connect();
+var connection = require('../mysql-db');
 
 var router = express.Router();
 
@@ -24,12 +16,14 @@ router.post('/efpayment', function (req, res) {
 
     console.log(today);
 
-    connection.query('SELECT COUNT(RoomShare_roomID) as share' +
-        ' FROM wroom.roomshare_has_user' +
-        ' WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5)',
-        function (error, results, fields) {
+    // sql 로그인 id 수정
+    var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5)';
 
-            console.log("룸메이트 수: " + results[0].share);
+    connection.query(rMember,
+        function (error, rMemberResults, fields) {
+            if (error) throw error;
+
+            console.log("룸메이트 수: " + rMemberResults[0].share);
 
             var options = {
                 method: 'POST',
@@ -53,17 +47,60 @@ router.post('/efpayment', function (req, res) {
                 },
                 json: true
             };
+
             request(options, function (error, response, body) {
                 var resultObject = body;
+                resultObject.price = body.Tram / rMemberResults[0].share;
+                console.log(" >> resultObject.price : " + resultObject.price);
                 var payCategory = 2;
                 var dueDate = moment().add("1", "M").format("YYYYMMDD");
-                connection.query('INSERT INTO wroom.pay(payCategory, payAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
-                    ' VALUES (' + payCategory + ',' + resultObject.Tram + ', null , ' + "\'" + dueDate + "\'" + ', null, 1, 1)',
-                    function (error, results, fields) {
-                        console.log("this.sql : " + this.sql);
-                        if (error) throw error;
-                    });
-                res.json(resultObject);
+
+                // sql 로그인 id 수정
+                // 테이블 pay 전기세 삽입
+                var sql1 = 'SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = 5';
+                var sql2 = 'INSERT INTO wroom.pay(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID)' +
+                    ' VALUES (?,?,?,?,?,?,?,?)';
+
+                // sql 로그인 id 수정
+                // 테이블 dutchpayyn 룸메이트 개별 전기세 삽입
+                var sql3 = 'SELECT User_userID FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = 5)';
+                var sql4 = 'INSERT INTO wroom.dutchpayyn(payID, User_userID) VALUES (?,?)';
+
+                connection.query(sql1, [], function (error, sql1Result, fields) {
+                    console.log("this.sql : " + this.sql);
+                    console.log("sql1 :" + sql1Result[0].RoomShare_roomID);
+
+                    if (error) throw error;
+                    else {
+                        connection.query(sql2, [payCategory, resultObject.Tram, resultObject.price, null, resultObject.PbtxPayExdt, null, 0, sql1Result[0].RoomShare_roomID],
+                            function (error, sql2Results, fields) {
+                                console.log("this.sql : " + this.sql);
+                                if (error) throw error;
+                                else {
+                                    var insertId = sql2Results.insertId;
+                                    connection.query(sql3, function (error, sql3Result) {
+                                        if (error) {
+                                            throw error;
+                                        } else {
+                                            Object.keys(sql3Result).forEach(function (key) {
+                                                var row = sql3Result[key];
+                                                connection.query(sql4, [insertId, row.User_userID],
+                                                    function (error, results) {
+                                                        if (error) {
+                                                            throw error;
+                                                        } else {
+                                                            console.log('전기세 dutchpayyn 삽입 완료');
+                                                        }
+                                                    });
+                                            });
+                                        }
+                                    });
+                                    res.json(resultObject);
+                                }
+                            });
+
+                    }
+                });
             });
         });
 });
