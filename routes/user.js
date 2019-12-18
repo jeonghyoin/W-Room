@@ -122,7 +122,7 @@ router.post("/login", function(req, res){
   connection.query('SELECT * FROM user WHERE email = ?',
     [userEmail], function (error, results, fields) {
         if (results.length < 1) {
-            console.log('이메일 혹은 비밀번호가 맞지 않습니다.')
+            res.json(0);
         }
         else {
           if (results[0].password == userPassword) { // 비밀번호 체크
@@ -146,7 +146,7 @@ router.post("/login", function(req, res){
             )
             }
           else {
-            console.log('이메일 혹은 비밀번호가 맞지 않습니다.');
+            res.json(0);
           }
         };
     });  
