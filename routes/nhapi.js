@@ -2,15 +2,7 @@ var express = require('express');
 var request = require('request');
 var moment = require('moment');
 var connection = require('../server');
-
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: '192.168.30.54',
-    user: 'dana',
-    password: 'dana1234!',
-    database: 'wroom'
-});
-connection.connect();
+var connection = require('../mysql-db');
 
 var router = express.Router();
 
