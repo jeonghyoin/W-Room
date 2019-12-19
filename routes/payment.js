@@ -9,12 +9,11 @@ var tokenKey = "fintech123456789danahkim";
 var auth = require("../lib/auth");
 
 router.get('/bill', function(req, res) {
-    console.log(req.query);
+    console.log(req.query.dutchpayID);
     res.render('bill', {
         "dutchpayID" : req.query.dutchpayID,
         "totalAmount" : req.query.totalAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
         "payAmount" : req.query.payAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
-        "dutchpayID" : req.query.dutchpayID,
         "categoryName" : req.query.categoryName,
         "payDate" : req.query.payDate
     });
