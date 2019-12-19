@@ -166,85 +166,42 @@
 
 				</section>
 
-
 				<section class="container">
 					<h4 class="title-main">그룹 송금 현황</h4>
-					<ul class="transaction-list list-unstyled">
+					<ul id="groupList" class="transaction-list list-unstyled">
+						<!-- 그룹 송금 현황 붙여주는 곳! -->
 						<li>
 							<div class="d-flex align-items-center justify-content-between">
 	                          <div class="d-flex align-items-center">
-	                            <img class="img-xs" src="/img/content/coin1.png" alt="coin image">
+	                            <img id="checked" class="img-xs" src="/img/content/check.png" alt="coin image">
 	                            <div class="ml-10">
-																<!--송금을 하면 체크 이미지가 생김-->
-	                              <h4 class="coin-name">김이름</h4><img src="/img/content/check.png" width="15">
-	                              <small class="text-muted">08-24 <span class="ml-10">20.04PM</span></small>
+																						<!--송금을 하면 체크 이미지가 생김-->
+	                              <h4 id="username3" class="coin-name">윤정인</h4>
+	                              <small id="payedData3" class="text-muted">12-19</small>
 	                            </div>
 	                          </div>
 	                          <div>
-
-	                            <small class="text-muted d-block">$2,748.94</small>
+	                            <small id="payedAmount3" class="text-muted d-block">￦ 300,000</small>
 	                          </div>
 	                        </div>
 						</li>
 						<li>
 							<div class="d-flex align-items-center justify-content-between">
 	                          <div class="d-flex align-items-center">
-	                            <img class="img-xs" src="/img/content/coin2.png" alt="coin image">
+	                            <img id="uncheckedD" class="img-xs" src="/img/content/uncheck.png" alt="coin image">
 	                            <div class="ml-10">
-	                              <h4 class="coin-name">Ethereum</h4>
-	                              <small class="text-muted">08-24 <span class="ml-10">20.04PM</span></small>
+																						<!--송금을 하면 체크 이미지가 생김-->
+	                              <h4 id="username" class="coin-name">김단아</h4>
+	                              <small id="payedData" class="text-muted">미송금</small>
 	                            </div>
 	                          </div>
 	                          <div>
-	                            <small class="d-block mb-0 txt-green">+1.84993</small>
-	                            <small class="text-muted d-block">$3,748.94</small>
-	                          </div>
-	                        </div>
-						</li>
-						<li>
-							<div class="d-flex align-items-center justify-content-between">
-	                          <div class="d-flex align-items-center">
-	                            <img class="img-xs" src="/img/content/coin3.png" alt="coin image">
-	                            <div class="ml-10">
-	                              <h4 class="coin-name">Dashcoin</h4>
-	                              <small class="text-muted">08-24 <span class="ml-10">20.04PM</span></small>
-	                            </div>
-	                          </div>
-	                          <div>
-	                            <small class="d-block mb-0 txt-red">-23.84523</small>
-	                            <small class="text-muted d-block">$1,493.03</small>
-	                          </div>
-	                        </div>
-						</li>
-						<li>
-							<div class="d-flex align-items-center justify-content-between">
-	                          <div class="d-flex align-items-center">
-	                            <img class="img-xs" src="/img/content/coin4.png" alt="coin image">
-	                            <div class="ml-10">
-	                              <h4 class="coin-name">Ripple</h4>
-	                              <small class="text-muted">08-24 <span class="ml-10">20.04PM</span></small>
-	                            </div>
-	                          </div>
-	                          <div>
-	                            <small class="d-block mb-0 txt-green">+500.347</small>
-	                            <small class="text-muted d-block">$239.94</small>
+	                            <small id="payedAmount" class="text-muted d-block">￦ 0</small>
 	                          </div>
 	                        </div>
 						</li>
 					</ul>
 					<hr/>
-						<div class="d-flex align-items-center justify-content-between">
-						  <div class="d-flex align-items-center">
-							<img class="img-xs" src="/img/content/coin4.png" alt="coin image">
-							<div class="ml-10">
-							  <h4 class="coin-name">총액</h4>
-							  <small class="text-muted">08-24 납부 예정</small>
-							</div>
-						  </div>
-						  <div>
-							<h4 class="text-muted d-block">$239.94</h4>
-						  </div>
-						</div>
 				</section>
 
 				<footer>
@@ -254,6 +211,7 @@
 							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 							<li><a href="#"><i class="fa fa-google"></i></a></li>
 							<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+							<p id="dutchpayID" val="<%=dutchpayID%>"></p>
 						</ul>
 						<p>Copyright © All Right Reserved</p>
 					</div>
@@ -298,6 +256,9 @@
 	<script src="/js/global.script.js"></script>
 
 	<script>
+
+		var dutchpayID = $('#dutchpayID').val();
+		console.log(dutchpayID);
 		history.replaceState({}, null, location.pathname);
 
 		var jwtToken = sessionStorage.getItem('jwtToken');
@@ -318,10 +279,32 @@
 			  console.log("토큰 받아오기 완료");
 			}
 		});
+
+// 		$.ajax({ // 그룹 리스트 받아오는 곳
+// 			url:'http://localhost:3000/transfer/groupList',
+// 			type : 'POST',
+// 			headers : {
+// 			  'x-access-token' : jwtToken
+// 			},
+// 			data : {
+// 				dutchpayID : dutchpayID
+// 			 },
+// 			success:function(data){
+// 			  console.log(data);
+// 			  for(var i=0; i < data.length; i++){
+// 				  $('#groupList').append(
+// 					'<li> <div class="d-flex align-items-center justify-content-between"> <div class="d-flex align-items-center"> <div class="ml-10">' +
+// '<h4 id="username'+ i +'" class="coin-name">'+data[i].+'</h4>' +
+// '<small id="payedData'+i+'" class="text-muted">'+08-24+'</small> </div> </div> <div>'+
+// 	                            '<small id="payedAmount'+i+'" class="text-muted d-block">￦ '+0+'</small> </div> </div></li>'
+
+// 				  );
+// 			  }
+// 			}
+// 		});
 	}); 
 
 		$('#transferBtn').click(function(){
-			console.log("버튼 눌림");
 			var check, product_name, available_amt;
 			$.ajax({
 				url:'http://localhost:3000/transfer/balance',
@@ -357,6 +340,7 @@
 				async: false,
 			  success:function(data){
 				  if (data == 1){  // 출금이체 완료시 입금이체
+					var payed = false;
 					$.ajax({
 						  url:'http://localhost:3000/transfer/deposit',
 						  type : 'POST',
@@ -369,14 +353,37 @@
 						async: false,
 					  success:function(data){
 						  if (data == 1){
-						  console.log("송금 완료");
-						  document.getElementById('transferNEED').innerHTML = "송금완료된 금액";
-						  document.getElementById('transferBtn').style.display = "none";
+							payed = true;
+						 	console.log("송금 완료");
+						  	document.getElementById('transferNEED').innerHTML = "송금완료된 금액";
+							document.getElementById('transferBtn').style.display = "none";
+							$("#uncheckedD").attr("src", "/img/content/check.png");
+							$("#payedData").text("12-20");
+							$("#payedAmount").text("￦ 300,000");
 						  } else { // 송금이체 미완료시
 							alert("송금 실패! 다시 시도해주세요.");
 						  }
 					  }
+					});
+
+					if (payed) { // 송금이 모두 완료 되었을 때만 더치페이 업데이트!
+						$.ajax({
+						  url:'http://localhost:3000/transfer/payed',
+						  type : 'POST',
+						headers : {
+						  'x-access-token' : jwtToken
+						},
+						  data : {
+							dutchpayID : dutchpayID
+							  },
+						async: false,
+					  success:function(data){
+						  console.log("디비 업데이트 완료쓰!")
+					  }
 					})
+
+					}
+
 				  } else { // 출금이체 미완료시
 					alert("송금 실패! 다시 시도해주세요.");
 				  }
@@ -387,7 +394,7 @@
 		}
 		}
 	)
-		</script>
+	</script>
 </body>
 
 </html>

@@ -170,4 +170,37 @@ router.post('/balance', auth, function(req, res){
     });     
 })
 
+// 송금 완료 후 payYN 1로 바꾸기
+router.post('/payed', auth, function(req, res) {
+  var userId = req.decoded.userId ;
+  var dutchpayID = req.body.dutchpayID ;
+
+  connection.query('UPDATE dutchpayyn SET ' +
+    'dutchpayYN = ?, payDate = now() WHERE (dutchpayID = ? and User_userID = ?)', [1, dutchpayID, userId], function (error, results, fields) {
+        if (error) throw error;
+        console.log(results);
+        res.json(1);
+    });   
+
+});
+
+// 그룹 송금 내역 인자 받아오기
+router.post('/groupList', auth, function(req, res) {
+  var userId = req.decoded.userId ;
+  var dutchpayID = req.body.dutchpayID ;
+  console.log(userId, dutchpayID);
+
+  connection.query('SELECT payID FROM dutchpayyn WHERE dutchpayID = ? and User_userID = ?', [10, 5], function (error, results, fields) {
+        if (error) throw error;
+
+        connection.query('SELECT * FROM dutchpayyn WHERE (dutchpayID = ? and PayID = ?)', [10, results[0].payID], function (error, results, fields) {
+          if (error) throw error;
+          console.log("results");
+          console.log(results);
+          res.send(results);
+      });
+    });   
+
+});
+
 module.exports = router;
