@@ -146,7 +146,6 @@
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
 				success: function (authObj) {
-					alert(JSON.stringify(authObj));
 					// console.log(JSON.stringify(authObj));
 					var token = JSON.stringify(authObj.access_token);
 					// console.log(token);
