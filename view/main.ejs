@@ -143,11 +143,12 @@
 							</div>
 							<div class="content-row">
 								<div class="content-col">
-									<img src="img/content/billtopay.png" class="mb-5" id="payFalseButton">
+									<a href="/payment/0"><img src="img/content/pay.png" class="mb-5" alt=""></a>
+									<img src="img/content/billtopay.png" class="mb-5" id="payFalse">
 									<span>납부 예정 청구서</span>
 								</div>
 								<div class="content-col">
-									<img src="img/content/payy.png" class="mb-5" id="payTrueButton">
+									<a href="/payment/1"><img src="img/content/pay.png" class="mb-5" alt=""></a>
 									<span>납부한 청구서</span>
 								</div>
 
@@ -403,48 +404,6 @@
 			})
 		});
 
-		//납부 미완 내역 요청
-		$('#payFalseButton').click(function () {
-			$.ajax({
-				url: 'http://localhost:3000/payment/0',
-				type: 'GET',
-				headers: {
-					'x-access-token': jwtToken
-				},
-				success: function (data) {
-					console.log('납부 미완 내역 조회 완료');
-				},
-				error: function (request, status, error) {
-					alert("code:" + request.status + "\n" + "message:" +
-					request.responseText + "\n" +"error:" + error);
-				}
-			})
-		});
-
-		//납부 완료 내역 요청
-		$('#payTrueButton').click(function () {
-			$.ajax({
-				url: 'http://localhost:3000/payment/1',
-				type: 'GET',
-				headers: {
-					'x-access-token': jwtToken
-				},
-				success: function (data) {
-					console.log('납부 완료 내역 조회 완료');
-				},
-				error: function (request, status, error) {
-					alert("code:" + request.status + "\n" + "message:" +
-					request.responseText + "\n" + "error:" + error);
-				}
-			})
-		});
-
-		
 	</script>
-	<script>
-	
-	</script>
-
 </body>
-
 </html>
