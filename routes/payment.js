@@ -44,21 +44,21 @@ router.get('/category', auth, function(req, res) {
         if (error) {
             throw error;
         } else {
-            if (result.length >= 1){ // 룸 아이디가 있는 사용자만!
-            var roomId = result[0].RoomShare_roomID;
-            connection.query('SELECT * FROM pay INNER JOIN paycategory ON pay.payCategory = paycategory.categoryInt '+
-            'AND pay.RoomShare_roomID = ? '+
-            'WHERE (pay.payCategory, pay.payDate) '+
-            'IN (SELECT pay.payCategory, MAX(pay.payDate) FROM pay GROUP BY pay.payCategory)',
-            [roomId], function (error, results) {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log(results);
-                    res.json(results);
-                }
-            })
-        };     
+            if (result.length >= 1) { // 룸 아이디가 있는 사용자만!
+                var roomId = result[0].RoomShare_roomID;
+                connection.query('SELECT * FROM pay INNER JOIN paycategory ON pay.payCategory = paycategory.categoryInt '+
+                'AND pay.RoomShare_roomID = ? '+
+                'WHERE (pay.payCategory, pay.payDate) '+
+                'IN (SELECT pay.payCategory, MAX(pay.payDate) FROM pay GROUP BY pay.payCategory)',
+                [roomId], function (error, results) {
+                    if (error) {
+                        throw error;
+                    } else {
+                        console.log(results);
+                        res.json(results);
+                    }
+                })
+            };     
         }
     });
 });
@@ -126,6 +126,7 @@ router.post('/', auth, function(req, res) {
                     [data.payCategory, data.payAmount, shareAmount, data.payDate, data.dueDate, data.memo, data.payYN, roomId],
                     function (error, results) {
                         if(error) {
+                            console.log("!!!!!!!!!!!");
                             throw error;
                         } else {
                             var insertId = results.insertId;
@@ -146,9 +147,11 @@ router.post('/', auth, function(req, res) {
                                                 throw error;
                                             } else {
                                                 console.log(row.User_userID+' 작업 완료');
+                                               
                                             }
                                         });
                                     });
+                                     res.json(1);
                                 }
                             });
                         }

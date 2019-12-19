@@ -3018,7 +3018,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
 	border-radius: 20%;
     padding: 5px;
 	max-width: 100px;
-    border: 1px solid #00b1f2;
+    border: 1px solid #c5c5c5;
 }
 
 .add-member h4{
@@ -3040,7 +3040,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
 	border-radius: 50%;
     padding: 5px;
     max-width: 50px;
-    border: 1px solid #00b1f2;
+    border: 1px solid #c5c5c5;
 }
 .money-receiver h4{
 	font-size: 15px;

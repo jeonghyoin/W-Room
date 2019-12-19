@@ -37,12 +37,33 @@
       }
 
       #userList {
-         display:table-cell;
-            vertical-align: middle;
+         display: table-cell;
+         vertical-align: middle;
       }
 
       #userIcon {
-         border-radius: 50%;
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
+
+      #profileBox {
+         width: 90px;
+         height: 90px;
+         border-radius: 70%;
+         overflow: hidden;
+      }
+
+      #refreshBtn:hover {
+         cursor: pointer;
+      }
+
+      .eClick:hover {
+         background-color: #E6E6E6;
+      }
+
+      small {
+         text-align: right;
       }
    </style>
 
@@ -54,64 +75,66 @@
       <div class="nav-menu">
          <nav class="menu">
             <!-- nav삽입 -->
-                            <!-- Menu navigation start -->
-                        <div class="nav-container">
-                           <div style="padding-top:20px; padding-left: 25px;">
-                              <table style="margin-bottom: 20px;">
-                                 <tr>
-                                    <th colspan="2"></th>
-                                 </tr>
-                                 <tr>
-                                    <th rowspan="4">
-                                       <a href="profile.html">
-                                          <img id="userIcon" width="80" alt="">
-                                       </a>
-                                    <td> </td>
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                    <td> </td>
-                                 </tr>
-                                 <tr>
-                                    <td><a href="profile.html">
-                                          <h3 id="userName" style="margin-left: 25px;">이름<h3>
-                                       </a></td>
-                                 </tr>
-                                 <tr>
-                                    <td style="padding-left: 25px;">그룹이름</td>
-                                 </tr>
-                              </table>
+            <!-- Menu navigation start -->
+            <div class="nav-container">
+               <div style="padding-top:20px; padding-left: 25px;">
+                  <table style="margin-bottom: 20px;">
+                     <tr>
+                        <th colspan="2"></th>
+                     </tr>
+                     <tr>
+                        <th rowspan="4">
+                           <div id="profileBox">
+                              <a href="#">
+                                 <img id="userIcon" width="80" alt="프로필사진">
+                              </a>
                            </div>
-                           <hr>
-                           <ul class="main-menu">
-                              <!-- 블록 추가해서 프로필 넣기 -->
-            
-                              <li class="">
-                                 <a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
-                              </li>
-                              <li class="">
-                                 <a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
-                                 </a>
-                              </li>
-                              <li class="">
-                                 <a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
-                              </li>
-                              <li class="">
-                                 <a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-                                 <!--
+                        <td> </td>
+                        </th>
+                     </tr>
+                     <tr>
+                        <td> </td>
+                     </tr>
+                     <tr>
+                        <td><a href="profile.html">
+                              <h3 id="userName" style="margin-left: 25px;">이름<h3>
+                           </a></td>
+                     </tr>
+                     <tr>
+                        <td id="groupName" style="padding-left: 30px;">그룹이름</td>
+                     </tr>
+                  </table>
+               </div>
+               <hr>
+               <ul class="main-menu">
+                  <!-- 블록 추가해서 프로필 넣기 -->
+
+                  <li class="">
+                     <a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
+                     <!--
                             <ul>
                               <li><a href="login.html" data-loader="show">Login</a></li>
                               <li><a href="signup.html" data-loader="show">Register</a></li>
                               <li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
                             </ul>-->
-                              </li>
-            
-                              <!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
+                  </li>
+
+                  <!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
                               <li><a href="search-result.html" data-loader="show">Search Results</a></li>
                               <li><a href="contact.html" data-loader="show">Contact</a></li>
                               <li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li> -->
-                           </ul>
-                        </div>
+               </ul>
+            </div>
             <!-- Menu navigation end -->
          </nav>
       </div>
@@ -136,7 +159,7 @@
                   </div>
                </div>
             </div>
-
+            
             <section class="bal-section container">
                <div id="content">
                   <div id="content-body">
@@ -151,22 +174,22 @@
                      <div class="content-row">
                         <div class="content-col">
                            <a href="/payment/0"><img src="img/content/billtopay.png" class="mb-5" alt=""></a>
-                           <span>납부 예정 청구서</span>
+                           <span><b>납부 예정 청구서</b></span>
                         </div>
                         <div class="content-col">
                            <a href="/payment/1"><img src="img/content/payy.png" class="mb-5" alt=""></a>
-                           <span>납부한 청구서</span>
+                           <span><b>납부한 청구서</b></span>
                         </div>
                         <div class="content-col">
                            <a href="/notice"><img src="img/content/pay.png" class="mb-5" alt=""></a>
-                           <span>공지사항</span>
+                           <span><b>공지사항</b></span>
                         </div>
                      </div>
                   </div>
                </div>
             </section>
-
-            <section class="container o-hidden">
+            <h4 class="title-main" style="padding-left: 20px;">전체 구성원</h4>
+            <section class="container o-hidden" style="margin-top: -25px;">
                <h4 class="title-main"></h4>
                <div class="swiper-recievers">
                   <div class="swiper-wrapper">
@@ -252,13 +275,16 @@
 
             <!-- 리스트 띄우기 -->
             <section class="container">
+               
                <h4 class="title-main">당월 청구서</h4>
+               <div style="width:100%; position: absolute;" >
+               <a href="main/paymentAdd"><img style="position: relative; left: 91%; top: -35px;" class="img-xs" width = "25px" src="img/content/plus1.png"></a></div>
                <ul class="transaction-list list-unstyled">
                   <!-- 월세 -->
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/monthfee.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/discount.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">월세</h4>
                               <small id="monDuedate" class="text-muted"></small>
@@ -270,10 +296,10 @@
                         </div>
                      </div>
                   </li>
-                  <li>
-                     <div id="refreshBtn"class="d-flex align-items-center justify-content-between">
+                  <li class="eClick">
+                     <div id="refreshBtn" class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/thunder.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/electricity.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">전기</h4>
                               <small id="epDuedate" class="text-muted"></small>
@@ -289,7 +315,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/water.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/splash.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">수도</h4>
                               <small id="watDuedate" class="text-muted"></small>
@@ -304,7 +330,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/monthfee.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/marketing.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">생활비</h4>
                               <small id="livDuedate" class="text-muted"></small>
@@ -319,7 +345,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/netflix.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/netflix.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">기타</h4>
                               <small id="etcDuedate" class="text-muted"></small>
@@ -375,11 +401,12 @@
                console.log(">>> data : " + data[0].image);
 
                $("#userName").text(data[0].name);
+               $("#groupName").text(data[0].roomID + '번 방');
 
                var userIcon = document.getElementById('userIcon');
 
                if (data[0].image == null) {
-                  userIcon.src = '/img/content/profile.png';
+                  userIcon.src = '/img/content/main/user.png';
                } else {
                   userIcon.src = data[0].image;
                }
@@ -401,11 +428,11 @@
             success: function (data) {
                if (data.length > 0) {
                   for (var i = 0; i < data.length; i++) {
-                     if (!data[i].image) data[i].image = "/img/content/profile.png";
+                     if (!data[i].image) data[i].image = "/img/content/main/user.png";
                      $("#nameCard").append(
                         //'<div class="swiper-slide">'+
-                        '<div id="userList" class="money-receiver">' +
-                        '<img src="' + data[i].image + '" alt="">' +
+                        '<div id="userList" class="money-receiver friendsBox">' +
+                        '<img src="' + data[i].image + '" alt="프로필사진" style="width:52px; height:52px;">' +
                         '<h4>' + data[i].name + '</h4>' +
                         '</div>'
                      )
@@ -438,9 +465,7 @@
                $("#epDueDate").text(data.dueDate);
             },
             error: function (request, status, error) {
-               alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
-                  "error:" + error);
-               // alert('눌렸나?');
+               alert("api 호출 오류!");
             }
          })
       });
