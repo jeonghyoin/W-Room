@@ -174,15 +174,15 @@
                      <div class="content-row">
                         <div class="content-col">
                            <a href="/payment/0"><img src="img/content/billtopay.png" class="mb-5" alt=""></a>
-                           <span>납부 예정 청구서</span>
+                           <span><b>납부 예정 청구서</b></span>
                         </div>
                         <div class="content-col">
                            <a href="/payment/1"><img src="img/content/payy.png" class="mb-5" alt=""></a>
-                           <span>납부한 청구서</span>
+                           <span><b>납부한 청구서</b></span>
                         </div>
                         <div class="content-col">
                            <a href="/notice"><img src="img/content/pay.png" class="mb-5" alt=""></a>
-                           <span>공지사항</span>
+                           <span><b>공지사항</b></span>
                         </div>
                      </div>
                   </div>
@@ -281,7 +281,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/monthfee.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/discount.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">월세</h4>
                               <small id="monDuedate" class="text-muted"></small>
@@ -296,7 +296,7 @@
                   <li class="eClick">
                      <div id="refreshBtn" class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/thunder.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/electricity.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">전기</h4>
                               <small id="epDuedate" class="text-muted"></small>
@@ -312,7 +312,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/water.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/splash.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">수도</h4>
                               <small id="watDuedate" class="text-muted"></small>
@@ -327,7 +327,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/monthfee.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/marketing.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">생활비</h4>
                               <small id="livDuedate" class="text-muted"></small>
@@ -342,7 +342,7 @@
                   <li>
                      <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                           <img class="img-xs" src="img/content/netflix.png" alt="coin image">
+                           <img class="img-xs" src="img/content/main/netflix.png" alt="coin image">
                            <div class="ml-10">
                               <h4 class="coin-name">기타</h4>
                               <small id="etcDuedate" class="text-muted"></small>
@@ -403,7 +403,7 @@
                var userIcon = document.getElementById('userIcon');
 
                if (data[0].image == null) {
-                  userIcon.src = '/img/content/profile.png';
+                  userIcon.src = '/img/content/main/user.png';
                } else {
                   userIcon.src = data[0].image;
                }
@@ -425,7 +425,7 @@
             success: function (data) {
                if (data.length > 0) {
                   for (var i = 0; i < data.length; i++) {
-                     if (!data[i].image) data[i].image = "/img/content/profile.png";
+                     if (!data[i].image) data[i].image = "/img/content/main/user.png";
                      $("#nameCard").append(
                         //'<div class="swiper-slide">'+
                         '<div id="userList" class="money-receiver friendsBox">' +
