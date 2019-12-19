@@ -23,6 +23,7 @@ var nhapi = require('./routes/nhapi');
 var main = require('./routes/main');
 var invite = require('./routes/invite');
 var makeRoom = require('./routes/makeRoom');
+var userImg = require('./routes/userImg');
 
 app.use('/invite', invite);
 app.use('/notice', notice);
@@ -32,6 +33,7 @@ app.use('/payment', payment);
 app.use('/nh', nhapi);
 app.use('/main', main);
 app.use('/makeRoom', makeRoom);
+app.use('/userImg', userImg);
 
 //템플렛 추가
 app.set('views', __dirname + '/view');
