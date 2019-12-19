@@ -45,6 +45,7 @@ router.get('/category', auth, function(req, res) {
         if (error) {
             throw error;
         } else {
+            if (result.length >= 1){ // 룸 아이디가 있는 사용자만!
             var roomId = result[0].RoomShare_roomID;
             connection.query('SELECT * FROM pay INNER JOIN paycategory ON pay.payCategory = paycategory.categoryInt '+
             'AND pay.RoomShare_roomID = ? '+
@@ -57,7 +58,8 @@ router.get('/category', auth, function(req, res) {
                     console.log(results);
                     res.json(results);
                 }
-            });     
+            })
+        };     
         }
     });
 });
