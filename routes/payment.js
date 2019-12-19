@@ -8,10 +8,55 @@ var jwt = require('jsonwebtoken');
 var tokenKey = "fintech123456789danahkim";
 var auth = require("../lib/auth");
 
-
 router.get('/bill', function(req, res) {
-    res.render('bill');
+    console.log(req.query);
+    res.render('bill', {
+        "dutchpayID" : req.query.dutchpayID,
+        "totalAmount" : req.query.totalAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
+        "payAmount" : req.query.payAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
+        "dutchpayID" : req.query.dutchpayID,
+        "categoryName" : req.query.categoryName,
+        "payDate" : req.query.payDate
+    });
 });
+
+// router.post('/bill/:flag', auth, function(req, res) {
+//     var flag = req.params.flag; // 더치페이 아이디
+//     var userId = req.decoded.userId;
+//     console.log(req.body);
+//     // var totalAmount = req.body.totalAmount;
+//     // var payAmount = req.body.payAmount;
+//     // var dutchpayID = req.body.dutchpayID;
+//     // var categoryName = req.body.categoryName;
+//     // var payDate = req.body.payDate;
+
+//     var option = {
+//         method : "GET",
+//         url : "http://localhost:3000/payment/bill",
+//         headers : {
+//           Authorization: 'Bearer ' + TwoLegTtoken
+//         },
+//         data
+//       }
+
+//       request(option, function(error, response, body) {
+//         console.log(body);
+//           var resultObject = body;
+//           if (resultObject.rsp_code == "A0000"){
+//             res.json(1);
+//           } else {
+//             res.json(0);
+//           }
+//       });
+
+//     res.json('bill', {
+//         totalAmount : req.body.totalAmount,
+//         payAmount : req.body.payAmount,
+//         dutchpayID : req.body.dutchpayID,
+//         categoryName : req.body.categoryName,
+//         payDate : req.body.payDate
+//         });
+// });
 
 router.get('/check', function(req, res) {
     res.render('check');
@@ -56,6 +101,7 @@ router.get('/:flag', function(req, res) {
         res.render('beforePayment');
     }
 });
+
 //http://localhost:3000/payment/status/{flag}
 router.get('/status/:flag', auth, function(req, res) {
     var flag = req.params.flag;
@@ -72,7 +118,6 @@ router.get('/status/:flag', auth, function(req, res) {
             //var dueDate = moment(results[0].dueDate).format('YYYY-MM-DD hh:mm');
             //console.log(results);
             res.json(results);
-            
         }
     });
 });

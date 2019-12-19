@@ -28,6 +28,20 @@
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/plugins/turbo-slider/turbo.css">
 
+	<script type="text/javascript">
+		function hidestatus(){
+		window.status='http://localhost:3000/payment/bill';
+		return true;
+		}
+		if (document.layers){
+		document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT);
+		document.onmouseover=hidestatus;
+		document.onmouseout=hidestatus;
+		}
+		</script>
+		
+
+
 </head>
 
 <body>
@@ -112,7 +126,7 @@
 				<!-- Header area start -->
 				<header> <!-- extra class no-background -->
 					<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
-					<h1 class="page-title">월세</h1>
+					<h1 class="page-title"><%=categoryName%></h1>
 					<div class="navi-menu-button">
 						<em></em>
 						<em></em>
@@ -133,14 +147,14 @@
 						<div class="d-flex align-items-center">
 	                        <div class="d-flex flex-grow">
 	                          <div class="mr-auto">
-									<h5 class="w-text"> 19/11/16 </h5></br></br>
+									<h5 class="w-text"><%=payDate%></h5></br></br>
 									<div class="transferAllPart">
-										<h1 class="b-val" id="transferValAll">￦ 900,000</h1>
+										<h1 class="b-val" id="transferValAll">￦ <%=totalAmount%></h1>
 										<p class="g-text mb-10" id="transferNEEDAll">전체 금액</p>
 										<h1 class="b-text"></h1>
 									</div>
 									<div class="transferValPart">
-	                            		<h1 class="b-val" id="transferVal">￦ 300,000</h1>
+	                            		<h1 class="b-val" id="transferVal">￦ <%=payAmount%></h1>
 										<p class="g-text mb-10" id="transferNEED">송금해야할 금액</p>
 										<button id="transferBtn">송금하기</button>
 										<h1 class="b-text"></h1>
@@ -284,6 +298,8 @@
 	<script src="/js/global.script.js"></script>
 
 	<script>
+		history.replaceState({}, null, location.pathname);
+
 		var jwtToken = sessionStorage.getItem('jwtToken');
 		var transferVal = $('#transferVal').text();
 
@@ -319,7 +335,7 @@
 					async: false,
 				success:function(data){
 					product_name = data.product_name;
-					available_amt = data.available_amt.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+					available_amt = data.available_amt.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'); // , 표시 붙이기
 					}
 				})
 

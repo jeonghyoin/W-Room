@@ -87,11 +87,11 @@
 							<thead>
 							  <tr>
 								<th scope="col">카테고리</th>
-								<th scope="col">납부금액</th>
+								<th scope="col">등록일</th>
+								<th scope="col">총액</th>
 								<th scope="col">설명</th>
-								<th scope="col">시작일</th>
-								<th scope="col">종료일</th>
-								<th scope="col">납부</th>
+								<th scope="col">기한</th>
+								<th scope="col">송금</th>
 							  </tr>
 							</thead>
 							<tbody id="paymentItems">
@@ -134,8 +134,9 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 	<script>
+	var jwtToken = sessionStorage.getItem('jwtToken');
 	$(document).ready(function() {
-		var jwtToken = sessionStorage.getItem('jwtToken');
+		console.log("시작")
 		$.ajax({
 			url: 'http://localhost:3000/payment/status/0',
 			type: 'GET',
@@ -143,18 +144,25 @@
 				'x-access-token': jwtToken
 			},
 			success: function (item) {
+				var categoryName;
 				for(var i=0; i < item.length; i++) {
+					switch (item[i].payCategory*1) {
+						case 1: categoryName="월세"; break;
+						case 2: categoryName="전기"; break;
+						case 3: categoryName="생활비"; break;
+						case 4: categoryName="수도"; break;
+						case 5: categoryName="기타"; break;
+					}
 					$("#paymentItems").append(
 						'<tr>'+
-							'<th>'+item[i].payCategory+'</th>'+
-							'<td>'+item[i].shareAmount+'</td>'+
-							'<td>'+item[i].memo+'</td>'+
-							'<td>'+item[i].payDate+'</td>'+
-							'<td>'+item[i].dueDate+'</td>'+
-							'<td><button type="button" class="btn btn-outline-dark"'+
-							'value="">송금 바로가기</button></td>'+
+							'<th id="categoryName-' +i+ '">'+categoryName+'</th>'+
+							'<td id="payDate-' +i+ '">'+item[i].payDate+'</td>'+ // 등록일 .substr(0,10)
+							'<td id="totalAmount-' +i+ '">'+item[i].payAmount+'</td>'+ // 금액
+							'<td>'+item[i].memo+'</td>'+ // 설명
+							'<td>'+item[i].dueDate+'</td>'+ // 납부 .substr(0,10)
+							'<td><a href="javascript:myFunction('+i+','+ item[i].dutchpayID +','+item[i].shareAmount+')">'+ item[i].shareAmount +'원 송금하기</a></td>'+
 						'</tr>'
-					)
+					);
 				}
 			},
 			error: function (request, status, error) {
@@ -162,7 +170,40 @@
 				request.responseText + "\n" +"error:" + error);
 			}
 		});
-	})
+	});
+
+	function myFunction(i, dutchpayID, shareAmount){
+		alert("송금 버튼 눌림" + i);
+		var totalAmount = $('#totalAmount-'+i).text();
+		var categoryName = $('#categoryName-'+i).text();
+		var payDate = $('#payDate-'+i).text();
+		var payAmount = shareAmount;
+
+		var form = document.createElement("form");
+        var parm = new Array();
+        var input = new Array();
+
+        form.action = "http://localhost:3000/payment/bill";
+        form.method = "get";
+
+        parm.push( ['dutchpayID', dutchpayID] );
+		parm.push( ['totalAmount', totalAmount] );
+		parm.push( ['categoryName', categoryName] );
+		parm.push( ['payDate', payDate] );
+		parm.push( ['payAmount', payAmount] );
+
+
+        for (var i = 0; i < parm.length; i++) {
+            input[i] = document.createElement("input");
+            input[i].setAttribute("type", "hidden");
+            input[i].setAttribute('name', parm[i][0]);
+            input[i].setAttribute("value", parm[i][1]);
+            form.appendChild(input[i]);
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
+
 	</script>
 </body>
 </html>
