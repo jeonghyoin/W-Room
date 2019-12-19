@@ -125,7 +125,7 @@
 			<!-- 배경 색 변경은 global.style.css에서 .balance-card-->
 			<main class="margin mt-0">
 				<div class="dash-balance">
-						<h3 class="b-text">월세</h3><!--둘 중에 하나 지우기-->
+						<h3 class="b-text"></h3><!--둘 중에 하나 지우기-->
 				</div>
 
 				<section class="bal-section container">
@@ -133,13 +133,21 @@
 						<div class="d-flex align-items-center">
 	                        <div class="d-flex flex-grow">
 	                          <div class="mr-auto">
-															<h5 class="w-text"> 19/11/16 </h5></br></br>
-	                            <h1 class="b-won">￦ </h1> <h1 class="b-val" id="transferVal">300,000</h1>
-	                            <p class="g-text mb-10" id="transferNEED">송금해야할 금액</p>
+									<h5 class="w-text"> 19/11/16 </h5></br></br>
+									<div class="transferAllPart">
+										<h1 class="b-val" id="transferValAll">￦ 900,000</h1>
+										<p class="g-text mb-10" id="transferNEEDAll">전체 금액</p>
+										<h1 class="b-text"></h1>
+									</div>
+									<div class="transferValPart">
+	                            		<h1 class="b-val" id="transferVal">￦ 300,000</h1>
+										<p class="g-text mb-10" id="transferNEED">송금해야할 금액</p>
+										<button id="transferBtn">송금하기</button>
+										<h1 class="b-text"></h1>
+									</div>
 	                          </div>
 	                        </div>
 	                     </div>
-							<button id="transferBtn">송금하기</button>
 					</div>
 
 				</section>
@@ -298,6 +306,29 @@
 
 		$('#transferBtn').click(function(){
 			console.log("버튼 눌림");
+			var check, product_name, available_amt;
+			$.ajax({
+				url:'http://localhost:3000/transfer/balance',
+				 type : 'POST',
+					headers : {
+					  'x-access-token' : jwtToken
+					},
+					// data : {
+					// 	원래는 핀 유즈 넘버 필요
+					//   },
+					async: false,
+				success:function(data){
+					product_name = data.product_name;
+					available_amt = data.available_amt.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+					}
+				})
+
+				var confirm_msg = "현재 " + product_name + " 계좌의 출금 가능액은 " + available_amt +"원입니다. \n"
+					+ transferVal.substr(2)+ "원을 송금하시겠습니까?";
+				check = confirm(confirm_msg);
+				console.log("왜 안해조");
+
+		if (check == true) { // 진짜로 송금한다고 하면
 			$.ajax({
 			  url:'http://localhost:3000/transfer/withdraw',
 			  type : 'POST',
@@ -335,7 +366,11 @@
 				  }
 				}
 			})
-		})
+		} else { // 싫다고 하면
+			alert("송금이 취소되었습니다.")
+		}
+		}
+	)
 		</script>
 </body>
 
