@@ -31,17 +31,26 @@ router.get('/', function(req, res) {
 
 //납부 내역 조회, 카테고리별 최신 데이터
 //http://localhost:3000/payment/category
-router.get('/category', function(req, res) {
-    connection.query('SELECT * FROM pay INNER JOIN paycategory '+
-    'ON pay.payCategory = paycategory.categoryInt WHERE (payCategory, payDate) '+
-    'IN (SELECT payCategory, MAX(payDate) FROM pay GROUP BY payCategory)',
-    function (error, results) {
+router.get('/category', auth, function(req, res) {
+    var userId = req.decoded.userId;
+    connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
+    [userId], function (error, result) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
-            res.json(results);
-            //res.render('main', {items : results});
+            var roomId = result[0].RoomShare_roomID;
+            connection.query('SELECT * FROM pay INNER JOIN paycategory ON pay.payCategory = paycategory.categoryInt '+
+            'AND pay.RoomShare_roomID = ? '+
+            'WHERE (pay.payCategory, pay.payDate) '+
+            'IN (SELECT pay.payCategory, MAX(pay.payDate) FROM pay GROUP BY pay.payCategory)',
+            [roomId], function (error, results) {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(results);
+                    res.json(results);
+                }
+            });     
         }
     });
 });
@@ -64,8 +73,7 @@ router.get('/status/:flag', auth, function(req, res) {
     connection.query('SELECT * FROM pay INNER JOIN dutchpayyn ' + 
     'ON pay.payID = dutchpayyn.dutchpayID ' +
     'WHERE dutchpayyn.User_userID = ? AND dutchpayyn.dutchpayYN = ?',
-    [userId, flag],
-    function (error, results) {
+    [userId, flag], function (error, results) {
         if (error) {
             throw error;
         } else {
