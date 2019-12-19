@@ -79,21 +79,35 @@
 			<!-- Page content start -->
 			<main>
 				<div class="container">
-					<div id="balanceText">
-						<table class="table table-hover">
-							<thead>
-							  <tr>
-								<th scope="col">카테고리</th>
-								<th scope="col">등록일</th>
-								<th scope="col">금액</th>
-								<th scope="col">설명</th>
-							  </tr>
-							</thead>
-							<tbody id="paymentItems">
-							</tbody>
-						  </table>
-					</div>
-					<div id="transactionList"></div>
+					<!-- 추가 -->
+					<br>
+					<form>
+						<div class="form-group">
+							<select class="form-control" id="category">
+								<option>--- 납부 항목 ---</option>
+                                <option value="1">월세</option>
+                                <option value="2">전기</option>
+                                <option value="3">생활비</option>
+                                <option value="4">수도</option>
+                                <option value="5">기타</option>
+							</select>
+						</div>
+						<div class="form-group">
+						  <label>총 납부 금액</label>
+						  <input type="text" class="form-control" id="payAmount">
+						  <small id="emailHelp" class="form-text text-muted">숫자로 입력해주세요.</small>
+						</div>
+						<div class="form-group">
+						  <label>메모</label>
+						  <input type="text" class="form-control" id="memo">
+						</div>
+						<div class="form-group">
+							<label>납부 마감일</label>
+							<input id="datepicker"/>
+						</div>
+					</form>
+					<br>
+					<button type="button" id="addBtn" class="btn btn-outline-dark">납부 내역 추가하기</button>
 				</div>
 				<div class="form-divider"></div>
 				<!-- footer 영역-->
@@ -128,41 +142,50 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+	<!-- date picker -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	
+	<!-- data format -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    
 	<script>
-	$(document).ready(function() {
-		var jwtToken = sessionStorage.getItem('jwtToken');
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+	</script>	
+
+	<script>
+	var jwtToken = sessionStorage.getItem('jwtToken');
+
+	$('#addBtn').click(function(){
+		var category = $("#category option:selected").val(); //카테고리
+		var tmpDate = $('#datepicker').val(); //마감 일자
+		var dueDate = moment(tmpDate, 'MM/DD/YYYY').format("YYYY-MM-DD"); 
+		var payAmount = $('#payAmount').val(); //총 납부 금액
+		var memo = $('#memo').val();; //메모
 		$.ajax({
-			url: 'http://localhost:3000/payment/status/1',
-			type: 'GET',
+			url:'http://localhost:3000/payment',
+			type : 'POST',
 			headers: {
 				'x-access-token': jwtToken
 			},
-			success: function (item) {
-				console.log(item);
-				/* var categoryName;
-				for(var i=0; i < item.length; i++) {
-					switch (item[i].payCategory) {
-						case 1: categoryName="월세"; break;
-						case 2: categoryName="전기"; break;
-						case 3: categoryName="생활비"; break;
-						case 4: categoryName="수도"; break;
-						case 5: categoryName="기타"; break;
-					}
-					$("#paymentItems").append(
-						'<tr>'+
-							'<th>'+categoryName+'</th>'+
-							'<td>'+item[i].payDate.substr(0,10)+'</td>'+
-							'<td>'+item[i].shareAmount+'</td>'+
-							'<td>'+item[i].memo+'</td>'+
-						'</tr>'
-					)
-				} */
+			data : {
+				payCategory : category,
+				payAmount : payAmount,
+				dueDate : dueDate,
+				memo: memo
 			},
-			error: function (request, status, error) {
-				alert("code:" + request.status + "\n" + "message:" +
-				request.responseText + "\n" +"error:" + error);
+			success:function(result){
+				if(result == 1){
+					alert("납부 내역 추가가 완료되었습니다.");
+					window.location = '/main';
+				} else{
+					alert("[오류 발생] 다시 시도해주세요.");
+				}
 			}
-		});
+		})
 	})
 	</script>
 </body>

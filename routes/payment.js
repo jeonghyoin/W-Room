@@ -121,10 +121,11 @@ router.post('/', auth, function(req, res) {
                     throw error;
                 } else {
                     console.log('방 인원: '+results[0].share);
-                    console.log(data.payDate, data.dueDate);
+                    console.log('마감일: '+data.dueDate);
+                    console.log('cate: '+data.payCategory);
+                    console.log('전체 금액:'+data.payAmount);
                     var shareAmount = data.payAmount / results[0].share;
                     var currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-                    console.log('cate: '+data.payCategory);
                     //pay 데이터 삽입
                     connection.query('INSERT INTO pay ' +
                     '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, RoomShare_roomID) VALUES (?,?,?,?,?,?,?)',

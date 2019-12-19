@@ -9,8 +9,8 @@ router.get('/', function(req, res) {
     res.render('main');
 });
 
-router.get('/paymentAdd', function(req, res) {
-    res.render('paymentAdd');
+router.get('/payment/form', function(req, res) {
+    res.render('paymentForm');
 });
 
 //사용자가 가지는 같은 roomID 사람들 정보를 보내기

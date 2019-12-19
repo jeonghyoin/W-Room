@@ -275,10 +275,12 @@
 
             <!-- 리스트 띄우기 -->
             <section class="container">
-               
                <h4 class="title-main">당월 청구서</h4>
                <div style="width:100%; position: absolute;" >
-               <a href="main/paymentAdd"><img style="position: relative; left: 91%; top: -35px;" class="img-xs" width = "25px" src="img/content/plus1.png"></a></div>
+                  <a href="main/payment/form">
+                     <img style="position: relative; left: 91%; top: -35px;" class="img-xs" width = "25px" src="img/content/plus1.png">
+                  </a>
+               </div>
                <ul class="transaction-list list-unstyled">
                   <!-- 월세 -->
                   <li>
@@ -323,7 +325,7 @@
                         </div>
                         <div>
                            <small id="watShare" class="d-block mb-0 txt-green">등록된 금액이 없습니다.</small>
-                           <small id="monTotal" class="text-muted d-block"></small>
+                           <small id="watTotal" class="text-muted d-block"></small>
                         </div>
                      </div>
                   </li>
@@ -480,7 +482,7 @@
                'x-access-token': jwtToken
             },
             success: function (item) {
-               console.log(item);
+               //console.log(item);
                if (item.length != 0) {
                   for (var i = 0; i < item.length; i++) {
                      switch (item[i].cagegoryName) {
