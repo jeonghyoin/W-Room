@@ -127,6 +127,7 @@ router.post('/', auth, function(req, res) {
                     [data.payCategory, data.payAmount, shareAmount, data.payDate, data.dueDate, data.memo, data.payYN, roomId],
                     function (error, results) {
                         if(error) {
+                            console.log("!!!!!!!!!!!");
                             throw error;
                         } else {
                             var insertId = results.insertId;
@@ -147,9 +148,11 @@ router.post('/', auth, function(req, res) {
                                                 throw error;
                                             } else {
                                                 console.log(row.User_userID+' 작업 완료');
+                                               
                                             }
                                         });
                                     });
+                                     res.json(1);
                                 }
                             });
                         }

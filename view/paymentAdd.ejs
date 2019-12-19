@@ -140,7 +140,7 @@
 						<div class="form-row no-padding">
 							<i class="fa fa-bold"></i>
                             <select class="form-element">
-								<option value="">납부 항목을 선택해주세요.</option>
+								<option id="billName" value="">납부 항목을 선택해주세요.</option>
                                 <option value="1">월세</option>
                                 <option value="2">전기</option>
                                 <option value="3">생활비</option>
@@ -161,7 +161,7 @@
                             <div class="form-row no-padding">
                                 <i class="fa fa-sticky-note"></i>
 								<!--<input type="text" name="aaa" class="form-element"  id='datetimepicker4'>-->
-								<input type="text" class="form-control" placeholder="여기가 원래 날짜" id='datePicker'>
+								<input type="text" id='datePicker' class="form-control" placeholder="여기가 원래 날짜" >
                             </div>
 						</div>
 						
@@ -171,7 +171,7 @@
                         <div class="form-row-group with-icons">
                             <div class="form-row no-padding">
                                 <i class="fa fa-sticky-note"></i>
-                                <input type="text" name="payAmount" class="form-element" placeholder="납부 금액을 입력해주세요.">
+                                <input type="text" id="billMoney" name="payAmount" class="form-element" placeholder="납부 금액을 입력해주세요.">
                             </div>
                         </div>
                         <div class="form-mini-divider"></div>
@@ -179,7 +179,7 @@
                         <div class="form-row-group with-icons">
                             <div class="form-row no-padding">
                                 <i class="fa fa-sticky-note"></i>
-                                <textarea class="form-element" name="memo" placeholder="룸메이트들을 위해 부가 정보를 입력해주세요." rows="5"></textarea>
+                                <textarea class="form-element" id="billMemo" name="memo" placeholder="룸메이트들을 위해 부가 정보를 입력해주세요." rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-mini-divider"></div>
@@ -241,10 +241,36 @@
 	<script src="/js/app-charts.js"></script>
 	<script src="/js/global.script.js"></script>
 
-
-
 	<script>
 		var jwtToken = sessionStorage.getItem('jwtToken');
+		$('#addBtn').click(function(){
+			var billName = $('#billName').val();
+			billName=billName*1;
+			var datePicker= $('#datePicker').val();
+			var billMoney = $('#billMoney').val();
+			var billMemo = $('#billMemo').val();;
+			$.ajax({
+			  url:'http://localhost:3000/payment',
+			  type : 'POST',
+			  headers: {
+						'x-access-token': jwtToken
+					},
+			  data : {
+				payCategory : billName,
+				payAmount : billMoney,
+				dueDate : datePicker,
+				memo:billMemo
+					  },
+			  success:function(data){
+				if(data==1){
+					alert("납부 내역 추가가 완료되었습니다.");
+					window.location = '/main';
+				}else{
+					alert("오류");
+			}
+			}
+		})
+	})
 	</script>
 <script>
 $(function() {	
