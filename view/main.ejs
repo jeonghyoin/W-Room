@@ -401,7 +401,8 @@
                console.log(">>> data : " + data[0].image);
 
                $("#userName").text(data[0].name);
-               $("#groupName").text(data[0].roomID + '번 방');
+               var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
+               $("#groupName").text(groupYN);
 
                var userIcon = document.getElementById('userIcon');
 
