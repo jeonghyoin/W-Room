@@ -2,18 +2,29 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../mysql-db');
 
+//jwt token
+var jwt = require('jsonwebtoken'); 
+var tokenKey = "fintech123456789danahkim";
+var auth = require("../lib/auth");
+
 //전체 공지 가져오기
 //http://localhost:3000/notice
-router.get('/', function(req, res) {
-    var roomId = 1; //방 번호 임시
-    connection.query('SELECT * FROM notice WHERE roomID = ?',
-    [roomId],
-    function (error, results) {
+router.get('/', auth, function(req, res) {
+    var userId = req.decoded.userId;
+    connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
+    [userId], function (error, result) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
-            res.render('notice', {items : results});
+            var roomId = result[0].RoomShare_roomID;
+            connection.query('SELECT * FROM notice WHERE roomID = ?',
+            [roomId], function (error, results) {
+                if (error) {
+                    throw error;
+                } else {
+                    res.json(results);
+                }
+            });
         }
     });
 });
