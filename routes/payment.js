@@ -20,44 +20,6 @@ router.get('/bill', function(req, res) {
     });
 });
 
-// router.post('/bill/:flag', auth, function(req, res) {
-//     var flag = req.params.flag; // 더치페이 아이디
-//     var userId = req.decoded.userId;
-//     console.log(req.body);
-//     // var totalAmount = req.body.totalAmount;
-//     // var payAmount = req.body.payAmount;
-//     // var dutchpayID = req.body.dutchpayID;
-//     // var categoryName = req.body.categoryName;
-//     // var payDate = req.body.payDate;
-
-//     var option = {
-//         method : "GET",
-//         url : "http://localhost:3000/payment/bill",
-//         headers : {
-//           Authorization: 'Bearer ' + TwoLegTtoken
-//         },
-//         data
-//       }
-
-//       request(option, function(error, response, body) {
-//         console.log(body);
-//           var resultObject = body;
-//           if (resultObject.rsp_code == "A0000"){
-//             res.json(1);
-//           } else {
-//             res.json(0);
-//           }
-//       });
-
-//     res.json('bill', {
-//         totalAmount : req.body.totalAmount,
-//         payAmount : req.body.payAmount,
-//         dutchpayID : req.body.dutchpayID,
-//         categoryName : req.body.categoryName,
-//         payDate : req.body.payDate
-//         });
-// });
-
 router.get('/check', function(req, res) {
     res.render('check');
 });
