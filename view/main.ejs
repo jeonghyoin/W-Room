@@ -163,13 +163,9 @@
 				<section  class="container o-hidden">
 					<h4 class="title-main"></h4>
 					<div class="swiper-recievers">
-						<div id ="#nameCard" class="swiper-wrapper">
-
-							<div class="swiper-slide">
-								<div class="money-receiver">
-									<a href="/makeRoom"><img src="img/plus.png" alt=""></a>
-									<h4>모임개설</h4>
-								</div>
+						<div  class="swiper-wrapper">
+							<div id ="nameCard" class="swiper-slide">
+								
 							</div>
 							<!--<div class="swiper-slide">
 								<div class="money-receiver">
@@ -354,12 +350,31 @@
 				headers: {
 					'x-access-token': jwtToken
 				},
-				
 				success: function (data) {
-					console.log(data.res_list);
-					for(var i=0; i < data.res_list.length; i++){
-                        $("#nameCard").append()
+
+					if(data){
+						for(var i=0; i < data.length; i++){
+                        $("#nameCard").append(
+							//'<div class="swiper-slide">'+
+							'<div class="money-receiver">'+
+							'<img src="'+data[i].image+'" alt="">'+
+									'<h4>'+data[i].name+'</h4>'
+									+'</div>'
+									//+'</div>'
+						)
 					}
+				}else{
+					$("#nameCard").append(
+					//	'<div class="swiper-slide">'+
+						'<div  class="money-receiver">'+
+						'<a href="/makeRoom"><img src="img/plus.png" alt=""></a>'+
+									'<h4>모임개설</h4>'
+									+'</div>'
+									//+'</div>'
+					)
+				}
+					
+					
 				}
 			})
 		}

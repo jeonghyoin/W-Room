@@ -14,21 +14,28 @@ router.post('/', auth, function(req, res){
     // console.log(req.body.findEmail);
     var userEmail = req.decoded.userEmail
     var resultObject;
-    connection.query('SELECT * FROM user WHERE id = ?', [userId], function (error, results, fields) { //룸아이디 검색
+    var roomIDresult;
+    connection.query('SELECT * FROM user WHERE email = ?', [userEmail], function (error, results, fields) { //룸아이디 검색
         if (error) throw error;
         if(results.length < 1){
             console.log('사용자가 없습니다');
         }
         else {
-            resultObject = results;
-            console.log('')
-           // res.json(resultObject);
+            roomIDresult= results[0].roomID;
+            console.log(roomIDresult);
+           // resultObject = results;
+            connection.query('SELECT * FROM user WHERE roomID = ?', [roomIDresult], function (error, results, fields){
+                console.log(results);
+                resultObject=results;
+                res.json(resultObject);
+            })
+           // 
         }
      });
-     request(option, function (error, response, body) {
+   //  request(option, function (error, response, body) {
         
       //  res.json(resultObject);
-    });
+   // });
  });
 
 module.exports = router;
