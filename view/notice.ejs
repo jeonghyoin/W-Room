@@ -3,11 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-	<title>WROOM</title>
+	<title>WRoom</title>
 	<!-- Google font file. If you want you can change. -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
 	<!-- Fontawesome font file css -->
-	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 	<!-- Template global css file. Requared all pages -->
 	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
 	<!-- bootstrap -->
@@ -39,7 +39,7 @@
 								<td><a href = "profile.html"><h3 style="margin-right: 10px;">이름<h3></a></td>
 							</tr>
 							<tr>
-								<td><h5 style ="margin-top: -30px;">그룹이름</h5></td>
+								<td><h5 style="margin-top: -30px;">그룹이름</h5></td>
 								</tr>
 							</table>
 					</div>
@@ -56,17 +56,7 @@
 						</li>
 						<li class="">
 							<a href="signup.html"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-							<!--
-							<ul>
-								<li><a href="login.html" data-loader="show">Login</a></li>
-								<li><a href="signup.html" data-loader="show">Register</a></li>
-								<li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
-							</ul>-->
 						</li>
-						<!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
-						<li><a href="search-result.html" data-loader="show">Search Results</a></li>
-						<li><a href="contact.html" data-loader="show">Contact</a></li>
-						<li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li> -->
 					</ul>
 				</div>
 			<!-- Menu navigation end -->
@@ -98,16 +88,7 @@
 								<!-- <th scope="col">삭제</th> -->
 							  </tr>
 							</thead>
-							<tbody>
-							  <% items.forEach(function(item, index){ %>
-								<tr>
-									<th><%= item.noticeID %></th>
-									<td><%= item.contents %></td>
-									<td><%= item.created %></td>
-									<!-- <td><button type="button" class="btn btn-outline-dark" name="delete"
-										value=<%= item.noticeID %>>삭제</button></td> -->
-								  </tr>
-							  <% }); %>
+							<tbody id="noticeItems">
 							</tbody>
 						  </table>
 					</div>
@@ -140,18 +121,42 @@
 		  	<div class="circle3"></div>
 		</div>
 	</div>
-
 	<!-- JQuery library file. requared all pages -->
-	<script src="./js/jquery-3.2.1.min.js"></script>
+	<script src="/js/jquery-3.2.1.min.js"></script>
 	<!-- Template global script file. requared all pages -->
-	<script src="./js/global.script.js"></script>
+	<script src="/js/global.script.js"></script>
 	<!-- bootstrap js -->
-	<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-	<!-- 게시글 삭제 -->
-	<!-- <script>
+	<script>
+		//공지 가져오기
+		$(document).ready(function() {
+			var jwtToken = sessionStorage.getItem('jwtToken');
+			$.ajax({
+				url: 'http://localhost:3000/notice',
+				type: 'GET',
+				headers: {
+					'x-access-token': jwtToken
+				},
+				success: function (item) {
+					for(var i=0; i < item.length; i++) {
+						$("#noticeItems").append(
+							'<tr>'+
+								'<th>'+item[i].noticeId+'</th>'+
+								'<td>'+item[i].contents+'</td>'+
+								'<td>'+item[i].created+'</td>'+
+							'</tr>'
+						)
+					}
+				},
+				error: function (request, status, error) {
+					alert("code:" + request.status + "\n" + "message:" +
+					request.responseText + "\n" +"error:" + error);
+				}
+			});
+		})
+		//게시글 삭제
 		$("button[name='delete']").click(function() {
 			var id = this.value;
 			if(confirm(id+"번째 글을 삭제하시겠습니까?")){
@@ -164,6 +169,6 @@
 				});
 			}
 		});
-	</script> -->
+	</script>
 </body>
 </html>
