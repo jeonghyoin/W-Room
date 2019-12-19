@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
 router.post('/withdraw', auth, function(req, res){
     var userId = req.decoded.userId;
     console.log(req.body.transferVal)
-    var transferVal = req.body.transferVal.replace(",","");
+    var transferVal = req.body.transferVal.substr(2).replace(",","");
     console.log(transferVal);
     var countnum; 
     var nine = true;
@@ -44,7 +44,7 @@ router.post('/withdraw', auth, function(req, res){
                 "cntr_account_type": "N",
                 "cntr_account_num": "4847518547", // 이용기관 출금이체 약정번호
                 "dps_print_content": "월세김단아", 
-                "fintech_use_num" : "199159986057870945489890",
+                "fintech_use_num" : "199159986057870945489890", // 내 FIN_USE_NUM
   	            "wd_print_content" : "월세김단아",
   	            "tran_amt" : transferVal,
   	            "tran_dtime" : "20191217164250",
@@ -91,7 +91,7 @@ router.post('/withdraw', auth, function(req, res){
   // 입금이체 - 정인한테 300,000 입금하기
 router.post('/deposit', auth, function(req, res){
     var userId = req.decoded.userId;
-    var transferVal = req.body.transferVal.replace(",","");
+    var transferVal = req.body.transferVal.substr(2).replace(",","");
     var countnum; 
     var nine = true;
     while (nine)
@@ -119,7 +119,7 @@ router.post('/deposit', auth, function(req, res){
             "req_list": [ {
                   "tran_no": "1",
                   "bank_tran_id": transId,
-                  "fintech_use_num": "199159986057870945593762",
+                  "fintech_use_num": "199159986057870945593762", // 정인언니꺼
                   "print_content": "오픈서비스캐시백",
                   "tran_amt": transferVal,
                   "req_client_name": "윤정인",
@@ -139,5 +139,35 @@ router.post('/deposit', auth, function(req, res){
             }
         });
 });
+
+// 잔액 조회
+router.post('/balance', auth, function(req, res){
+  var userId = req.decoded.userId ;
+  var countnum = Math.floor(Math.random() * 1000000000) + 1;
+  var transId = "T991599860U" + countnum; // 랜덤 숫자 만들기
+
+  connection.query('SELECT * FROM user WHERE userID = ?', [userId],
+        function (error, results, fields) { // 디비에서 토큰 받아오기
+        if (error) throw error;
+        console.log(results);       
+        var option = {
+          method : "GET",
+          url : "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num",
+          headers : {
+            Authorization : "Bearer" + results[0].accessToken // 디비에서 받아온 토큰
+          },
+          qs : { // GET 방식이니까
+              bank_tran_id: transId,
+              fintech_use_num: '199159986057870945489890',
+              tran_dtime: '20191220140900'
+          }
+        }
+        request(option, function(error, response, body) {
+          console.log(body);
+          var resultObject = JSON.parse(body);
+          res.json(resultObject);
+        });
+    });     
+})
 
 module.exports = router;

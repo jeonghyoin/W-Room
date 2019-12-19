@@ -300,7 +300,8 @@ nav.menu ul.main-menu>li li a{
 	padding-right: 0 !important
 }
 .w-text{
-	color: #fff !important
+	color: #fff !important;
+	padding-bottom: 30px;
 }
 .g-text{
     color: #ede6e6 !important;
@@ -2579,14 +2580,33 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ddc3e', end
     padding: 10px 20px;
     border-radius: 10px
 }
+.mb-15 {
+	padding-bottom: 70px;
+}
+
 @media(min-width: 992px){
 	.balance-card{
 		background-position: center;
+		
 	}
 	.dash-balance:before{
 		background: none
 	}
 }
+
+.transferAllPart {
+	display: inline-block;
+	position : absolute;
+	top : 45%;
+	left : 10%;
+}
+.transferValPart {
+	display: inline-block;
+	position : absolute;
+	top : 45%;
+	right : 10%;
+}
+
 .b-val{
 	margin: 0;
     color: #fff;
