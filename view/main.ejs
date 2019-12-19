@@ -37,12 +37,21 @@
       }
 
       #userList {
-         display:table-cell;
-            vertical-align: middle;
+         display: table-cell;
+         vertical-align: middle;
       }
 
       #userIcon {
-         border-radius: 50%;
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
+
+      #profileBox {
+         width: 100px;
+         height: 100px;
+         border-radius: 70%;
+         overflow: hidden;
       }
    </style>
 
@@ -54,64 +63,66 @@
       <div class="nav-menu">
          <nav class="menu">
             <!-- nav삽입 -->
-                            <!-- Menu navigation start -->
-                        <div class="nav-container">
-                           <div style="padding-top:20px; padding-left: 25px;">
-                              <table style="margin-bottom: 20px;">
-                                 <tr>
-                                    <th colspan="2"></th>
-                                 </tr>
-                                 <tr>
-                                    <th rowspan="4">
-                                       <a href="profile.html">
-                                          <img id="userIcon" width="80" alt="">
-                                       </a>
-                                    <td> </td>
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                    <td> </td>
-                                 </tr>
-                                 <tr>
-                                    <td><a href="profile.html">
-                                          <h3 id="userName" style="margin-left: 25px;">이름<h3>
-                                       </a></td>
-                                 </tr>
-                                 <tr>
-                                    <td style="padding-left: 25px;">그룹이름</td>
-                                 </tr>
-                              </table>
+            <!-- Menu navigation start -->
+            <div class="nav-container">
+               <div style="padding-top:20px; padding-left: 25px;">
+                  <table style="margin-bottom: 20px;">
+                     <tr>
+                        <th colspan="2"></th>
+                     </tr>
+                     <tr>
+                        <th rowspan="4">
+                           <div id="profileBox">
+                              <a href="#">
+                                 <img id="userIcon" width="80" alt="프로필사진">
+                              </a>
                            </div>
-                           <hr>
-                           <ul class="main-menu">
-                              <!-- 블록 추가해서 프로필 넣기 -->
-            
-                              <li class="">
-                                 <a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
-                              </li>
-                              <li class="">
-                                 <a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
-                                 </a>
-                              </li>
-                              <li class="">
-                                 <a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
-                              </li>
-                              <li class="">
-                                 <a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-                                 <!--
+                        <td> </td>
+                        </th>
+                     </tr>
+                     <tr>
+                        <td> </td>
+                     </tr>
+                     <tr>
+                        <td><a href="profile.html">
+                              <h3 id="userName" style="margin-left: 25px;">이름<h3>
+                           </a></td>
+                     </tr>
+                     <tr>
+                        <td id="groupName" style="padding-left: 30px;">그룹이름</td>
+                     </tr>
+                  </table>
+               </div>
+               <hr>
+               <ul class="main-menu">
+                  <!-- 블록 추가해서 프로필 넣기 -->
+
+                  <li class="">
+                     <a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
+                     <!--
                             <ul>
                               <li><a href="login.html" data-loader="show">Login</a></li>
                               <li><a href="signup.html" data-loader="show">Register</a></li>
                               <li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
                             </ul>-->
-                              </li>
-            
-                              <!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
+                  </li>
+
+                  <!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
                               <li><a href="search-result.html" data-loader="show">Search Results</a></li>
                               <li><a href="contact.html" data-loader="show">Contact</a></li>
                               <li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li> -->
-                           </ul>
-                        </div>
+               </ul>
+            </div>
             <!-- Menu navigation end -->
          </nav>
       </div>
@@ -271,7 +282,7 @@
                      </div>
                   </li>
                   <li>
-                     <div id="refreshBtn"class="d-flex align-items-center justify-content-between">
+                     <div id="refreshBtn" class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
                            <img class="img-xs" src="img/content/thunder.png" alt="coin image">
                            <div class="ml-10">
@@ -375,6 +386,7 @@
                console.log(">>> data : " + data[0].image);
 
                $("#userName").text(data[0].name);
+               $("#groupName").text(data[0].roomID + '번 방');
 
                var userIcon = document.getElementById('userIcon');
 
