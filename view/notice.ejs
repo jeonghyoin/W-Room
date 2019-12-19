@@ -85,12 +85,13 @@
 								<th scope="col">글번호</th>
 								<th scope="col">내용</th>
 								<th scope="col">작성일</th>
-								<!-- <th scope="col">삭제</th> -->
+								<th scope="col">삭제</th>
 							  </tr>
 							</thead>
 							<tbody id="noticeItems">
 							</tbody>
-						  </table>
+						</table>
+					<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">공지 등록</button>
 					</div>
 					<div id="transactionList"></div>
 				</div>
@@ -121,6 +122,7 @@
 		  	<div class="circle3"></div>
 		</div>
 	</div>
+	
 	<!-- JQuery library file. requared all pages -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<!-- Template global script file. requared all pages -->
@@ -134,7 +136,7 @@
 		$(document).ready(function() {
 			var jwtToken = sessionStorage.getItem('jwtToken');
 			$.ajax({
-				url: 'http://localhost:3000/notice',
+				url: 'http://localhost:3000/notice/items',
 				type: 'GET',
 				headers: {
 					'x-access-token': jwtToken
@@ -143,9 +145,11 @@
 					for(var i=0; i < item.length; i++) {
 						$("#noticeItems").append(
 							'<tr>'+
-								'<th>'+item[i].noticeId+'</th>'+
+								'<th>'+item[i].noticeID+'</th>'+
 								'<td>'+item[i].contents+'</td>'+
 								'<td>'+item[i].created+'</td>'+
+								'<td id="deleteBtn" ><button type="button" class="btn btn-outline-dark"'+
+								'value="'+item[i].noticeID+'">삭제</button></td>'+
 							'</tr>'
 						)
 					}
@@ -157,14 +161,15 @@
 			});
 		})
 		//게시글 삭제
-		$("button[name='delete']").click(function() {
+		$('#deleteBtn').click(function() {
+			console.log('test');
 			var id = this.value;
 			if(confirm(id+"번째 글을 삭제하시겠습니까?")){
 				$.ajax({
 					url: '/notice/'+id,
-					type: 'GET',
+					type: 'DELETE',
 					success: function(data) {
-						//location.reload();
+						location.reload();
 					},
 				});
 			}
