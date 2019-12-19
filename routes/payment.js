@@ -24,7 +24,7 @@ router.get('/', function(req, res) {
         if (error) {
             throw error;
         } else {
-            res.render('main', {items : results});
+            //res.render('main', {items : results});
         }
     });
 });
@@ -39,7 +39,8 @@ router.get('/category', function(req, res) {
         if (error) {
             throw error;
         } else {
-            console.log(results[0]);
+            console.log(results);
+            res.json(results);
             //res.render('main', {items : results});
         }
     });
@@ -72,7 +73,6 @@ router.get('/status/:flag', auth, function(req, res) {
             //var dueDate = moment(results[0].dueDate).format('YYYY-MM-DD hh:mm');
             //console.log(results);
             res.json(results);
-            
         }
     });
 });
