@@ -16,7 +16,6 @@ router.get('/', function(req, res) {
 
 // 로그인 페이지
 router.get("/login", function (req, res) {
-    console.log("rksl?");
     res.render('login');
 });
 
@@ -115,7 +114,7 @@ router.post('/passwdUpdate', function (req, res) { // 패스워드 업데이트
 });
 
 // 로그인 페이지에서 이메일/비번 입력 후 로그인 눌렀을 때
-router.post("/login", function(req, res){
+router.post("/login", function(req, res) {
   var userEmail = req.body.userEmail;
   var userPassword = req.body.userPassword;
 
