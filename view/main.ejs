@@ -29,7 +29,17 @@
 	<link rel="stylesheet" type="text/css" href="plugins/turbo-slider/turbo.css">
 
 	<style>
+		#nameCard {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+			width: 100% !important;
+		}
 
+		#userList {
+			display:table-cell;
+            vertical-align: middle;
+		}
 	</style>
 
 </head>
@@ -39,68 +49,68 @@
 	<div class="wrapper ">
 		<div class="nav-menu">
 			<nav class="menu">
-
-				<!-- Menu navigation start -->
-				<div class="nav-container">
-					<div>
-						<table>
-							<tr>
-								<th colspan="2"></th>
-							</tr>
-							<tr>
-								<th rowspan="4">
-									<a href="profile.html"><img src="img/content/profile.png" width="80" alt=""></a>
-								<td> </td>
-								</th>
-							</tr>
-							<tr>
-								<td> </td>
-							</tr>
-							<tr>
-								<td><a href="profile.html">
-										<h3>이름<h3>
-									</a></td>
-							</tr>
-							<tr>
-								<td>그룹이름</td>
-							</tr>
-						</table>
-					</div>
-					<ul class="main-menu">
-						<!--블록 추가해서 프로필 넣기-->
-
-						<li class="">
-							<a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
-						</li>
-						<li class="">
-							<a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
-							</a>
-						</li>
-						<li class="">
-							<a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
-						</li>
-						<li class="">
-							<a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-							<!--
-                     <ul>
-                        <li><a href="login.html" data-loader="show">Login</a></li>
-                        <li><a href="signup.html" data-loader="show">Register</a></li>
-                        <li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
-                     </ul>-->
-						</li>
-
-						<li><a href="profile.html" data-loader="show">User Profile</a></li>
-						<li><a href="search-result.html" data-loader="show">Search Results</a></li>
-						<li><a href="contact.html" data-loader="show">Contact</a></li>
-						<li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li>
-					</ul>
-				</div>
+				<!-- nav삽입 -->
+				                <!-- Menu navigation start -->
+								<div class="nav-container">
+									<div>
+										<table>
+											<tr>
+												<th colspan="2"></th>
+											</tr>
+											<tr>
+												<th rowspan="4">
+													<a href="profile.html"><img src="img/content/profile.png" width="80" alt=""></a>
+												<td> </td>
+												</th>
+											</tr>
+											<tr>
+												<td> </td>
+											</tr>
+											<tr>
+												<td><a href="profile.html">
+														<h3>이름<h3>
+													</a></td>
+											</tr>
+											<tr>
+												<td>그룹이름</td>
+											</tr>
+										</table>
+									</div>
+									<ul class="main-menu">
+										<!-- 블록 추가해서 프로필 넣기 -->
+				
+										<li class="">
+											<a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
+										</li>
+										<li class="">
+											<a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
+											</a>
+										</li>
+										<li class="">
+											<a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
+										</li>
+										<li class="">
+											<a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
+											<!--
+									 <ul>
+										<li><a href="login.html" data-loader="show">Login</a></li>
+										<li><a href="signup.html" data-loader="show">Register</a></li>
+										<li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
+									 </ul>-->
+										</li>
+				
+										<!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
+										<li><a href="search-result.html" data-loader="show">Search Results</a></li>
+										<li><a href="contact.html" data-loader="show">Contact</a></li>
+										<li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li> -->
+									</ul>
+								</div>
 				<!-- Menu navigation end -->
 			</nav>
 		</div>
 		<div class="wrapper-inline">
 			<!-- Header area start -->
-			<header class="no-background">
+			<header>
 				<!-- extra class no-background -->
 				<div class="navi-menu-button">
 					<em></em>
@@ -126,7 +136,8 @@
 							<div class="content-head">
 								<div class="d-flex align-items-center">
 									<div class="d-flex flex-grow">
-										<img src="img/content/logo.png" width="70px" class="logo" alt="">
+										<img src="img/content/wroomHor.png" width="100px" class="logo" alt=""
+											style="margin: 0 auto; margin-top: 11px;">
 									</div>
 								</div>
 							</div>
@@ -148,12 +159,12 @@
 					</div>
 				</section>
 
-				<section  class="container o-hidden">
+				<section class="container o-hidden">
 					<h4 class="title-main"></h4>
-					<div  class="swiper-recievers">
-						<div  class="swiper-wrapper">
-							<div id ="nameCard" class="swiper-slide">
-								
+					<div class="swiper-recievers">
+						<div class="swiper-wrapper">
+							<div id="nameCard" class="swiper-slide">
+
 							</div>
 							<!--<div class="swiper-slide">
 								<div class="money-receiver">
@@ -252,13 +263,13 @@
 							</div>
 						</li>
 						<li>
-							<div class="d-flex align-items-center justify-content-between">
+							<div id="refreshBtn"class="d-flex align-items-center justify-content-between">
 								<div class="d-flex align-items-center">
 									<img class="img-xs" src="img/content/thunder.png" alt="coin image">
 									<div class="ml-10">
 										<h4 class="coin-name">전기</h4>
 										<small class="text-muted">납부 마감일</small>
-										<img id="refreshBtn" src="img/content/icons/new.png" alt="새로고침">
+										<!-- <img id="refreshBtn" src="img/content/icons/new.png" alt="새로고침"> -->
 									</div>
 								</div>
 								<div>
@@ -345,7 +356,7 @@
 
 		displayGroup();
 		//룸쉐어 멤버 리스트 보여주기
-        function displayGroup() {
+		function displayGroup() {
 			$.ajax({
 				url: 'http://localhost:3000/main',
 				type: 'POST',
@@ -353,25 +364,26 @@
 					'x-access-token': jwtToken
 				},
 				success: function (data) {
-					if(data.length>0){
-						for(var i=0; i < data.length; i++){
-						if(!data[i].image) data[i].image="/img/content/profile.png";
-                        $("#nameCard").append(
-							//'<div class="swiper-slide">'+
-							'<div class="money-receiver">'+
-							'<img src="'+data[i].image+'" alt="">'+
-									'<h4>'+data[i].name+'</h4>'
-							+'</div>'
+					if (data.length > 0) {
+						for (var i = 0; i < data.length; i++) {
+							if (!data[i].image) data[i].image = "/img/content/profile.png";
+							$("#nameCard").append(
+								//'<div class="swiper-slide">'+
+								'<div id="userList" class="money-receiver">' +
+								'<img src="' + data[i].image + '" alt="">' +
+								'<h4>' + data[i].name + '</h4>' +
+								'</div>'
+							)
+						}
+					} else {
+						$("#nameCard").append(
+							//	'<div class="swiper-slide">'+
+							'<div class="money-receiver" style="width: 100%;">' +
+							'<a href="/makeRoom"><img src="img/plus.png" alt=""></a>' +
+							'<h4>모임개설</h4>' +
+							'</div>'
 						)
 					}
-				} else{
-					$("#nameCard").append(
-					//	'<div class="swiper-slide">'+
-						'<div class="money-receiver">'+
-						'<a href="/makeRoom"><img src="img/plus.png" alt=""></a>'+
-									'<h4>모임개설</h4>'
-									+'</div>'
-					)}
 				}
 			})
 		}
@@ -397,7 +409,7 @@
 		});
 
 		//청구서 목록 가져오기
-		$(document).ready(function() {
+		$(document).ready(function () {
 			$.ajax({
 				url: 'http://localhost:3000/payment/category',
 				type: 'GET',
@@ -406,8 +418,8 @@
 				},
 				success: function (item) {
 					console.log(item);
-					if(item.length != 0) {
-						for(var i=0; i < item.length; i++) {
+					if (item.length != 0) {
+						for (var i = 0; i < item.length; i++) {
 							switch (item[i].cagegoryName) {
 								case '월세':
 									$("#monShare").text(makeComma(item[i].shareAmount) + " 원");
@@ -435,10 +447,11 @@
 				},
 				error: function (request, status, error) {
 					alert("code:" + request.status + "\n" + "message:" +
-					request.responseText + "\n" +"error:" + error);
+						request.responseText + "\n" + "error:" + error);
 				}
 			});
 		})
 	</script>
 </body>
+
 </html>
