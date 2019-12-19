@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var tokenKey = "fintech123456789danahkim";
 var auth = require("../lib/auth");
 
+
 router.get('/bill', function(req, res) {
     console.log(req.query.dutchpayID);
     res.render('bill', {
@@ -74,7 +75,6 @@ router.get('/:flag', function(req, res) {
         res.render('beforePayment');
     }
 });
-
 //http://localhost:3000/payment/status/{flag}
 router.get('/status/:flag', auth, function(req, res) {
     var flag = req.params.flag;
@@ -111,6 +111,7 @@ router.post('/', auth, function(req, res) {
             throw error;
         } else {
             roomId = result[0].RoomShare_roomID;
+            console.log('룸 아이디: '+roomId);
             //유저가 속한 룸의 인원
             connection.query('SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user ' + 
             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
@@ -119,17 +120,21 @@ router.post('/', auth, function(req, res) {
                 if (error) {
                     throw error;
                 } else {
+                    console.log('방 인원: '+results[0].share);
+                    console.log(data.payDate, data.dueDate);
                     var shareAmount = data.payAmount / results[0].share;
+                    var currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    console.log('cate: '+data.payCategory);
                     //pay 데이터 삽입
                     connection.query('INSERT INTO pay ' +
-                    '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID) VALUES (?,?,?,?,?,?,?,?)',
-                    [data.payCategory, data.payAmount, shareAmount, data.payDate, data.dueDate, data.memo, data.payYN, roomId],
+                    '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, RoomShare_roomID) VALUES (?,?,?,?,?,?,?)',
+                    [data.payCategory, data.payAmount, shareAmount, currentTime, data.dueDate, data.memo, roomId],
                     function (error, results) {
                         if(error) {
-                            console.log("!!!!!!!!!!!");
                             throw error;
                         } else {
                             var insertId = results.insertId;
+                            console.log('insertid: '+ insertId);
                             //유저가 속한 그룹의 유저 아이디들 가져오기
                             connection.query('SELECT User_userID FROM roomshare_has_user ' +
                             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
@@ -151,7 +156,6 @@ router.post('/', auth, function(req, res) {
                                             }
                                         });
                                     });
-                                     res.json(1);
                                 }
                             });
                         }
