@@ -67,8 +67,7 @@ router.get('/:id', function(req, res) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
-            //페이지 새로고침
+            res.render('notice');
         }
     });
 });

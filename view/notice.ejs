@@ -176,7 +176,7 @@
 								'<th>'+item[i].noticeID+'</th>'+
 								'<td>'+item[i].contents+'</td>'+
 								'<td>'+item[i].created+'</td>'+
-								'<td id="deleteBtn" ><button type="button" class="btn btn-outline-dark"'+
+								'<td><button id="deleteBtn" type="button" class="btn btn-outline-dark"'+
 								'value="'+item[i].noticeID+'">삭제</button></td>'+
 							'</tr>'
 						)
@@ -204,13 +204,14 @@
 			});
 		});
 		//게시글 삭제
-		$('#deleteBtn').click(function() {
+		$(document).on('click', '#deleteBtn', function(){
 			var id = this.value;
 			if(confirm(id+"번째 글을 삭제하시겠습니까?")){
 				$.ajax({
 					url: '/notice/'+id,
-					type: 'DELETE',
+					type: 'GET',
 					success: function(data) {
+						alert(id+"번째 글이 삭제되었습니다.");
 						location.reload();
 					},
 				});
