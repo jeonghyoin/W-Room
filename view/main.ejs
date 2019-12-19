@@ -78,7 +78,6 @@
 									</div>
 									<ul class="main-menu">
 										<!-- 블록 추가해서 프로필 넣기 -->
-				
 										<li class="">
 											<a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
 										</li>
@@ -91,18 +90,7 @@
 										</li>
 										<li class="">
 											<a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-											<!--
-									 <ul>
-										<li><a href="login.html" data-loader="show">Login</a></li>
-										<li><a href="signup.html" data-loader="show">Register</a></li>
-										<li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
-									 </ul>-->
 										</li>
-				
-										<!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
-										<li><a href="search-result.html" data-loader="show">Search Results</a></li>
-										<li><a href="contact.html" data-loader="show">Contact</a></li>
-										<li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li> -->
 									</ul>
 								</div>
 				<!-- Menu navigation end -->
@@ -166,31 +154,6 @@
 							<div id="nameCard" class="swiper-slide">
 
 							</div>
-							<!--<div class="swiper-slide">
-								<div class="money-receiver">
-									<img src="img/content/avatar/avatar-3.png" alt="">
-									<h4>김수지</h4>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="money-receiver">
-									<img src="img/content/avatar/avatar-4.png" alt="">
-									<h4>윤정인</h4>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="money-receiver">
-									<img src="img/content/avatar/avatar-5.png" alt="">
-									<h4>최정윤</h4>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="money-receiver">
-									<img src="img/content/avatar/avatar-5.png" alt="">
-									<h4>최효인</h4>
-								</div>
-							</div>
-							-->
 						</div>
 					</div>
 				</section>
@@ -253,7 +216,7 @@
 									<img class="img-xs" src="img/content/monthfee.png" alt="coin image">
 									<div class="ml-10">
 										<h4 class="coin-name">월세</h4>
-										<small class="text-muted">납부 마감일</small>
+										<small id="monDuedate" class="text-muted"></small>
 									</div>
 								</div>
 								<div>
@@ -268,13 +231,12 @@
 									<img class="img-xs" src="img/content/thunder.png" alt="coin image">
 									<div class="ml-10">
 										<h4 class="coin-name">전기</h4>
-										<small class="text-muted">납부 마감일</small>
-										<!-- <img id="refreshBtn" src="img/content/icons/new.png" alt="새로고침"> -->
+										<small id="epDuedate" class="text-muted"></small>
 									</div>
 								</div>
 								<div>
-									<small id="epShare" class="d-block mb-0 txt-green"> - </small>
-									<small id="ePTotal" class="text-muted d-block"> - </small>
+									<small id="epShare" class="d-block mb-0 txt-green">등록된 금액이 없습니다.</small>
+									<small id="ePTotal" class="text-muted d-block"></small>
 								</div>
 							</div>
 						</li>
@@ -284,7 +246,7 @@
 									<img class="img-xs" src="img/content/water.png" alt="coin image">
 									<div class="ml-10">
 										<h4 class="coin-name">수도</h4>
-										<small class="text-muted">납부 마감일</small>
+										<small id="watDuedate" class="text-muted"></small>
 									</div>
 								</div>
 								<div>
@@ -299,7 +261,7 @@
 									<img class="img-xs" src="img/content/monthfee.png" alt="coin image">
 									<div class="ml-10">
 										<h4 class="coin-name">생활비</h4>
-										<small class="text-muted">납부 마감일</small>
+										<small id="livDuedate" class="text-muted"></small>
 									</div>
 								</div>
 								<div>
@@ -314,7 +276,7 @@
 									<img class="img-xs" src="img/content/netflix.png" alt="coin image">
 									<div class="ml-10">
 										<h4 class="coin-name">기타</h4>
-										<small class="text-muted">납부 마감일</small>
+										<small id="etcDuedate" class="text-muted"></small>
 									</div>
 								</div>
 								<div>
@@ -400,6 +362,7 @@
 					console.log("data.price :" + data.price);
 					$("#epShare").text(makeComma(data.price) + " 원");
 					$("#ePTotal").text(makeComma(data.Tram) + " 원");
+					$("#epDueDate").text(data.dueDate);
 				},
 				error: function (request, status, error) {
 					alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
@@ -424,22 +387,27 @@
 								case '월세':
 									$("#monShare").text(makeComma(item[i].shareAmount) + " 원");
 									$("#monTotal").text(makeComma(item[i].payAmount) + " 원");
+									$("#monDueDate").text("납부 기한: " + item[i].dueDate);
 									break;
 								case '전기':
 									$("#epShare").text(makeComma(item[i].payAmount) + " 원");
 									$("#ePTotal").text(makeComma(item[i].shareAmount) + " 원");
+									$("#epDueDate").text("납부 기한: " + item[i].dueDate);
 									break;
 								case '수도':
 									$("#watShare").text(makeComma(item[i].shareAmount) + " 원");
 									$("#watTotal").text(makeComma(item[i].payAmount) + " 원");
+									$("#watDueDate").text("납부 기한: " + item[i].dueDate);
 									break;
 								case '생활비':
 									$("#livShare").text(makeComma(item[i].shareAmount) + " 원");
 									$("#livTotal").text(makeComma(item[i].payAmount) + " 원");
+									$("#livDueDate").text("납부 기한: " + item[i].dueDate);
 									break;
 								case '기타':
 									$("#etcShare").text(makeComma(item[i].shareAmount) + " 원");
 									$("#etcTotal").text(makeComma(item[i].payAmount) + " 원");
+									$("#etcDueDate").text("납부 기한: " + item[i].dueDate);
 									break;
 							}
 						}

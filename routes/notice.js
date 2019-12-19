@@ -7,9 +7,14 @@ var jwt = require('jsonwebtoken');
 var tokenKey = "fintech123456789danahkim";
 var auth = require("../lib/auth");
 
+
+//뷰 이동
+router.get('/', function(req, res) {
+    res.render('notice');
+});
 //전체 공지 가져오기
-//http://localhost:3000/notice
-router.get('/', auth, function(req, res) {
+//http://localhost:3000/notice/items
+router.get('/items', auth, function(req, res) {
     var userId = req.decoded.userId;
     connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
     [userId], function (error, result) {
