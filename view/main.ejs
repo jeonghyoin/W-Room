@@ -53,6 +53,14 @@
          border-radius: 70%;
          overflow: hidden;
       }
+
+      #refreshBtn:hover {
+         cursor: pointer;
+      }
+
+      .eClick:hover {
+         background-color: #E6E6E6;
+      }
    </style>
 
 </head>
@@ -281,7 +289,7 @@
                         </div>
                      </div>
                   </li>
-                  <li>
+                  <li class="eClick">
                      <div id="refreshBtn" class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
                            <img class="img-xs" src="img/content/thunder.png" alt="coin image">
@@ -416,7 +424,7 @@
                      if (!data[i].image) data[i].image = "/img/content/profile.png";
                      $("#nameCard").append(
                         //'<div class="swiper-slide">'+
-                        '<div id="userList" class="money-receiver">' +
+                        '<div id="userList" class="money-receiver friendsBox">' +
                         '<img src="' + data[i].image + '" alt="">' +
                         '<h4>' + data[i].name + '</h4>' +
                         '</div>'
@@ -450,9 +458,7 @@
                $("#epDueDate").text(data.dueDate);
             },
             error: function (request, status, error) {
-               alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
-                  "error:" + error);
-               // alert('눌렸나?');
+               alert("api 호출 오류!");
             }
          })
       });
