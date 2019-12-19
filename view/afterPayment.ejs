@@ -67,7 +67,7 @@
 			<!-- Header area start -->
 			<header> <!-- extra class no-background -->
 				<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
-				<h1 class="page-title">결제 목록</h1>
+				<h1 class="page-title">납부 완료한 목록</h1>
 				<div class="navi-menu-button">
 					<em></em>
 					<em></em>
@@ -85,6 +85,7 @@
 							  <tr>
 								<th scope="col">카테고리</th>
 								<th scope="col">등록일</th>
+								<th scope="col">납부기한</th>
 								<th scope="col">금액</th>
 								<th scope="col">설명</th>
 							  </tr>
@@ -139,7 +140,7 @@
 			},
 			success: function (item) {
 				console.log(item);
-				/* var categoryName;
+				var categoryName;
 				for(var i=0; i < item.length; i++) {
 					switch (item[i].payCategory) {
 						case 1: categoryName="월세"; break;
@@ -151,12 +152,13 @@
 					$("#paymentItems").append(
 						'<tr>'+
 							'<th>'+categoryName+'</th>'+
-							'<td>'+item[i].payDate.substr(0,10)+'</td>'+
+							'<th>'+item[i].payDate+'</th>'+
+							'<td>'+item[i].dueDate+'</td>'+
 							'<td>'+item[i].shareAmount+'</td>'+
 							'<td>'+item[i].memo+'</td>'+
 						'</tr>'
 					)
-				} */
+				}
 			},
 			error: function (request, status, error) {
 				alert("code:" + request.status + "\n" + "message:" +

@@ -400,8 +400,7 @@
             },
             success: function (data) {
                //이미지
-               console.log(">>> data : " + data[0].image);
-
+               //console.log(">>> data : " + data[0].image);
                $("#userName").text(data[0].name);
                var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
                $("#groupName").text(groupYN);
@@ -416,7 +415,6 @@
             }
          })
       }
-
       getImg();
 
       displayGroup();

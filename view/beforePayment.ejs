@@ -51,16 +51,7 @@
 						</li>
 						<li class="">
 							<a href="/signup.html"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-							<!-- <ul>
-								<li><a href="login.html" data-loader="show">Login</a></li>
-								<li><a href="signup.html" data-loader="show">Register</a></li>
-								<li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
-							</ul>-->
 						</li>
-							<!-- <li><a href="/profile.html" data-loader="show">User Profile</a></li>
-							<li><a href="/search-result.html" data-loader="show">Search Results</a></li>
-							<li><a href="/contact.html" data-loader="show">Contact</a></li>
-							<li class="active"><a href="/blank.html" data-loader="show">Blank Page</a></li> -->
 					</ul>
 				</div>
 			<!-- Menu navigation end -->
@@ -70,7 +61,7 @@
 			<!-- Header area start -->
 			<header> <!-- extra class no-background -->
 				<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
-				<h1 class="page-title">결제 목록</h1>
+				<h1 class="page-title">납부해야 할 목록</h1>
 				<div class="navi-menu-button">
 					<em></em>
 					<em></em>
@@ -90,7 +81,7 @@
 								<th scope="col">등록일</th>
 								<th scope="col">총액</th>
 								<th scope="col">설명</th>
-								<th scope="col">기한</th>
+								<th scope="col">납부기한</th>
 								<th scope="col">송금</th>
 							  </tr>
 							</thead>
@@ -136,7 +127,6 @@
 	<script>
 	var jwtToken = sessionStorage.getItem('jwtToken');
 	$(document).ready(function() {
-		console.log("시작")
 		$.ajax({
 			url: 'http://localhost:3000/payment/status/0',
 			type: 'GET',
@@ -153,6 +143,7 @@
 						case 4: categoryName="수도"; break;
 						case 5: categoryName="기타"; break;
 					}
+					console.log(item[i].payDate);
 					$("#paymentItems").append(
 						'<tr>'+
 							'<th id="categoryName-' +i+ '">'+categoryName+'</th>'+
@@ -190,7 +181,6 @@
 		parm.push( ['categoryName', categoryName] );
 		parm.push( ['payDate', payDate] );
 		parm.push( ['payAmount', payAmount] );
-
 
         for (var i = 0; i < parm.length; i++) {
             input[i] = document.createElement("input");

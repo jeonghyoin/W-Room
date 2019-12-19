@@ -64,6 +64,7 @@ router.get('/category', auth, function(req, res) {
     });
 });
 
+//TODO: yn db 기본값 설정(false)
 //납부 내역 조회 - TODO: 테스트
 //0, 납부 미완 | 1, 납부 완료
 //http://localhost:3000/payment/{flag}
@@ -79,24 +80,20 @@ router.get('/:flag', function(req, res) {
 router.get('/status/:flag', auth, function(req, res) {
     var flag = req.params.flag;
     var userId = req.decoded.userId;
-    connection.query('SELECT * FROM pay INNER JOIN dutchpayyn ' + 
-    'ON pay.payID = dutchpayyn.dutchpayID ' +
+    connection.query('SELECT * FROM pay INNER JOIN dutchpayyn ON pay.payID = dutchpayyn.payID '+
     'WHERE dutchpayyn.User_userID = ? AND dutchpayyn.dutchpayYN = ?',
     [userId, flag], function (error, results) {
         if (error) {
             throw error;
         } else {
+            console.log(results);
+            //TODO: 테이블 payyn 기본값 설정하기, paydate null 수정하기
             //TODO: 데이터 포멧
             //var dueDate = moment(results[0].dueDate).format('YYYY-MM-DD hh:mm');
             //console.log(results);
             res.json(results);
         }
     });
-});
-
-//납부 내역 삭제
-//http://localhost:3000/payment/{id}
-router.get('/:id', function(req, res) {
 });
 
 //납부 내역 등록
@@ -120,13 +117,8 @@ router.post('/', auth, function(req, res) {
                 if (error) {
                     throw error;
                 } else {
-                    console.log('방 인원: '+results[0].share);
-                    console.log('마감일: '+data.dueDate);
-                    console.log('cate: '+data.payCategory);
-                    console.log('전체 금액:'+data.payAmount);
                     var shareAmount = data.payAmount / results[0].share;
                     var currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-                    //pay 데이터 삽입
                     connection.query('INSERT INTO pay ' +
                     '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, RoomShare_roomID) VALUES (?,?,?,?,?,?,?)',
                     [data.payCategory, data.payAmount, shareAmount, currentTime, data.dueDate, data.memo, roomId],
@@ -135,7 +127,6 @@ router.post('/', auth, function(req, res) {
                             throw error;
                         } else {
                             var insertId = results.insertId;
-                            console.log('insertid: '+ insertId);
                             //유저가 속한 그룹의 유저 아이디들 가져오기
                             connection.query('SELECT User_userID FROM roomshare_has_user ' +
                             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
@@ -153,7 +144,6 @@ router.post('/', auth, function(req, res) {
                                                 throw error;
                                             } else {
                                                 console.log(row.User_userID+' 작업 완료');
-                                               
                                             }
                                         });
                                     });
@@ -170,6 +160,11 @@ router.post('/', auth, function(req, res) {
 //납부 내역 수정
 //http://localhost:3000/payment/{id}
 router.post('/:id', function(req, res) {
+});
+
+//납부 내역 삭제
+//http://localhost:3000/payment/{id}
+router.get('/:id', function(req, res) {
 });
 
 module.exports = router;
