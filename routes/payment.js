@@ -84,42 +84,55 @@ router.get('/:id', function(req, res) {
 
 //납부 내역 등록
 //http://localhost:3000/payment
-router.post('/', function(req, res) {
+router.post('/', auth, function(req, res) {
     var data = req.body;
-    connection.query('SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user ' + 
-    'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
-    'FROM wroom.roomshare_has_user WHERE User_userID = 5)',
-    function (error, results) {
+    var userId = req.decoded.userId;
+    var roomId;
+    connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
+    [userId], function (error, result) {
         if (error) {
             throw error;
         } else {
-            var shareAmount = data.payAmount / results[0].share;
-            connection.query('INSERT INTO pay ' +
-            '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID) VALUES (?,?,?,?,?,?,?,?)',
-            [data.payCategory, data.payAmount, shareAmount, data.payDate, data.dueDate, data.memo, data.payYN, data.RoomShare_roomID],
-            function (error, results) {
-                if(error) {
+            roomId = result[0].RoomShare_roomID;
+            //유저가 속한 룸의 인원
+            connection.query('SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user ' + 
+            'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
+            'FROM wroom.roomshare_has_user WHERE User_userID = ?)',
+            [userId], function (error, results) {
+                if (error) {
                     throw error;
-                } else { //유저번호 임시
-                    var insertId = results.insertId;
-                    connection.query('SELECT User_userID FROM roomshare_has_user ' +
-                    'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
-                    'FROM roomshare_has_user WHERE User_userID = 5)',
-                    function (error, result) {
+                } else {
+                    var shareAmount = data.payAmount / results[0].share;
+                    //pay 데이터 삽입
+                    connection.query('INSERT INTO pay ' +
+                    '(payCategory, payAmount, shareAmount, payDate, dueDate, memo, payYN, RoomShare_roomID) VALUES (?,?,?,?,?,?,?,?)',
+                    [data.payCategory, data.payAmount, shareAmount, data.payDate, data.dueDate, data.memo, data.payYN, roomId],
+                    function (error, results) {
                         if(error) {
                             throw error;
                         } else {
-                            Object.keys(result).forEach(function(key) {
-                                var row = result[key];
-                                connection.query('INSERT INTO dutchpayyn(payID, User_userID) VALUES (?,?)',
-                                [insertId, row.User_userID],
-                                function (error, results) {
-                                    if(error) {
-                                        throw error;
-                                    } else {
-                                        console.log(row.User_userID+' 작업 완료');
-                                    }
-                                });
+                            var insertId = results.insertId;
+                            //유저가 속한 그룹의 유저 아이디들 가져오기
+                            connection.query('SELECT User_userID FROM roomshare_has_user ' +
+                            'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
+                            'FROM roomshare_has_user WHERE User_userID = ?)',
+                            [userId], function (error, result) {
+                                if(error) {
+                                    throw error;
+                                } else {
+                                    Object.keys(result).forEach(function(key) {
+                                        var row = result[key];
+                                        connection.query('INSERT INTO dutchpayyn(payID, User_userID) VALUES (?,?)',
+                                        [insertId, row.User_userID],
+                                        function (error, results) {
+                                            if(error) {
+                                                throw error;
+                                            } else {
+                                                console.log(row.User_userID+' 작업 완료');
+                                            }
+                                        });
+                                    });
+                                }
                             });
                         }
                     });
