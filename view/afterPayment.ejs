@@ -93,10 +93,9 @@
 							<thead>
 							  <tr>
 								<th scope="col">카테고리</th>
-								<th scope="col">납부금액</th>
+								<th scope="col">등록일</th>
+								<th scope="col">금액</th>
 								<th scope="col">설명</th>
-								<th scope="col">시작일</th>
-								<th scope="col">종료일</th>
 							  </tr>
 							</thead>
 							<tbody id="paymentItems">
@@ -148,14 +147,21 @@
 				'x-access-token': jwtToken
 			},
 			success: function (item) {
+				var categoryName;
 				for(var i=0; i < item.length; i++) {
+					switch (item[i].payCategory) {
+						case 1: categoryName="월세"; break;
+						case 2: categoryName="전기"; break;
+						case 3: categoryName="생활비"; break;
+						case 4: categoryName="수도"; break;
+						case 5: categoryName="기타"; break;
+					}
 					$("#paymentItems").append(
 						'<tr>'+
-							'<th>'+item[i].payCategory+'</th>'+
+							'<th>'+categoryName+'</th>'+
+							'<td>'+item[i].payDate.substr(0,10)+'</td>'+
 							'<td>'+item[i].shareAmount+'</td>'+
 							'<td>'+item[i].memo+'</td>'+
-							'<td>'+item[i].payDate+'</td>'+
-							'<td>'+item[i].dueDate+'</td>'+
 						'</tr>'
 					)
 				}
