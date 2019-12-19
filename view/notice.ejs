@@ -85,12 +85,13 @@
 								<th scope="col">글번호</th>
 								<th scope="col">내용</th>
 								<th scope="col">작성일</th>
-								<!-- <th scope="col">삭제</th> -->
+								<th scope="col">삭제</th>
 							  </tr>
 							</thead>
 							<tbody id="noticeItems">
 							</tbody>
-						  </table>
+						</table>
+					<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">공지 등록</button>
 					</div>
 					<div id="transactionList"></div>
 				</div>
@@ -121,6 +122,33 @@
 		  	<div class="circle3"></div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">공지사항 등록</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<form id="noticeForm">
+					<div class="form-group">
+						<label for="exampleFormControlTextarea1">내용</label>
+						<textarea class="form-control" id="contents" rows="3"></textarea>
+					  </div>
+				</form>
+			</div>
+			<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" id="noticeInsertBtn" class="btn btn-outline-dark">Save</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	
 	<!-- JQuery library file. requared all pages -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<!-- Template global script file. requared all pages -->
@@ -130,11 +158,13 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 	<script>
+		var jwtToken = sessionStorage.getItem('jwtToken');
+
 		//공지 가져오기
 		$(document).ready(function() {
 			var jwtToken = sessionStorage.getItem('jwtToken');
 			$.ajax({
-				url: 'http://localhost:3000/notice',
+				url: 'http://localhost:3000/notice/items',
 				type: 'GET',
 				headers: {
 					'x-access-token': jwtToken
@@ -143,9 +173,11 @@
 					for(var i=0; i < item.length; i++) {
 						$("#noticeItems").append(
 							'<tr>'+
-								'<th>'+item[i].noticeId+'</th>'+
+								'<th>'+item[i].noticeID+'</th>'+
 								'<td>'+item[i].contents+'</td>'+
 								'<td>'+item[i].created+'</td>'+
+								'<td id="deleteBtn" ><button type="button" class="btn btn-outline-dark"'+
+								'value="'+item[i].noticeID+'">삭제</button></td>'+
 							'</tr>'
 						)
 					}
@@ -156,15 +188,30 @@
 				}
 			});
 		})
+		//공지사항 등록
+		$('#noticeInsertBtn').click(function() {
+			var contents = $('#contents').val();
+			$.ajax({
+				url: '/notice',
+				type: 'POST',
+				data: {contents: contents},
+				headers: {
+					'x-access-token': jwtToken
+				},
+				success: function(data) {
+					//TODO: 페이지 리로드
+				},
+			});
+		});
 		//게시글 삭제
-		$("button[name='delete']").click(function() {
+		$('#deleteBtn').click(function() {
 			var id = this.value;
 			if(confirm(id+"번째 글을 삭제하시겠습니까?")){
 				$.ajax({
 					url: '/notice/'+id,
-					type: 'GET',
+					type: 'DELETE',
 					success: function(data) {
-						//location.reload();
+						location.reload();
 					},
 				});
 			}

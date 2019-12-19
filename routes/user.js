@@ -42,7 +42,6 @@ router.post("/kakao", function (req, res) {
            '(name, email, age, gender, kakaoID, image) VALUES (?,?,?,?,?,?)',
                 [name, email, age, gender, kakaoID, image], function (error, results, fields) {
                 if (error) throw error;
-                console.log(results);
             })
             res.json(0);
         } else { // 사용자가 있다면 1
@@ -93,8 +92,7 @@ router.get("/authResult", function (req, res) {
     connection.query('UPDATE user SET ' +
     'accessToken = ?, refreshToken=?, userSeqno =? WHERE kakaoId = ?',
     [access_token, refresh_token, user_seq_no, currentUserID], function (error, results, fields) {
-        if (error) throw error;
-        console.log(results);       
+        if (error) throw error;     
     });
     res.send("현재 창을 닫고 회원가입을 계속 해주세요.");
   }) // 토큰과 ID 값 받아와서 DB에 저장까지 완료
@@ -108,7 +106,6 @@ router.post('/passwdUpdate', function (req, res) { // 패스워드 업데이트
     connection.query('UPDATE user SET ' +
     'password = ? WHERE email = ?', [password, email], function (error, results, fields) {
         if (error) throw error;
-        console.log(results);
         res.json(1);       
     });     
 });

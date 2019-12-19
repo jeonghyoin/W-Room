@@ -25,15 +25,12 @@ router.post('/', auth, function(req, res){
             console.log('사용자가 없습니다');
         }
         else {
-            userImg = results[0].image;
             roomIDresult= results[0].roomID;
             console.log(roomIDresult);
            // resultObject = results;
             connection.query('SELECT * FROM user WHERE roomID = ?', [roomIDresult], function (error, results, fields){
                 console.log(results);
                 resultObject=results;
-                resultObject.img = userImg;
-                console.log(`resultObject.img 값 : ${resultObject.img}`);
                 res.json(resultObject);
             })
            // 

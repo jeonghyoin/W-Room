@@ -8,9 +8,16 @@ var jwt = require('jsonwebtoken');
 var tokenKey = "fintech123456789danahkim";
 var auth = require("../lib/auth");
 
-
 router.get('/bill', function(req, res) {
-    res.render('bill');
+    console.log(req.query);
+    res.render('bill', {
+        "dutchpayID" : req.query.dutchpayID,
+        "totalAmount" : req.query.totalAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
+        "payAmount" : req.query.payAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
+        "dutchpayID" : req.query.dutchpayID,
+        "categoryName" : req.query.categoryName,
+        "payDate" : req.query.payDate
+    });
 });
 
 router.get('/check', function(req, res) {
@@ -38,19 +45,21 @@ router.get('/category', auth, function(req, res) {
         if (error) {
             throw error;
         } else {
-            var roomId = result[0].RoomShare_roomID;
-            connection.query('SELECT * FROM pay INNER JOIN paycategory ON pay.payCategory = paycategory.categoryInt '+
-            'AND pay.RoomShare_roomID = ? '+
-            'WHERE (pay.payCategory, pay.payDate) '+
-            'IN (SELECT pay.payCategory, MAX(pay.payDate) FROM pay GROUP BY pay.payCategory)',
-            [roomId], function (error, results) {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log(results);
-                    res.json(results);
-                }
-            });     
+            if (result.length >= 1) { // 룸 아이디가 있는 사용자만!
+                var roomId = result[0].RoomShare_roomID;
+                connection.query('SELECT * FROM pay INNER JOIN paycategory ON pay.payCategory = paycategory.categoryInt '+
+                'AND pay.RoomShare_roomID = ? '+
+                'WHERE (pay.payCategory, pay.payDate) '+
+                'IN (SELECT pay.payCategory, MAX(pay.payDate) FROM pay GROUP BY pay.payCategory)',
+                [roomId], function (error, results) {
+                    if (error) {
+                        throw error;
+                    } else {
+                        console.log(results);
+                        res.json(results);
+                    }
+                })
+            };     
         }
     });
 });
@@ -66,6 +75,7 @@ router.get('/:flag', function(req, res) {
         res.render('beforePayment');
     }
 });
+
 //http://localhost:3000/payment/status/{flag}
 router.get('/status/:flag', auth, function(req, res) {
     var flag = req.params.flag;
