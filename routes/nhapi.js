@@ -23,12 +23,11 @@ router.post('/efpayment', auth, function (req, res) {
     // sql 로그인 id 수정
     var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = ?)';
 
-    connection.query(rMember,[userId],
+    connection.query(rMember, [userId],
         function (error, rMemberResults, fields) {
             if (error) throw error;
 
             console.log("룸메이트 수: " + rMemberResults[0].share);
-
             var options = {
                 method: 'POST',
                 url: 'https://developers.nonghyup.com/InquireElectricityFarePayment.nh',
@@ -39,7 +38,7 @@ router.post('/efpayment', auth, function (req, res) {
                     Header: {
                         ApiNm: 'InquireElectricityFarePayment',
                         Tsymd: String(today),
-                        Trtm: '210400',
+                        Trtm: '112428',
                         Iscd: '000083',
                         FintechApsno: '001',
                         ApiSvcCd: '13E_001_00',
@@ -52,8 +51,33 @@ router.post('/efpayment', auth, function (req, res) {
                 json: true
             };
 
+
+            // var options = {
+            //     method: 'POST',
+            //     url: 'https://developers.nonghyup.com/InquireElectricityFarePayment.nh',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: {
+            //         Header: {
+            //             ApiNm: 'InquireElectricityFarePayment',
+            //             Tsymd: String(today),
+            //             Trtm: '112428',
+            //             Iscd: '000083',
+            //             FintechApsno: '001',
+            //             ApiSvcCd: '13E_001_00',
+            //             IsTuno: String(num),
+            //             AccessToken: '77e6e4d1423789df17041565b263c59d806da81738ad03b339ebe1ce751ca3c9'
+            //         },
+            //         ElecPayNo: '0606628088',
+            //         Acno: '3020000000071'
+            //     },
+            //     json: true
+            // };
+
             request(options, function (error, response, body) {
                 var resultObject = body;
+                console.log(`body.Tram : ${body.Tram}, rMemberResults[0].share : ${rMemberResults[0].share}`)
                 resultObject.price = body.Tram / rMemberResults[0].share;
                 console.log(" >> resultObject.price : " + resultObject.price);
                 var payCategory = 2;
@@ -82,7 +106,7 @@ router.post('/efpayment', auth, function (req, res) {
                                 if (error) throw error;
                                 else {
                                     var insertId = sql2Results.insertId;
-                                    connection.query(sql3,[userId], function (error, sql3Result) {
+                                    connection.query(sql3, [userId], function (error, sql3Result) {
                                         if (error) {
                                             throw error;
                                         } else {
