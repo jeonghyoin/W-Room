@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">ç
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
@@ -91,18 +91,10 @@
 								<th scope="col">설명</th>
 								<th scope="col">시작일</th>
 								<th scope="col">종료일</th>
+								<th scope="col">납부</th>
 							  </tr>
 							</thead>
-							<tbody>
-							  <% items.forEach(function(item, index){ %>
-								<tr>
-									<th><%= item.payCategory %></th>
-									<td><%= item.shareAmount %></td>
-									<td><%= item.memo %></td>
-									<td><%= item.payDate %></td>
-									<td><%= item.dueDate %></td>
-								  </tr>
-							  <% }); %>
+							<tbody id="paymentItems">
 							</tbody>
 						  </table>
 					</div>
@@ -138,25 +130,39 @@
 	<!-- Template global script file. requared all pages -->
 	<script src="/js/global.script.js"></script>
 	<!-- bootstrap js -->
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 	<script>
+	$(document).ready(function() {
+		var jwtToken = sessionStorage.getItem('jwtToken');
 		$.ajax({
-				url: 'http://localhost:3000/payment/0',
-				type: 'GET',
-				headers: {
-					'x-access-token': jwtToken
-				},
-				success: function (data) {
-					console.log('납부 미완 내역 조회 완료');
-				},
-				error: function (request, status, error) {
-					alert("code:" + request.status + "\n" + "message:" +
-					request.responseText + "\n" +"error:" + error);
+			url: 'http://localhost:3000/payment/status/0',
+			type: 'GET',
+			headers: {
+				'x-access-token': jwtToken
+			},
+			success: function (item) {
+				for(var i=0; i < item.length; i++) {
+					$("#paymentItems").append(
+						'<tr>'+
+							'<th>'+item[i].payCategory+'</th>'+
+							'<td>'+item[i].shareAmount+'</td>'+
+							'<td>'+item[i].memo+'</td>'+
+							'<td>'+item[i].payDate+'</td>'+
+							'<td>'+item[i].dueDate+'</td>'+
+							'<td><button type="button" class="btn btn-outline-dark"'+
+							'value="">송금 바로가기</button></td>'+
+						'</tr>'
+					)
 				}
-			})
+			},
+			error: function (request, status, error) {
+				alert("code:" + request.status + "\n" + "message:" +
+				request.responseText + "\n" +"error:" + error);
+			}
+		});
+	})
 	</script>
 </body>
 </html>
