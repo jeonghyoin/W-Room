@@ -36,19 +36,25 @@ router.get('/items', auth, function(req, res) {
 
 //공지 등록
 //http://localhost:3000/notice
-router.post('/', function(req, res){
+router.post('/', auth, function(req, res){
     var data = req.body;
-    var roomId = 1;
-    connection.query('INSERT INTO notice ' +
-    '(roomId, contents) VALUES (?,?)',
-    [roomId, data.contents], function (error, results) {
+    var contents = data.contents;
+    var userId = req.decoded.userId;
+    connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
+    [userId], function (error, result) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
-            //페이지 새로고침
+            var roomId = result[0].RoomShare_roomID;
+            connection.query('INSERT INTO notice (roomId, contents) VALUES (?,?)',
+            [roomId, contents], function (error, results) {
+                if (error) {
+                    throw error;
+                } else {
+                }
+            });
         }
-    });      
+    });
 })
 
 //공지 삭제
