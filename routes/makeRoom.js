@@ -9,7 +9,7 @@ var auth = require("../lib/auth"); // 토큰용
 router.get('/', function(req, res) {
     res.render('makeRoom');
 });
-
+    
 router.post('/update', auth, function(req, res) {
     var userId = req.decoded.userId;    
     var roomName = req.body.roomName ;
