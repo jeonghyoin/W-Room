@@ -1,175 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-	<title>WRoom</title>
-	<!-- Google font file. If you want you can change. -->
-	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
-	<!-- Fontawesome font file css -->
-	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
-	<!-- Template global css file. Requared all pages -->
-	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+   <title>WRoom</title>
+   <!-- Google font file. If you want you can change. -->
+   <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
+   <!-- Fontawesome font file css -->
+   <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+   <!-- Template global css file. Requared all pages -->
+   <link rel="stylesheet" type="text/css" href="/css/global.style.css">
+   <!-- bootstrap -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
-	<div class="wrapper">
-		<div class="nav-menu">
-			<nav class="menu">
-				<!-- Menu navigation start -->
-				<div class="nav-container">
-					<div>
-						<table>
-							<tr><th colspan="2"></th></tr>
-							<tr>
-								<th rowspan="4">
-									<a href = "profile.html"><img src="/img/content/profile.png" width = "80" alt=""></a>
-									<td> </td>
-								</th>
-								</tr>
-								<tr><td> </td></tr>
-								<tr>
-								<td><a href="/profile.html"><h3>이름<h3></a></td>
-							</tr>
-							<tr>
-								<td>그룹이름</td>
-							</tr>
-						</table>
-					</div>
-					<ul class="main-menu">
-						<!--블록 추가해서 프로필 넣기-->
-						<li class="">
-							<a href="/index.html"><img src="/img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
-						</li>
-						<li class="">
-							<a href="/wallet.html"><img src="/img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong> </a>
-						</li>
-						<li class="">
-							<a href="/trading.html"><img src="/img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
-						</li>
-						<li class="">
-							<a href="/signup.html"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-						</li>
-					</ul>
-				</div>
-			<!-- Menu navigation end -->
-			</nav>
-		</div>
-		<div class="wrapper-inline">
-			<!-- Header area start -->
-			<header> <!-- extra class no-background -->
-				<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
-				<h1 class="page-title">납부해야 할 목록</h1>
-				<div class="navi-menu-button">
-					<em></em>
-					<em></em>
-					<em></em>
-				</div>
-			</header>
-			<!-- Header area end -->
-			<!-- Page content start -->
-			<main>
-				<div class="container">
-					<div id="balanceText">
-						<!-- 결제 리스트 넣기 -->
-						<table class="table table-hover">
-							<thead>
-							  <tr>
-								<th scope="col">카테고리</th>
-								<th scope="col">등록일</th>
-								<th scope="col">총액</th>
-								<th scope="col">설명</th>
-								<th scope="col">납부기한</th>
-								<th scope="col">송금</th>
-							  </tr>
-							</thead>
-							<tbody id="paymentItems">
-							</tbody>
-						  </table>
-					</div>
-					<div id="transactionList"></div>
-				</div>
-				<div class="form-divider"></div>
-				<!-- footer 영역-->
-				<footer>
-					<div class="container">
-						<ul>
-							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-							<li><a href="#"><i class="fa fa-google"></i></a></li>
-							<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-						</ul>
-						<p>Copyright © All Right Reserved</p>
-					</div>
-				</footer>
-			</main>
-			<!-- Page content end -->
-		</div>
-	</div>
-	<!--Page loader DOM Elements. Requared all pages-->
-	<div class="sweet-loader">
-		<div class="box">
-		  	<div class="circle1"></div>
-		  	<div class="circle2"></div>
-		  	<div class="circle3"></div>
-		</div>
-	</div>
-	<!-- JQuery library file. requared all pages -->
-	<script src="/js/jquery-3.2.1.min.js"></script>
-	<!-- Template global script file. requared all pages -->
-	<script src="/js/global.script.js"></script>
-	<!-- bootstrap js -->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+   <div class="wrapper">
+      <div class="nav-menu">
+         <nav class="menu">
+            <!-- Menu navigation start -->
+            <div class="nav-container">
+               <div>
+                  <table>
+                     <tr><th colspan="2"></th></tr>
+                     <tr>
+                        <th rowspan="4">
+                           <a href = "profile.html"><img src="/img/content/profile.png" width = "80" alt=""></a>
+                           <td> </td>
+                        </th>
+                        </tr>
+                        <tr><td> </td></tr>
+                        <tr>
+                        <td><a href="/profile.html"><h3>이름<h3></a></td>
+                     </tr>
+                     <tr>
+                        <td>그룹이름</td>
+                     </tr>
+                  </table>
+               </div>
+               <ul class="main-menu">
+                  <!--블록 추가해서 프로필 넣기-->
+                  <li class="">
+                     <a href="/index.html"><img src="/img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="/wallet.html"><img src="/img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="/trading.html"><img src="/img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
+                  </li>
+                  <li class="">
+                     <a href="/signup.html"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
+                  </li>
+               </ul>
+            </div>
+         <!-- Menu navigation end -->
+         </nav>
+      </div>
+      <div class="wrapper-inline">
+         <!-- Header area start -->
+         <header> <!-- extra class no-background -->
+            <a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
+            <h1 class="page-title">납부해야 할 목록</h1>
+            <div class="navi-menu-button">
+               <em></em>
+               <em></em>
+               <em></em>
+            </div>
+         </header>
+         <!-- Header area end -->
+         <!-- Page content start -->
+         <main>
+            <div class="container">
+               <div id="balanceText">
+                  <!-- 결제 리스트 넣기 -->
+                  <table class="table table-hover">
+                     <thead>
+                       <tr>
+                        <th scope="col">카테고리</th>
+                        <th scope="col">등록일</th>
+                        <th scope="col">총액</th>
+                        <th scope="col">설명</th>
+                        <th scope="col">납부기한</th>
+                        <th scope="col">송금</th>
+                       </tr>
+                     </thead>
+                     <tbody id="paymentItems">
+                     </tbody>
+                    </table>
+               </div>
+               <div id="transactionList"></div>
+            </div>
+            <div class="form-divider"></div>
+            <!-- footer 영역-->
+            <footer>
+               <div class="container">
+                  <ul>
+                     <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                     <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                     <li><a href="#"><i class="fa fa-google"></i></a></li>
+                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                  </ul>
+                  <p>Copyright © All Right Reserved</p>
+               </div>
+            </footer>
+         </main>
+         <!-- Page content end -->
+      </div>
+   </div>
+   <!--Page loader DOM Elements. Requared all pages-->
+   <div class="sweet-loader">
+      <div class="box">
+           <div class="circle1"></div>
+           <div class="circle2"></div>
+           <div class="circle3"></div>
+      </div>
+   </div>
+   <!-- JQuery library file. requared all pages -->
+   <script src="/js/jquery-3.2.1.min.js"></script>
+   <!-- Template global script file. requared all pages -->
+   <script src="/js/global.script.js"></script>
+   <!-- bootstrap js -->
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-	<script>
-	var jwtToken = sessionStorage.getItem('jwtToken');
-	$(document).ready(function() {
-		$.ajax({
-			url: 'http://localhost:3000/payment/status/0',
-			type: 'GET',
-			headers: {
-				'x-access-token': jwtToken
-			},
-			success: function (item) {
-				var categoryName;
-				for(var i=0; i < item.length; i++) {
-					switch (item[i].payCategory*1) {
-						case 1: categoryName="월세"; break;
-						case 2: categoryName="전기"; break;
-						case 3: categoryName="생활비"; break;
-						case 4: categoryName="수도"; break;
-						case 5: categoryName="기타"; break;
-					}
-					console.log(item[i].payDate);
-					$("#paymentItems").append(
-						'<tr>'+
-							'<th id="categoryName-' +i+ '">'+categoryName+'</th>'+
-							'<td id="payDate-' +i+ '">'+item[i].payDate+'</td>'+ // 등록일 .substr(0,10)
-							'<td id="totalAmount-' +i+ '">'+item[i].payAmount+'</td>'+ // 금액
-							'<td>'+item[i].memo+'</td>'+ // 설명
-							'<td>'+item[i].dueDate+'</td>'+ // 납부 .substr(0,10)
-							'<td><a href="javascript:myFunction('+i+','+ item[i].dutchpayID +','+item[i].shareAmount+')">'+ item[i].shareAmount +'원 송금하기</a></td>'+
-						'</tr>'
-					);
-				}
-			},
-			error: function (request, status, error) {
-				alert("code:" + request.status + "\n" + "message:" +
-				request.responseText + "\n" +"error:" + error);
-			}
-		});
-	});
+   <script>
+   var jwtToken = sessionStorage.getItem('jwtToken');
+   $(document).ready(function() {
+      $.ajax({
+         url: 'http://localhost:3000/payment/status/0',
+         type: 'GET',
+         headers: {
+            'x-access-token': jwtToken
+         },
+         success: function (item) {
+            var categoryName;
+            for(var i=0; i < item.length; i++) {
+               switch (item[i].payCategory*1) {
+                  case 1: categoryName="월세"; break;
+                  case 2: categoryName="전기"; break;
+                  case 3: categoryName="생활비"; break;
+                  case 4: categoryName="수도"; break;
+                  case 5: categoryName="기타"; break;
+               }
+               console.log(item[i].payDate);
+               $("#paymentItems").append(
+                  '<tr>'+
+                     '<th id="categoryName-' +i+ '">'+categoryName+'</th>'+
+                     '<td id="payDate-' +i+ '">2019-12-20</td>'+ // 등록일 .substr(0,10)
+                     '<td id="totalAmount-' +i+ '">'+item[i].payAmount+'</td>'+ // 금액
+                     '<td>'+item[i].memo+'</td>'+ // 설명
+                     '<td>'+item[i].dueDate.substr(0,10)+'</td>'+ // 납부 .substr(0,10)
+                     '<td><a href="javascript:myFunction('+i+','+ item[i].dutchpayID +','+item[i].shareAmount+')">'+ item[i].shareAmount +'원 송금하기</a></td>'+
+                  '</tr>'
+               );
+            }
+         },
+         error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" +
+            request.responseText + "\n" +"error:" + error);
+         }
+      });
+   });
 
-	function myFunction(i, dutchpayID, shareAmount){
-		var totalAmount = $('#totalAmount-'+i).text();
-		var categoryName = $('#categoryName-'+i).text();
-		var payDate = $('#payDate-'+i).text();
-		var payAmount = shareAmount;
+   function myFunction(i, dutchpayID, shareAmount){
+      var totalAmount = $('#totalAmount-'+i).text();
+      var categoryName = $('#categoryName-'+i).text();
+      var payDate = $('#payDate-'+i).text();
+      var payAmount = shareAmount;
 
-		var form = document.createElement("form");
+      var form = document.createElement("form");
         var parm = new Array();
         var input = new Array();
 
@@ -177,10 +177,10 @@
         form.method = "get";
 
         parm.push( ['dutchpayID', dutchpayID] );
-		parm.push( ['totalAmount', totalAmount] );
-		parm.push( ['categoryName', categoryName] );
-		parm.push( ['payDate', payDate] );
-		parm.push( ['payAmount', payAmount] );
+      parm.push( ['totalAmount', totalAmount] );
+      parm.push( ['categoryName', categoryName] );
+      parm.push( ['payDate', payDate] );
+      parm.push( ['payAmount', payAmount] );
 
         for (var i = 0; i < parm.length; i++) {
             input[i] = document.createElement("input");
@@ -193,6 +193,6 @@
         form.submit();
     }
 
-	</script>
+   </script>
 </body>
 </html>

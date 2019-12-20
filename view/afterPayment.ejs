@@ -152,8 +152,8 @@
 					$("#paymentItems").append(
 						'<tr>'+
 							'<th>'+categoryName+'</th>'+
-							'<th>'+item[i].payDate+'</th>'+
-							'<td>'+item[i].dueDate+'</td>'+
+							'<td id="payDate-' +i+ '">2019-12-20</td>'+
+							'<td>'+item[i].dueDate.substr(0,10)+'</td>'+
 							'<td>'+item[i].shareAmount+'</td>'+
 							'<td>'+item[i].memo+'</td>'+
 						'</tr>'

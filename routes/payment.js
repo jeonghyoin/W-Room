@@ -144,9 +144,11 @@ router.post('/', auth, function(req, res) {
                                                 throw error;
                                             } else {
                                                 console.log(row.User_userID+' 작업 완료');
+                                               
                                             }
                                         });
                                     });
+                                    res.json(1);
                                 }
                             });
                         }
