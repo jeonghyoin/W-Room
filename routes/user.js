@@ -76,9 +76,8 @@ router.get("/authResult", function (req, res) {
       header : "",
       form : {
         code : authCode, // 인증 코드 받아서  
-        // 수지언니 앱 정보
-        client_id : "BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi",
-        client_secret : "BvrW1wX8Fy1juZAh1Wdzhk7AgDBgrcPIr84KrVYi",
+        client_id : "앱 키",
+        client_secret : "앱 시크릿키",
         redirect_uri : "http://localhost:3000/user/authResult",
         grant_type : "authorization_code"
       }

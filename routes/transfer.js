@@ -76,8 +76,8 @@ router.post('/withdraw', auth, function(req, res){
             headers : {
             },
             form: 
-            { client_id: 'BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi',
-              client_secret: 'BvrW1wX8Fy1juZAh1Wdzhk7AgDBgrcPIr84KrVYi',
+            { client_id: '앱 키',
+              client_secret: '앱 시크릿키',
               scope: 'oob',
               grant_type: 'client_credentials' }
           }
