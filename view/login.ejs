@@ -17,10 +17,11 @@
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 	<style>
-		#loginBtn {
+		#loginBtn, #signupBtn {
 			width: 300px;
 			height: 49px;
 			margin: 0 auto;
+			margin-bottom: 10px;
 			font-size: 17px;
 		}
 
@@ -42,23 +43,14 @@
 	<div class="wrapper-inline">
 		<!-- Header area start -->
 		<header>
-			<!-- extra class no-background -->
-			<!-- <a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a> -->
 			<h1 class="page-title">로그인</h1>
-			<!-- <div class="navi-menu-button">
-					<em></em>
-					<em></em>
-					<em></em>
-				</div> -->
 		</header>
 		<!-- Header area end -->
+
 		<!-- Page content start -->
 		<main>
-
 			<div class="container">
 				<div class="form-divider"></div>
-				<!-- <div class="form-label-divider"> -->
-					<!-- <span>OR</span> -->
 				</div>
 				<div class="form-divider"></div>
 
@@ -80,17 +72,13 @@
 				<div class="form-divider"></div>
 
 				<div class="form-row">
+					<button type="button" id="signupBtn" class="button circle block orange">SignUp</button>
 					<button type="button" id="loginBtn" class="button circle block orange">Login</button>
-
-					<div class="form-row">
-						<a id="custom-login-btn" href="javascript:loginWithKakao()">
-							<img id="kakaoBtn" src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg"
-								width="300" />
-						</a> <!-- 카카오톡으로 로그인하기 -->
-					</div>
+					<!-- 카카오톡으로 로그인하기 -->
+					<a id="custom-login-btn" href="javascript:loginWithKakao()">
+						<img id="kakaoBtn" src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300" />
+					</a> 
 				</div>
-
-
 			</div>
 		</main>
 		<!-- Page content end -->
@@ -114,6 +102,10 @@
 	<script src="/js/global.script.js"></script>
 
 	<script>
+		$('#signupBtn').click(function () {
+			location.href = "/user/signup";
+		});
+
 		$('#loginBtn').click(function () {
 			var email = $('#userEmail').val();
 			var password = $('#userPassword').val();
@@ -133,12 +125,11 @@
 						window.location = '/main';
 					}
 				}
-			})
-		})
+			});
+		});
 	</script>
 
 	<script type='text/javascript'>
-		//<![CDATA[
 		// 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('e782e062553d3c8c1b5ebcce3ca1cdf0');
 
@@ -146,14 +137,10 @@
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
 				success: function (authObj) {
-					// console.log(JSON.stringify(authObj));
 					var token = JSON.stringify(authObj.access_token);
-					// console.log(token);
-
 					Kakao.API.request({
 						url: '/v2/user/me',
 						success: function (res) {
-
 							$.ajax({
 								url: 'http://localhost:3000/user/kakao',
 								type: 'POST',
@@ -188,9 +175,7 @@
 				}
 			});
 		};
-		//]]>
 	</script>
-
 </body>
 
 </html>

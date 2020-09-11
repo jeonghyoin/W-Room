@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../mysql-db');
+var connection = require('../database/mysql');
 var moment = require('moment');
 
 //jwt token

@@ -330,7 +330,7 @@
                      </div>
                   </li>
                   <li>
-                     <div class="d-flex align-items-center justify-content-between">
+                     <div id="refresh-liv" class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
                            <img class="img-xs" src="img/content/main/marketing.png" alt="coin image">
                            <div class="ml-10">
@@ -443,7 +443,7 @@
                      //   '<div class="swiper-slide">'+
                      '<div class="money-receiver" style="width: 100%;">' +
                      '<a href="/makeRoom"><img src="img/plus.png" alt=""></a>' +
-                     '<h4>모임개설</h4>' +
+                     '<h4>구성원 초대하기</h4>' +
                      '</div>'
                   )
                }
@@ -514,8 +514,13 @@
                }
             },
             error: function (request, status, error) {
-               alert("code:" + request.status + "\n" + "message:" +
-                  request.responseText + "\n" + "error:" + error);
+               if(request.status === 403) {
+                  alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
+                  location.href = "/user/login";
+               } else {
+                  alert("code: " + request.status + "\n"
+                  +"message: " + request.responseText + "\n" +"error: " + error);
+               }
             }
          });
       })

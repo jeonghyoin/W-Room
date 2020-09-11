@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken'); // 토큰용
 var tokenKey = "fintech123456789danahkim"; // 토큰용
 var auth = require("../lib/auth"); // 토큰용
 var connection = require('../server');
-var connection = require('../mysql-db');
+var connection = require('../database/mysql');
 
 var router = express.Router();
 

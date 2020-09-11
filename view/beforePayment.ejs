@@ -157,8 +157,12 @@
             }
          },
          error: function (request, status, error) {
-            alert("code:" + request.status + "\n" + "message:" +
-            request.responseText + "\n" +"error:" + error);
+            if(request.status === 403) {
+					alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
+				} else {
+               alert("code: " + request.status + "\n"
+				   +"message: " + request.responseText + "\n" +"error: " + error);
+            }
          }
       });
    });
