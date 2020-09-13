@@ -19,9 +19,7 @@ router.get('/', function(req, res) {
 // },
 router.post('/withdraw', auth, function(req, res){
     var userId = req.decoded.userId;
-    console.log(req.body.transferVal)
     var transferVal = req.body.transferVal.substr(2).replace(",","");
-    console.log(transferVal);
     var countnum; 
     var nine = true;
     while (nine)
@@ -56,7 +54,6 @@ router.post('/withdraw', auth, function(req, res){
             }
         }
         request(option, function (error, response, body) {
-            console.log(body);
             var resultObject = body;
             if (resultObject.rsp_code == "A0000"){
               res.json(1);
@@ -130,7 +127,6 @@ router.post('/deposit', auth, function(req, res){
         }
 
         request(option, function(error, response, body) {
-          console.log(body);
             var resultObject = body;
             if (resultObject.rsp_code == "A0000"){
               res.json(1);
@@ -148,8 +144,7 @@ router.post('/balance', auth, function(req, res){
 
   connection.query('SELECT * FROM user WHERE userID = ?', [userId],
         function (error, results, fields) { // 디비에서 토큰 받아오기
-        if (error) throw error;
-        console.log(results);       
+        if (error) throw error;   
         var option = {
           method : "GET",
           url : "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num",
@@ -163,7 +158,6 @@ router.post('/balance', auth, function(req, res){
           }
         }
         request(option, function(error, response, body) {
-          console.log(body);
           var resultObject = JSON.parse(body);
           res.json(resultObject);
         });
@@ -178,7 +172,6 @@ router.post('/payed', auth, function(req, res) {
   connection.query('UPDATE dutchpayyn SET ' +
     'dutchpayYN = ?, payDate = now() WHERE (dutchpayID = ? and User_userID = ?)', [1, dutchpayID, userId], function (error, results, fields) {
         if (error) throw error;
-        console.log(results);
         res.json(1);
     });   
 
@@ -188,15 +181,13 @@ router.post('/payed', auth, function(req, res) {
 router.post('/groupList', auth, function(req, res) {
   var userId = req.decoded.userId ;
   var dutchpayID = req.body.dutchpayID ;
-  console.log(userId, dutchpayID);
+  // console.log(userId, dutchpayID);
 
   connection.query('SELECT payID FROM dutchpayyn WHERE dutchpayID = ? and User_userID = ?', [10, 5], function (error, results, fields) {
         if (error) throw error;
 
         connection.query('SELECT * FROM dutchpayyn WHERE (dutchpayID = ? and PayID = ?)', [10, results[0].payID], function (error, results, fields) {
           if (error) throw error;
-          console.log("results");
-          console.log(results);
           res.send(results);
       });
     });   

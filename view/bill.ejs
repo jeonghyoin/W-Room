@@ -273,7 +273,6 @@
    <script>
 
       var dutchpayID = $('#dutchpayID').val();
-      console.log(dutchpayID);
       history.replaceState({}, null, location.pathname);
 
       var jwtToken = sessionStorage.getItem('jwtToken');
@@ -340,7 +339,6 @@
             var confirm_msg = "현재 " + product_name + " 계좌의 출금 가능액은 " + available_amt +"원입니다. \n"
                + transferVal.substr(2)+ "원을 송금하시겠습니까?";
             check = confirm(confirm_msg);
-            console.log("왜 안해조");
 
       if (check == true) { // 진짜로 송금한다고 하면
          $.ajax({
@@ -369,8 +367,8 @@
                  success:function(data){
                     if (data == 1){
                      payed = true;
-                      console.log("송금 완료");
-                       document.getElementById('transferNEED').innerHTML = "송금완료된 금액";
+                     console.log("송금 완료");
+                     document.getElementById('transferNEED').innerHTML = "송금완료된 금액";
                      document.getElementById('transferBtn').style.display = "none";
                      $("#uncheckedD").attr("src", "/img/content/check.png");
                      $("#payedData").text("12-20");

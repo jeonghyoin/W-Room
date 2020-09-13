@@ -26,7 +26,6 @@ router.get("/signup", function (req, res) {
 
 // 카카오로 로그인 후 받아온 정보를 DB에 저장
 router.post("/kakao", function (req, res) {
-    console.log(req.body);
     var kakaoID = req.body.id;
     var name = req.body.nickname;
     var image = req.body.image;
@@ -135,13 +134,10 @@ router.post("/login", function(req, res) {
                     subject : 'user.login.info'
                 },
                 function(err, token){
-                    console.log('로그인 성공', token)
                     res.json(token) // 우리 서비스에 로그인하기 위한 토큰
                     // 액세스 토큰은 오픈 API를 이용하기 위한 토큰!
-                }
-            )
-            }
-          else {
+                });
+            } else {
             res.json(0);
           }
         };

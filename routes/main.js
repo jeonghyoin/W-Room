@@ -24,7 +24,6 @@ router.post('/', auth, function(req, res){
             console.log('사용자가 없습니다.');
         } else {
             roomIDresult = results[0].roomId;
-            console.log("roomIDresult " + roomIDresult);
             connection.query('SELECT * FROM user WHERE roomID = ?', [roomIDresult], function (error, results, fields){
                 res.json(results);
             })

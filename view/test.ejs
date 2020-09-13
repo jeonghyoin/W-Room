@@ -18,7 +18,6 @@
             url: 'http://localhost:3000/nh/efpayment',
             type: 'POST',
             success: function (data) {
-                console.log(data);
                 $("#value").text(data.price);
             },
             error: function (request, status, error) {

@@ -92,7 +92,7 @@
 							</thead>
 							<tbody id="paymentItems">
 							</tbody>
-						  </table>
+						</table>
 					</div>
 					<div id="transactionList"></div>
 				</div>
@@ -139,7 +139,6 @@
 				'x-access-token': jwtToken
 			},
 			success: function (item) {
-				console.log(item);
 				var categoryName;
 				for(var i=0; i < item.length; i++) {
 					switch (item[i].payCategory) {
@@ -166,7 +165,7 @@
 				} else {
                alert("code: " + request.status + "\n"
 				   +"message: " + request.responseText + "\n" +"error: " + error);
-            }
+            	}
 			}
 		});
 	})

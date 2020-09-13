@@ -18,16 +18,12 @@ router.post('/efpayment', auth, function (req, res) {
     var today = moment().format("YYYYMMDD");
     var num = Math.floor(Math.random() * 9000) + 1000;
 
-    console.log(today);
-
     // sql 로그인 id 수정
     var rMember = 'SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user WHERE RoomShare_roomID IN (SELECT RoomShare_roomID FROM wroom.roomshare_has_user WHERE User_userID = ?)';
-
     connection.query(rMember, [userId],
         function (error, rMemberResults, fields) {
             if (error) throw error;
 
-            console.log("룸메이트 수: " + rMemberResults[0].share);
             var options = {
                 method: 'POST',
                 url: 'https://developers.nonghyup.com/InquireElectricityFarePayment.nh',
@@ -50,7 +46,6 @@ router.post('/efpayment', auth, function (req, res) {
                 },
                 json: true
             };
-
 
             // var options = {
             //     method: 'POST',
@@ -77,9 +72,9 @@ router.post('/efpayment', auth, function (req, res) {
 
             request(options, function (error, response, body) {
                 var resultObject = body;
-                console.log(`body.Tram : ${body.Tram}, rMemberResults[0].share : ${rMemberResults[0].share}`)
+                // console.log(`body.Tram : ${body.Tram}, rMemberResults[0].share : ${rMemberResults[0].share}`)
                 resultObject.price = body.Tram / rMemberResults[0].share;
-                console.log(" >> resultObject.price : " + resultObject.price);
+                // console.log(" >> resultObject.price : " + resultObject.price);
                 var payCategory = 2;
                 var dueDate = moment().add("1", "M").format("YYYYMMDD");
 
@@ -95,14 +90,13 @@ router.post('/efpayment', auth, function (req, res) {
                 var sql4 = 'INSERT INTO wroom.dutchpayyn(payID, User_userID) VALUES (?,?)';
 
                 connection.query(sql1, [userId], function (error, sql1Result, fields) {
-                    console.log("this.sql : " + this.sql);
-                    console.log("sql1 :" + sql1Result[0].RoomShare_roomID);
-
+                    // console.log("this.sql : " + this.sql);
+                    // console.log("sql1 :" + sql1Result[0].RoomShare_roomID);
                     if (error) throw error;
                     else {
                         connection.query(sql2, [payCategory, resultObject.Tram, resultObject.price, null, resultObject.PbtxPayExdt, null, 0, sql1Result[0].RoomShare_roomID],
                             function (error, sql2Results, fields) {
-                                console.log("this.sql : " + this.sql);
+                                // console.log("this.sql : " + this.sql);
                                 if (error) throw error;
                                 else {
                                     var insertId = sql2Results.insertId;
@@ -117,7 +111,7 @@ router.post('/efpayment', auth, function (req, res) {
                                                         if (error) {
                                                             throw error;
                                                         } else {
-                                                            console.log('전기세 dutchpayyn 삽입 완료');
+                                                            // console.log('전기세 dutchpayyn 삽입 완료');
                                                         }
                                                     });
                                             });
@@ -126,7 +120,6 @@ router.post('/efpayment', auth, function (req, res) {
                                     res.json(resultObject);
                                 }
                             });
-
                     }
                 });
             });

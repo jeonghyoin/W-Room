@@ -10,7 +10,6 @@ var auth = require("../lib/auth");
 
 
 router.get('/bill', function(req, res) {
-    console.log(req.query.dutchpayID);
     res.render('bill', {
         "dutchpayID" : req.query.dutchpayID,
         "totalAmount" : req.query.totalAmount.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
@@ -27,6 +26,7 @@ router.get('/check', function(req, res) {
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
 router.get('/', function(req, res) {
+    console.log("호출1");
     connection.query('SELECT * FROM pay', function (error, results) {
         if (error) {
             throw error;
@@ -55,7 +55,54 @@ router.get('/category', auth, function(req, res) {
                     if (error) {
                         throw error;
                     } else {
-                        console.log(results);
+                        res.json(results);
+                    }
+                })
+            };     
+        }
+    });
+});
+
+// 생활비 내역 조회
+//http://localhost:3000/payment/living
+router.get('/living', auth, function(req, res) {
+    var userId = req.decoded.userId;
+    connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
+    [userId], function (error, result) {
+        if (error) {
+            throw error;
+        } else {
+            if (result.length >= 1) {
+                var roomId = result[0].RoomShare_roomID;
+                connection.query('SELECT * FROM pay WHERE payCategory = 3 && RoomShare_roomID = ?;',
+                [roomId], function (error, results) {
+                    if (error) {
+                        throw error;
+                    } else {
+                        res.json(results);
+                    }
+                })
+            };     
+        }
+    });
+});
+
+// 기타 내역 조회
+//http://localhost:3000/payment/etc
+router.get('/etc', auth, function(req, res) {
+    var userId = req.decoded.userId;
+    connection.query('SELECT RoomShare_roomID FROM roomshare_has_user WHERE User_userID = ?',
+    [userId], function (error, result) {
+        if (error) {
+            throw error;
+        } else {
+            if (result.length >= 1) {
+                var roomId = result[0].RoomShare_roomID;
+                connection.query('SELECT * FROM pay WHERE payCategory = 5 && RoomShare_roomID = ?;',
+                [roomId], function (error, results) {
+                    if (error) {
+                        throw error;
+                    } else {
                         res.json(results);
                     }
                 })
@@ -76,6 +123,7 @@ router.get('/:flag', function(req, res) {
         res.render('beforePayment');
     }
 });
+
 //http://localhost:3000/payment/status/{flag}
 router.get('/status/:flag', auth, function(req, res) {
     var flag = req.params.flag;
@@ -86,7 +134,6 @@ router.get('/status/:flag', auth, function(req, res) {
         if (error) {
             throw error;
         } else {
-            console.log(results);
             //TODO: 테이블 payyn 기본값 설정하기, paydate null 수정하기
             //TODO: 데이터 포멧
             //var dueDate = moment(results[0].dueDate).format('YYYY-MM-DD hh:mm');
@@ -108,7 +155,6 @@ router.post('/', auth, function(req, res) {
             throw error;
         } else {
             roomId = result[0].RoomShare_roomID;
-            console.log('룸 아이디: '+roomId);
             //유저가 속한 룸의 인원
             connection.query('SELECT COUNT(RoomShare_roomID) as share FROM wroom.roomshare_has_user ' + 
             'WHERE RoomShare_roomID IN (SELECT RoomShare_roomID ' +
@@ -143,8 +189,7 @@ router.post('/', auth, function(req, res) {
                                             if(error) {
                                                 throw error;
                                             } else {
-                                                console.log(row.User_userID+' 작업 완료');
-                                               
+                                                // console.log(row.User_userID+' 작업 완료');
                                             }
                                         });
                                     });
@@ -161,12 +206,12 @@ router.post('/', auth, function(req, res) {
 
 //납부 내역 수정
 //http://localhost:3000/payment/{id}
-router.post('/:id', function(req, res) {
-});
+//router.post('/:id', function(req, res) {
+//});
 
 //납부 내역 삭제
 //http://localhost:3000/payment/{id}
-router.get('/:id', function(req, res) {
-});
+//router.get('/:id', function(req, res) {
+//});
 
 module.exports = router;

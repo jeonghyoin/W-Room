@@ -18,16 +18,13 @@ router.post('/update', auth, function(req, res) {
     connection.query('INSERT INTO roomshare SET ' +
     'roomName = ?, roomAccount = ?, roomLeader = ?' , [roomName, account, userId], function (error, results, fields) {
         if (error) throw error;
-        console.log(results);
         var insertId = results.insertId;
         // 룸 개설하고
         connection.query('UPDATE user SET `roomID` = ? WHERE (`userID` = ?)' , [insertId, userId], function (error, results, fields) {
         if (error) throw error;
-        console.log(results);
             // 양쪽 다 업데이트
         connection.query('INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)' , [insertId, userId], function (error, results, fields) {
             if (error) throw error;
-            console.log(results);
             // INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)
             res.json(1);       
             });  
