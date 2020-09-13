@@ -54,7 +54,7 @@
          overflow: hidden;
       }
 
-      #refreshBtn:hover, #refresh-liv:hover, #refresh-etc:hover {
+      #refreshBtn:hover, #refresh-liv:hover, #refresh-etc:hover, #main-logo:hover {
          cursor: pointer;
       }
 
@@ -165,8 +165,8 @@
                      <div class="content-head">
                         <div class="d-flex align-items-center">
                            <div class="d-flex flex-grow">
-                              <img src="img/content/wroomHor.png" width="100px" class="logo" alt=""
-                                 style="margin: 0 auto; margin-top: 11px;">
+                              <img id="main-logo" src="img/content/wroomHor.png" width="100px" class="logo"
+                                 style="margin: 0 auto; margin-top: 11px;" onclick="location.href='/main'">
                            </div>
                         </div>
                      </div>
@@ -344,7 +344,7 @@
                      </div>
                   </li>
                   <li class="eClick">
-                     <div id="refresh-etc" class="d-flex align-items-center justify-content-between" data-toggle="modal" data-target="#livingModal">
+                     <div id="refresh-etc" class="d-flex align-items-center justify-content-between" data-toggle="modal" data-target="#etcModal">
                         <div class="d-flex align-items-center">
                            <img class="img-xs" src="img/content/main/netflix.png" alt="coin image">
                            <div class="ml-10">
