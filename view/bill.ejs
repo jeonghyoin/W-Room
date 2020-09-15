@@ -156,7 +156,7 @@
                            <div class="transferValPart">
                                      <h1 class="b-val" id="transferVal">￦ <%=payAmount%></h1>
                               <p class="g-text mb-10" id="transferNEED">송금해야할 금액</p>
-                              <button id="transferBtn">송금하기</button>
+                              <button id="transferBtn" class="btn btn-light">송금하기</button>
                               <h1 class="b-text"></h1>
                            </div>
                              </div>
@@ -249,11 +249,11 @@
    <script src="/js/jquery-3.2.1.min.js"></script>
 
    <!-- Swiper JS -->
-    <script src="/js/swiper.min.js"></script>
+   <script src="/js/swiper.min.js"></script>
 
     <!-- Initialize Swiper -->
 
-     <!-- Flot Charts -->
+   <!-- Flot Charts -->
    <script src="/plugins/c3-chart/c3.min.js"></script>
    <script src="/plugins/c3-chart/d3.min.js"></script>
    <script src="/plugins/c3-chart/c3.custom.js"></script>
@@ -270,8 +270,11 @@
    <script src="/js/app-charts.js"></script>
    <script src="/js/global.script.js"></script>
 
-   <script>
+   <!-- bootstrap js -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+   <script>
       var dutchpayID = $('#dutchpayID').val();
       history.replaceState({}, null, location.pathname);
 
