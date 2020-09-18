@@ -476,7 +476,7 @@
             },
             success: function (data) {
                // console.log("data.price :" + data.price);
-               $("#epShare").text(makeComma(data.price) + " 원");
+               $("#epShare").text(makeComma(Math.ceil(data.price)) + " 원");
                $("#ePTotal").text(makeComma(data.Tram) + " 원");
                $("#epDueDate").text(data.dueDate);
             },
@@ -557,7 +557,7 @@
                            $("#monDueDate").text("납부 기한: " + item[i].dueDate);
                            break;
                         case '전기':
-                           $("#epShare").text(makeComma(item[i].shareAmount) + " 원");
+                           $("#epShare").text(makeComma(Math.ceil([i].shareAmount)) + " 원");
                            $("#ePTotal").text(makeComma(item[i].payAmount) + " 원");
                            $("#epDueDate").text("납부 기한: " + item[i].dueDate);
                            break;

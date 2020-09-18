@@ -32,6 +32,7 @@ router.post("/kakao", function (req, res) {
     var email = req.body.email;
     var age = req.body.age;
     var gender = req.body.gender;
+
     currentUserID = kakaoID;
     connection.query('SELECT * FROM user WHERE kakaoID = ?',
     [kakaoID], function (error, results, fields) {
@@ -74,14 +75,14 @@ router.get("/authResult", function (req, res) {
       url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
       header : "",
       form : {
-        code : authCode, // 인증 코드 받아서  
-        // 수지언니 앱 정보
-        client_id : "BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi",
-        client_secret : "BvrW1wX8Fy1juZAh1Wdzhk7AgDBgrcPIr84KrVYi",
+        code : authCode,
+        client_id : "mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu",
+        client_secret : "ed6EcMwoZ11mlHRRzmkmhD33w1Zg4zQ7ggbr0kPj",
         redirect_uri : "http://localhost:3000/user/authResult",
         grant_type : "authorization_code"
       }
   }
+
   request(option, function(error, response, body) {
     var result = JSON.parse(body);
     var access_token = result.access_token;
@@ -129,7 +130,7 @@ router.post("/login", function(req, res) {
                 },
                 tokenKey,
                 {
-                    expiresIn : '10d', // 토큰 유효기간 1d 일, 1h 시, 15m
+                    expiresIn : '100d', // 길게 100일로!
                     issuer : 'wroom.admin',
                     subject : 'user.login.info'
                 },

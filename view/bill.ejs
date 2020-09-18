@@ -325,19 +325,19 @@
          var check, product_name, available_amt;
          $.ajax({
             url:'http://localhost:3000/transfer/balance',
-             type : 'POST',
-               headers : {
-                 'x-access-token' : jwtToken
-               },
+            type : 'POST',
+            headers : {
+               'x-access-token' : jwtToken
+            },
                // data : {
                //    원래는 핀 유즈 넘버 필요
                //   },
-               async: false,
+            async: false,
             success:function(data){
                product_name = data.product_name;
                available_amt = data.available_amt.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'); // , 표시 붙이기
                }
-            })
+            });
 
             var confirm_msg = "현재 " + product_name + " 계좌의 출금 가능액은 " + available_amt +"원입니다. \n"
                + transferVal.substr(2)+ "원을 송금하시겠습니까?";

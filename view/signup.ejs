@@ -83,11 +83,8 @@
 
     <script>
     $('#authBtn').click(function(){
-        var tmpWindow = window.open("about:blank");
-		// 강사님 앱 키
-		//tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=q7kH44ThJwjpvNRg0BbJvE1yxvx5X53DKz1rNgPF&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0"
-		// 수지언니 앱 키	
-		tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0"
+		var authURL = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0";
+		document.location.href = authURL;
 	})
 
 	$('#signupBtn').click(function(){

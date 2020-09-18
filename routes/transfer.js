@@ -28,7 +28,7 @@ router.post('/withdraw', auth, function(req, res){
             nine = false;
         }
     }
-    var transId = "T991599860U" + countnum; // 회원정보 이용기관코드
+    var transId = "T991603750U" + countnum; // 회원정보 이용기관코드
     connection.query('SELECT * FROM user WHERE userID = ?', [userId], function (error, results, fields) {
         if (error) throw error;
         var option = {
@@ -38,19 +38,20 @@ router.post('/withdraw', auth, function(req, res){
                 Authorization : "Bearer " + results[0].accessToken
             },
             json : { // 출금이체 테스트 데이터에 내용이 들어가 있어야 함
-                "bank_tran_id": transId,
-                "cntr_account_type": "N",
-                "cntr_account_num": "4847518547", // 이용기관 출금이체 약정번호
-                "dps_print_content": "월세김단아", 
-                "fintech_use_num" : "199159986057870945489890", // 내 FIN_USE_NUM
-  	            "wd_print_content" : "월세김단아",
-  	            "tran_amt" : transferVal,
-  	            "tran_dtime" : "20191217164250",
-  	            "req_client_name" : "김단아",
-  	            "req_client_bank_code" : "097",
-  	            "req_client_account_num" : "01077335549",
-  	            "transfer_purpose" : "TR",
-  	            "req_client_num" : "DANAHKIM0903" // 사용자마다 우리가 겹치지 않게 만들어야 하는 부분 = 유저 or 카카오 ID 쓰면 될 듯? 
+                cntr_account_type : "N", // 약정 계좌/계정 구분(N: 계좌, C: 계정)
+                cntr_account_num : "5582638902", // 약정 계좌 or 계정 번호
+                dps_print_content : "９월생활비", // 입금계좌 인자내역
+                fintech_use_num : 199160375057881337454548, // 출금계좌 핀테크 이용번호
+                tran_amt : "300000", // 거래 금액
+                tran_dtime : "20200622000000", // 요청 일시
+                req_client_num : transId, // 요청고객 계좌번호 - 고유 번호
+                req_client_bank_code : "097", // 요청고객 핀테크 이용번호
+                req_client_account_num : "01080069901", // 요청고객 계좌 번호
+                req_client_name : "김수지", // 요청고객 성명
+                transfer_purpose : "TR", //이체 용도(TR: 송금, ST: 결제, RC: 충전)                 
+                recv_client_name : "정효인", // 최종 수취고객 성명
+                recv_client_bank_code : "097", // 최종 수취고객 계좌 개설기관. 표준코드
+                recv_client_account_num : "01080069901" // 최종 수취고객 계좌번호
             }
         }
         request(option, function (error, response, body) {
@@ -72,11 +73,12 @@ router.post('/withdraw', auth, function(req, res){
             url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
             headers : {
             },
-            form: 
-            { client_id: 'BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi',
-              client_secret: 'BvrW1wX8Fy1juZAh1Wdzhk7AgDBgrcPIr84KrVYi',
+            form: {
+              client_id: 'mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu',
+              client_secret: 'ed6EcMwoZ11mlHRRzmkmhD33w1Zg4zQ7ggbr0kPj',
               scope: 'oob',
-              grant_type: 'client_credentials' }
+              grant_type: 'client_credentials'
+            }
           }
           request(option, function(error, response, body) {
             var resultObject = JSON.parse(body);
@@ -97,33 +99,34 @@ router.post('/deposit', auth, function(req, res){
             nine = false;
         }
     }
-  var transId = "T991599860U" + countnum;
+  var transId = "T991603750U" + countnum;
 
   var option = {
           method : "POST",
           url : "https://testapi.openbanking.or.kr/v2.0/transfer/deposit/fin_num",
           headers : {
             Authorization: 'Bearer ' + TwoLegTtoken
-                    },
+          },
           json : {
             "cntr_account_type": "N",
-            "cntr_account_num": "1736442487",
+            "cntr_account_num": "1100752336",
             "wd_pass_phrase": "NONE",
-            "wd_print_content": "월세김단아",
+            "wd_print_content": "9월생활비",
             "name_check_option": "on",
-            "tran_dtime": "20191217164250",
+            "tran_dtime": "20200918000000",
             "req_cnt": "1",
-            "req_list": [ {
+            "req_list": [{
                   "tran_no": "1",
                   "bank_tran_id": transId,
-                  "fintech_use_num": "199159986057870945593762", // 정인언니꺼
-                  "print_content": "오픈서비스캐시백",
+                  "fintech_use_num": "199160375057881337454548",
+                  "print_content": "9월생활비",
                   "tran_amt": transferVal,
-                  "req_client_name": "윤정인",
-                  "req_client_fintech_use_num" : "199159986057870945593762",
-                  "req_client_num": "JUNGIN1234",
-                  "transfer_purpose": "TR" } ]
-          }
+                  "req_client_name": "김수지",
+                  "req_client_fintech_use_num" : "199160375057881337454548",
+                  "req_client_num": "NONE",
+                  "transfer_purpose": "TR"
+                }]
+              }
         }
 
         request(option, function(error, response, body) {
@@ -138,12 +141,12 @@ router.post('/deposit', auth, function(req, res){
 
 // 잔액 조회
 router.post('/balance', auth, function(req, res){
-  var userId = req.decoded.userId ;
+  var userId = req.decoded.userId;
   var countnum = Math.floor(Math.random() * 1000000000) + 1;
-  var transId = "T991599860U" + countnum; // 랜덤 숫자 만들기
+  var transId = "T991603750U" + countnum; // 랜덤 숫자 만들기
 
   connection.query('SELECT * FROM user WHERE userID = ?', [userId],
-        function (error, results, fields) { // 디비에서 토큰 받아오기
+        function (error, results, fields) {
         if (error) throw error;   
         var option = {
           method : "GET",
@@ -151,14 +154,17 @@ router.post('/balance', auth, function(req, res){
           headers : {
             Authorization : "Bearer" + results[0].accessToken // 디비에서 받아온 토큰
           },
-          qs : { // GET 방식이니까
-              bank_tran_id: transId,
-              fintech_use_num: '199159986057870945489890',
-              tran_dtime: '20191220140900'
+          qs : {
+              bank_tran_id: transId, // 은행 거래 고유번호
+              fintech_use_num: '199160375057881337454548', // 핀테크 이용번호
+              tran_dtime: '20200910101921' // 요청 시간
           }
         }
         request(option, function(error, response, body) {
           var resultObject = JSON.parse(body);
+
+          console.log(resultObject);
+
           res.json(resultObject);
         });
     });     
