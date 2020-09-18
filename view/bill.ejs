@@ -154,14 +154,15 @@
                               <h1 class="b-text"></h1>
                            </div>
                            <div class="transferValPart">
-                                     <h1 class="b-val" id="transferVal">￦ <%=payAmount%></h1>
+                              <h1 class="b-val" id="transferVal">￦ <%=payAmount%></h1>
                               <p class="g-text mb-10" id="transferNEED">송금해야할 금액</p>
                               <button id="transferBtn" class="btn btn-light">송금하기</button>
+                              <button id="showBalanceBtn" class="btn btn-light">잔액 조회하기</button>
                               <h1 class="b-text"></h1>
                            </div>
-                             </div>
-                           </div>
                         </div>
+                     </div>
+                  </div>
                </div>
 
             </section>
@@ -282,18 +283,18 @@
       var transferVal = $('#transferVal').text();
 
       // 로딩될 때 미리 이체용 토큰 받아오기
-   $(function() {
-      $.ajax({
-         url:'http://localhost:3000/transfer/token',
-         type : 'GET',
-         headers : {
-           'x-access-token' : jwtToken
-         },
-         data : {
-            transferVal : transferVal
-          },
-         success:function(data){
-           console.log("토큰 받아오기 완료");
+      $(function() {
+         $.ajax({
+            url:'http://localhost:3000/transfer/token',
+            type : 'GET',
+            headers : {
+            'x-access-token' : jwtToken
+            },
+            data : {
+               transferVal : transferVal
+            },
+            success:function(data){
+            console.log("토큰 받아오기 완료");
          }
       });
 
@@ -321,7 +322,7 @@
 //       });
    }); 
 
-      $('#transferBtn').click(function(){
+      $('#transferBtn').click(function() {
          var check, product_name, available_amt;
          $.ajax({
             url:'http://localhost:3000/transfer/balance',
@@ -329,21 +330,18 @@
             headers : {
                'x-access-token' : jwtToken
             },
-               // data : {
-               //    원래는 핀 유즈 넘버 필요
-               //   },
             async: false,
             success:function(data){
                product_name = data.product_name;
                available_amt = data.available_amt.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'); // , 표시 붙이기
                }
-            });
+         });
 
-            var confirm_msg = "현재 " + product_name + " 계좌의 출금 가능액은 " + available_amt +"원입니다. \n"
-               + transferVal.substr(2)+ "원을 송금하시겠습니까?";
+         var confirm_msg = "현재 " + product_name + " 계좌의 출금 가능액은 " + available_amt +"원입니다. \n"
+            + transferVal.substr(2)+ "원을 송금하시겠습니까?";
             check = confirm(confirm_msg);
 
-      if (check == true) { // 진짜로 송금한다고 하면
+         if (check == true) { // 진짜로 송금한다고 하면
          $.ajax({
            url:'http://localhost:3000/transfer/withdraw',
            type : 'POST',
@@ -404,12 +402,29 @@
                alert("송금 실패! 다시 시도해주세요.");
               }
             }
-         })
-      } else { // 싫다고 하면
-         alert("송금이 취소되었습니다.")
-      }
-      }
-   )
+         });
+         } else { // 싫다고 하면
+            alert("송금이 취소되었습니다.")
+         }
+      });
+
+      $('#showBalanceBtn').click(function() {
+         var product_name, available_amt;
+         $.ajax({
+            url:'http://localhost:3000/transfer/balance',
+            type : 'POST',
+            headers : {
+               'x-access-token' : jwtToken
+            },
+            async: false,
+            success:function(data){
+               product_name = data.product_name;
+               available_amt = data.available_amt.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'); // , 표시 붙이기
+               
+               alert(product_name + "계좌의 잔액은 " + available_amt + "원이며, 송금 가능합니다.");
+            }
+         });
+      });
    </script>
 </body>
 
