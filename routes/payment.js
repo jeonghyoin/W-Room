@@ -26,7 +26,6 @@ router.get('/check', function(req, res) {
 //납부 내역 조회, 전체
 //http://localhost:3000/payment
 router.get('/', function(req, res) {
-    console.log("호출1");
     connection.query('SELECT * FROM pay', function (error, results) {
         if (error) {
             throw error;
@@ -183,7 +182,7 @@ router.post('/', auth, function(req, res) {
                                 } else {
                                     Object.keys(result).forEach(function(key) {
                                         var row = result[key];
-                                        connection.query('INSERT INTO dutchpayyn(payID, User_userID) VALUES (?,?)',
+                                        connection.query('INSERT INTO dutchpayyn(payID, User_userID, dutchpayYN) VALUES (?,?,0)',
                                         [insertId, row.User_userID],
                                         function (error, results) {
                                             if(error) {

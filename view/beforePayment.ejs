@@ -114,7 +114,8 @@
             <div class="container">
                <div id="balanceText">
                   <div class="alert alert-success" role="alert">
-                     이번 달에 총 납부해야할 금액은 <b class="totalPayment"></b>원입니다.
+                     이번 달에 "우리집" 방에서 사용하신 총 금액은 <b class="totalPayment"></b>원입니다. <br>
+                     이중 개인 당 납부해야 할 총 금액은 <b class="sharePayment"></b>원입니다.
                    </div>
                   <!-- 결제 리스트 넣기 -->
                   <table class="table table-hover">
@@ -179,9 +180,13 @@
             'x-access-token': jwtToken
          },
          success: function (item) {
-            var categoryName, total = 0;
+            var categoryName, total = 0, share = 0;
             for(var i=0; i < item.length; i++) {
                total = total + item[i].payAmount;
+               share = share + item[i].shareAmount;
+            }
+
+            for(var i=0; i < item.length; i++) {
                switch (item[i].payCategory*1) {
                   case 1: categoryName="월세"; break;
                   case 2: categoryName="전기"; break;
@@ -194,17 +199,18 @@
                   '<tr>'+
                      '<th id="categoryName-' +i+ '">'+categoryName+'</th>'+
                      '<td id="payDate-' +i+ '">2020-09-18</td>'+ // 등록일 .substr(0,10)
-                     '<td id="totalAmount-' +i+ '">'+item[i].payAmount+'</td>'+ // 금액
+                     '<td id="totalAmount-' +i+ '">'+total+'</td>'+ // 금액
                      '<td>'+item[i].memo+'</td>'+ // 설명
                      '<td>'+item[i].dueDate.substr(0,10)+'</td>'+ // 납부 .substr(0,10)
                      '<td><button type="button" class="btn btn-outline-secondary" onclick="myFunction('+i+','+item[i].dutchpayID +','+item[i].shareAmount+')">'+item[i].shareAmount+'원 송금하기</button></td>'+
-                     '<td><button type="button" class="btn btn-outline-secondary" onclick="myFunction('+i+','+item[i].dutchpayID +','+total+')">'+'전체 금액 송금하기</button></td>'+
+                     '<td><button type="button" class="btn btn-outline-secondary" onclick="myFunction('+i+','+item[i].dutchpayID +','+share+')">'+'전체 금액 송금하기</button></td>'+
                   '</tr>'
                );
             }
 
             // 전체 납부 금액
             $(".totalPayment").append(total);
+            $(".sharePayment").append(share);
          },
          error: function (request, status, error) {
             if(request.status === 403) {
