@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # css, js 템플릿 제외시키기
-public/
+# public/
