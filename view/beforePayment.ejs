@@ -12,51 +12,91 @@
    <link rel="stylesheet" type="text/css" href="/css/global.style.css">
    <!-- bootstrap -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+   <style>
+		th, td {
+		text-align: center;
+		}
+
+		#nameCard {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+			width: 100% !important;
+		}
+
+		#userList {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		#userIcon {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		#profileBox {
+			width: 90px;
+			height: 90px;
+			border-radius: 70%;
+			overflow: hidden;
+		}
+
+		small {
+			text-align: right;
+		}
+	</style>
 </head>
 
 <body>
    <div class="wrapper">
       <div class="nav-menu">
          <nav class="menu">
+            <!-- nav삽입 -->
             <!-- Menu navigation start -->
             <div class="nav-container">
-               <div>
-                  <table>
-                     <tr><th colspan="2"></th></tr>
-                     <tr>
-                        <th rowspan="4">
-                           <a href = "profile.html"><img src="/img/content/profile.png" width = "80" alt=""></a>
-                           <td> </td>
-                        </th>
-                        </tr>
-                        <tr><td> </td></tr>
-                        <tr>
-                        <td><a href="/profile.html"><h3>이름<h3></a></td>
-                     </tr>
-                     <tr>
-                        <td>그룹이름</td>
-                     </tr>
-                  </table>
-               </div>
-               <ul class="main-menu">
-                  <!--블록 추가해서 프로필 넣기-->
-                  <li class="">
-                     <a href="/index.html"><img src="/img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
-                  </li>
-                  <li class="">
-                     <a href="/wallet.html"><img src="/img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong> </a>
-                  </li>
-                  <li class="">
-                     <a href="/trading.html"><img src="/img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
-                  </li>
-                  <li class="">
-                     <a href="/signup.html"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-                  </li>
-               </ul>
+              <div style="padding-top:20px; padding-left: 25px;">
+                <table style="margin-bottom: 20px;">
+                  <tr>
+                     <th colspan="2"></th>
+                  </tr>
+                  <tr>
+                     <th rowspan="4">
+                       <div id="profileBox">
+                         <a href="#">
+                           <img id="userIcon" width="80" alt="프로필사진">
+                         </a>
+                       </div>
+                     </th>
+                  </tr>
+                  <tr>
+                     <td><a href="profile.html"><h3 id="userName" style="margin-left: 25px;">이름<h3></a></td>
+                  </tr>
+                </table>
+              </div>
+              <hr>
+              <ul class="main-menu" style="margin-left: 10px;">
+                <!-- 블록 추가해서 프로필 넣기 -->
+                <li class="">
+                  <a href="index.html"><img src="/img/content/icons/1.png"><strong>구성원 관리</strong></a>
+                </li>
+                <li class="">
+                  <a href="wallet.html"><img src="/img/content/icons/2.png"><strong>지난 내역 보기</strong>
+                  </a>
+                </li>
+                <li class="">
+                  <a href="trading.html"><img src="/img/content/icons/3.png"><strong>고객센터</strong></a>
+                </li>
+                <li class="">
+                  <a href="signup.html"><img src="/img/content/icons/6.png"><strong>로그아웃</strong></a>
+                </li>
+              </ul>
             </div>
-         <!-- Menu navigation end -->
+            <!-- Menu navigation end -->
          </nav>
       </div>
+
       <div class="wrapper-inline">
          <!-- Header area start -->
          <header> <!-- extra class no-background -->
@@ -73,6 +113,10 @@
          <main>
             <div class="container">
                <div id="balanceText">
+                  <div class="alert alert-success" role="alert">
+                     이번 달에 "우리집" 방에서 사용하신 총 금액은 <b class="totalPayment"></b>원입니다. <br>
+                     이중 개인 당 납부해야 할 총 금액은 <b class="sharePayment"></b>원입니다.
+                   </div>
                   <!-- 결제 리스트 넣기 -->
                   <table class="table table-hover">
                      <thead>
@@ -83,6 +127,7 @@
                         <th scope="col">설명</th>
                         <th scope="col">납부기한</th>
                         <th scope="col">송금</th>
+                        <th scope="col">총 금액</th>
                        </tr>
                      </thead>
                      <tbody id="paymentItems">
@@ -126,6 +171,7 @@
 
    <script>
    var jwtToken = sessionStorage.getItem('jwtToken');
+   
    $(document).ready(function() {
       $.ajax({
          url: 'http://localhost:3000/payment/status/0',
@@ -134,7 +180,12 @@
             'x-access-token': jwtToken
          },
          success: function (item) {
-            var categoryName;
+            var categoryName, total = 0, share = 0;
+            for(var i=0; i < item.length; i++) {
+               total = total + item[i].payAmount;
+               share = share + item[i].shareAmount;
+            }
+
             for(var i=0; i < item.length; i++) {
                switch (item[i].payCategory*1) {
                   case 1: categoryName="월세"; break;
@@ -143,22 +194,31 @@
                   case 4: categoryName="수도"; break;
                   case 5: categoryName="기타"; break;
                }
-               console.log(item[i].payDate);
+
                $("#paymentItems").append(
                   '<tr>'+
                      '<th id="categoryName-' +i+ '">'+categoryName+'</th>'+
-                     '<td id="payDate-' +i+ '">2019-12-20</td>'+ // 등록일 .substr(0,10)
-                     '<td id="totalAmount-' +i+ '">'+item[i].payAmount+'</td>'+ // 금액
+                     '<td id="payDate-' +i+ '">2020-09-18</td>'+ // 등록일 .substr(0,10)
+                     '<td id="totalAmount-' +i+ '">'+total+'</td>'+ // 금액
                      '<td>'+item[i].memo+'</td>'+ // 설명
                      '<td>'+item[i].dueDate.substr(0,10)+'</td>'+ // 납부 .substr(0,10)
-                     '<td><a href="javascript:myFunction('+i+','+ item[i].dutchpayID +','+item[i].shareAmount+')">'+ item[i].shareAmount +'원 송금하기</a></td>'+
+                     '<td><button type="button" class="btn btn-outline-secondary" onclick="myFunction('+i+','+item[i].dutchpayID +','+item[i].shareAmount+')">'+item[i].shareAmount+'원 송금하기</button></td>'+
+                     '<td><button type="button" class="btn btn-outline-secondary" onclick="myFunction('+i+','+item[i].dutchpayID +','+share+')">'+'전체 금액 송금하기</button></td>'+
                   '</tr>'
                );
             }
+
+            // 전체 납부 금액
+            $(".totalPayment").append(total);
+            $(".sharePayment").append(share);
          },
          error: function (request, status, error) {
-            alert("code:" + request.status + "\n" + "message:" +
-            request.responseText + "\n" +"error:" + error);
+            if(request.status === 403) {
+					alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
+				} else {
+               alert("code: " + request.status + "\n"
+				   +"message: " + request.responseText + "\n" +"error: " + error);
+            }
          }
       });
    });
@@ -170,29 +230,56 @@
       var payAmount = shareAmount;
 
       var form = document.createElement("form");
-        var parm = new Array();
-        var input = new Array();
+      var parm = new Array();
+      var input = new Array();
 
-        form.action = "http://localhost:3000/payment/bill";
-        form.method = "get";
+      form.action = "http://localhost:3000/payment/bill";
+      form.method = "get";
 
-        parm.push( ['dutchpayID', dutchpayID] );
+      parm.push( ['dutchpayID', dutchpayID] );
       parm.push( ['totalAmount', totalAmount] );
       parm.push( ['categoryName', categoryName] );
       parm.push( ['payDate', payDate] );
       parm.push( ['payAmount', payAmount] );
 
-        for (var i = 0; i < parm.length; i++) {
-            input[i] = document.createElement("input");
-            input[i].setAttribute("type", "hidden");
-            input[i].setAttribute('name', parm[i][0]);
-            input[i].setAttribute("value", parm[i][1]);
-            form.appendChild(input[i]);
-        }
-        document.body.appendChild(form);
-        form.submit();
-    }
+      for (var i = 0; i < parm.length; i++) {
+         input[i] = document.createElement("input");
+         input[i].setAttribute("type", "hidden");
+         input[i].setAttribute('name', parm[i][0]);
+         input[i].setAttribute("value", parm[i][1]);
+         form.appendChild(input[i]);
+      }
+      document.body.appendChild(form);
+      form.submit();
+   }
 
+   var jwtToken = sessionStorage.getItem('jwtToken');
+		// 이미지 가져오기
+		function getImg() {
+			$.ajax({
+				url: 'http://localhost:3000/userImg',
+				type: 'GET',
+				headers: {
+				'x-access-token': jwtToken
+				},
+				success: function (data) {
+				//이미지
+				//console.log(">>> data : " + data[0].image);
+				$("#userName").text(data[0].name);
+				var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
+				$("#groupName").text(groupYN);
+
+				var userIcon = document.getElementById('userIcon');
+
+				if (data[0].image == null) {
+					userIcon.src = '/img/content/main/user.png';
+				} else {
+					userIcon.src = data[0].image;
+				}
+			}
+		});
+	}
+	getImg();
    </script>
 </body>
 </html>

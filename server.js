@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 //database
-var mysql = require('./mysql-db');
+var mysql = require('./database/mysql');
 mysql.connect();
 
 //라우터 설정

@@ -17,6 +17,35 @@
 	 th, td {
 		text-align: center;
 	 }
+
+	 #nameCard {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+			width: 100% !important;
+		}
+
+		#userList {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		#userIcon {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		#profileBox {
+			width: 90px;
+			height: 90px;
+			border-radius: 70%;
+			overflow: hidden;
+		}
+
+		small {
+			text-align: right;
+		}
 	</style>
 </head>
 
@@ -24,44 +53,50 @@
 	<div class="wrapper">
 		<div class="nav-menu">
 			<nav class="menu">
-				<!-- Menu navigation start -->
-				<div class="nav-container">
-					<div>
-						<table>
-							<tr><th colspan = "2"></th></tr>
-							<tr>
-								<th rowspan="4">
-									<a href = "profile.html"><img src="/img/content/profile.png" width = "80" alt=""></a>
-									<td> </td></th>
-								</tr>
-								<tr><td> </td></tr>
-								<tr>
-								<td><a href = "profile.html"><h3 style="margin-right: 10px;">이름<h3></a></td>
-							</tr>
-							<tr>
-								<td><h5 style="margin-top: -30px;">그룹이름</h5></td>
-								</tr>
-							</table>
-					</div>
-					<ul class="main-menu">
-						<!--블록 추가해서 프로필 넣기-->
-						<li class="">
-							<a href="index.html"><img src="/img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
-						</li>
-						<li class="">
-							<a href="wallet.html"><img src="/img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong> </a>
-						</li>
-						<li class="">
-							<a href="trading.html"><img src="/img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
-						</li>
-						<li class="">
-							<a href="signup.html"><img src="/img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-						</li>
-					</ul>
-				</div>
-			<!-- Menu navigation end -->
+			   <!-- nav삽입 -->
+			   <!-- Menu navigation start -->
+			   <div class="nav-container">
+				  <div style="padding-top:20px; padding-left: 25px;">
+					 <table style="margin-bottom: 20px;">
+						<tr>
+						   <th colspan="2"></th>
+						</tr>
+						<tr>
+						   <th rowspan="4">
+							  <div id="profileBox">
+								 <a href="#">
+									<img id="userIcon" width="80" alt="프로필사진">
+								 </a>
+							  </div>
+						   </th>
+						</tr>
+						<tr>
+						   <td><a href="profile.html"><h3 id="userName" style="margin-left: 25px;">이름<h3></a></td>
+						</tr>
+					 </table>
+				  </div>
+				  <hr>
+				  <ul class="main-menu" style="margin-left: 10px;">
+					 <!-- 블록 추가해서 프로필 넣기 -->
+					 <li class="">
+						<a href="index.html"><img src="/img/content/icons/1.png"><strong>구성원 관리</strong></a>
+					 </li>
+					 <li class="">
+						<a href="wallet.html"><img src="/img/content/icons/2.png"><strong>지난 내역 보기</strong>
+						</a>
+					 </li>
+					 <li class="">
+						<a href="trading.html"><img src="/img/content/icons/3.png"><strong>고객센터</strong></a>
+					 </li>
+					 <li class="">
+						<a href="signup.html"><img src="/img/content/icons/6.png"><strong>로그아웃</strong></a>
+					 </li>
+				  </ul>
+			   </div>
+			   <!-- Menu navigation end -->
 			</nav>
-		</div>
+		 </div>
+
 		<div class="wrapper-inline">
 			<!-- Header area start -->
 			<header> <!-- extra class no-background -->
@@ -78,12 +113,11 @@
 			<main>
 				<div class="container">
 					<div id="noticeContents">
-						<!-- 결제 리스트 넣기 -->
 						<table class="table table-hover">
 							<thead>
 							  <tr>
 								<th scope="col">글번호</th>
-								<th scope="col">내용</th>
+								<th scope="col">제목</th>
 								<th scope="col">작성일</th>
 								<th scope="col">삭제</th>
 							  </tr>
@@ -175,7 +209,7 @@
 							'<tr>'+
 								'<th>'+item[i].noticeID+'</th>'+
 								'<td>'+item[i].contents+'</td>'+
-								'<td>'+item[i].created.substr(0,10)+'</td>'+
+								'<td>'+item[i].created+'</td>'+
 								'<td><button id="deleteBtn" type="button" class="btn btn-outline-dark"'+
 								'value="'+item[i].noticeID+'">삭제</button></td>'+
 							'</tr>'
@@ -183,14 +217,20 @@
 					}
 				},
 				error: function (request, status, error) {
-					alert("code:" + request.status + "\n" + "message:" +
-					request.responseText + "\n" +"error:" + error);
+					if(request.status === 403) {
+					alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
+						} else {
+					alert("code: " + request.status + "\n"
+						+"message: " + request.responseText + "\n" +"error: " + error);
+					}
 				}
 			});
 		})
+
 		//공지사항 등록
 		$('#noticeInsertBtn').click(function() {
 			var contents = $('#contents').val();
+			console.log(contents);
 			$.ajax({
 				url: '/notice',
 				type: 'POST',
@@ -203,6 +243,7 @@
 				},
 			});
 		});
+
 		//게시글 삭제
 		$(document).on('click', '#deleteBtn', function(){
 			var id = this.value;
@@ -217,6 +258,33 @@
 				});
 			}
 		});
+
+		// 이미지 가져오기
+		function getImg() {
+			$.ajax({
+				url: 'http://localhost:3000/userImg',
+				type: 'GET',
+				headers: {
+				'x-access-token': jwtToken
+				},
+				success: function (data) {
+				//이미지
+				//console.log(">>> data : " + data[0].image);
+				$("#userName").text(data[0].name);
+				var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
+				$("#groupName").text(groupYN);
+
+				var userIcon = document.getElementById('userIcon');
+
+				if (data[0].image == null) {
+					userIcon.src = '/img/content/main/user.png';
+				} else {
+					userIcon.src = data[0].image;
+				}
+				}
+			})
+		}
+		getImg();
 	</script>
 </body>
 </html>

@@ -6,71 +6,83 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 	<title>WROOM</title>
 
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- Google font file. If you want you can change. -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
-
 	<!-- Fontawesome font file css -->
 	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
-
 	<!-- Template global css file. Requared all pages -->
 	<link rel="stylesheet" type="text/css" href="/css/global.style.css">
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	
+	<style>
+		#authBtn {
+			margin:15px 0 15px 0;
+		}
+	</style>
 </head>
 
 <body>
-	
-		<div class="wrapper-inline">
-			<!-- Header area start -->
-			<header> <!-- extra class no-background -->
-				<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
-				<h1 class="page-title">회원가입</h1>
-				<div class="navi-menu-button">
-					<em></em>
-					<em></em>
-					<em></em>
+	<div class="wrapper-inline">
+		<!-- Header area start -->
+		<header> <!-- extra class no-background -->
+			<a class="go-back-link" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
+			<h1 class="page-title">회원가입</h1>
+			<div class="navi-menu-button">
+				<em></em>
+				<em></em>
+				<em></em>
+			</div>
+		</header>
+		<!-- Header area end -->
+		<!-- Page content start -->
+		<main>
+			<div class="container"  id="form_area_div">
+				<div class="form-label-divider" style="margin: 80px 0 30px 0;"><span>필수 정보</span></div>
+				<div class="form-row-group with-icons">
+					<div class="form-row no-padding">
+						<i class="fa fa-envelope"></i>
+						<input type="email" id="userEmail" class="form-element" placeholder="카카오톡 이메일을 적어주세요">
+					</div>
+					<div class="form-row no-padding">
+						<i class="fa fa-lock"></i>
+						<input type="password" id="userPassword" class="form-element" placeholder="Password">
+					</div>
 				</div>
-			</header>
-			<!-- Header area end -->
-			<!-- Page content start -->
-			<main>
-				<div class="container"  id="form_area_div">
-					<div class="form-divider"></div>
-					<div class="form-divider"></div>
-					<div class="form-label-divider"><span>OR</span></div>
-					<div class="form-divider"></div>
+				<div class="form-label-divider" style="margin: 30px 0 30px 0;"><span>부가 정보</span></div>
+				<div class="form-row-group with-icons">
+					<div class="form-row no-padding">
+						<i class="fa fa-envelope"></i>
+						<input type="text" id="userBirth" class="form-element" placeholder="생년월일을 입력해주세요.">
+						<i class="fa fa-envelope"></i>
+						<input type="text" id="userGender" class="form-element" placeholder="성별을 입력해주세요.">
+						<i class="fa fa-envelope"></i>
+						<input type="text" id="userLocation" class="form-element" placeholder="거주 지역을 입력해주세요.">
+					</div>
+				</div>
 
-					<div class="form-row-group with-icons">
-						<div class="form-row no-padding">
-							<i class="fa fa-envelope"></i>
-							<input type="email" id="userEmail" class="form-element" placeholder="카카오톡 이메일을 적어주세요">
+				<div class="form-label-divider" style="margin: 30px 0 30px 0;"><span>오픈뱅킹 인증</span></div>
+
+				<div class="form-row">
+					<div class="form-group">
+						<div class="form-check">
+						  <input class="form-check-input" type="checkbox" id="gridCheck">
+						  <label class="form-check-label" for="gridCheck">
+							정보 활용에 동의합니다. 정보 활용 동의 후 서비스 이용이 가능합니다.
+						  </label>
 						</div>
-						<div class="form-row no-padding">
-							<i class="fa fa-lock"></i>
-							<input type="password" id="userPassword" class="form-element" placeholder="Password">
-						</div>
-					</div>
-
-					<div class="form-row">	
-						<button id="authBtn" class="button circle block red">오픈뱅킹 인증하기</button>
-					</div>
-
-                    <div class="form-divider"></div>
-
-					<div class="form-row">
-						<button id="signupBtn" class="button circle block orange">회원 가입 완료하기</button>
-					</div>
-
-					<div class="form-row txt-center mt-15">
-						Already have an account? <a href="login.html" data-loader="show">Login</a>
-					</div>
+					  </div>
+					<button id="authBtn" class="button circle block red">오픈뱅킹 인증하기</button>
+					<button id="signupBtn" class="button circle block orange">회원 가입 완료하기</button>
+				</div>
 					
-
+				<div class="form-row txt-center mt-15">
+					Already have an account? <a href="/user/login" data-loader="show">Login</a>
 				</div>
-			</main>
-			<!-- Page content end -->
-		</div>
+			</div>
+		</main>
+		<!-- Page content end -->
 	</div>
-
 
 	<!--Page loader DOM Elements. Requared all pages-->
 	<div class="sweet-loader">
@@ -83,18 +95,18 @@
 
 	<!-- JQuery library file. requared all pages -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
-
 	<!-- Template global script file. requared all pages -->
 	<script src="/js/global.script.js"></script>
-	
+	<!-- kakao -->
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<!-- bootstrap js -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+
     <script>
     $('#authBtn').click(function(){
-        // alert('auth btn clicked');
-        var tmpWindow = window.open("about:blank");
-// 강사님 앱 키
-		//tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=q7kH44ThJwjpvNRg0BbJvE1yxvx5X53DKz1rNgPF&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0"
-// 수지언니 앱 키	
-		tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=BYDWJtEBTE523XORl2bthXPX3bT21JxNzKAo7lqi&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0"
+		var tmpWindow = window.open("about:blank");
+		tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0";
 	})
 
 	$('#signupBtn').click(function(){

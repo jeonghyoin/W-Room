@@ -8,22 +8,17 @@
 
    <!-- Google font file. If you want you can change. -->
    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,900" rel="stylesheet">
-
    <!-- Fontawesome font file css -->
    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-
    <!-- Animate css file for css3 animations. for more : https://daneden.github.io/animate.css -->
    <!-- Only use animate action. If you dont use animation, you don't have to add.-->
    <link rel="stylesheet" type="text/css" href="css/animate.css">
    <link rel="stylesheet" type="text/css" href="css/cryptocoins.css">
    <link rel="stylesheet" type="text/css" href="plugins/c3-chart/c3.css">
-
    <!-- Template global css file. Requared all pages -->
    <link rel="stylesheet" type="text/css" href="css/global.style.css">
-
    <!-- Swiper slider css file -->
    <link rel="stylesheet" href="css/swiper.min.css">
-
    <!--turbo slider plugin css file -->
    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
    <link rel="stylesheet" type="text/css" href="plugins/turbo-slider/turbo.css">
@@ -54,7 +49,7 @@
          overflow: hidden;
       }
 
-      #refreshBtn:hover {
+      #refreshBtn:hover, #refresh-liv:hover, #refresh-etc:hover, #main-logo:hover {
          cursor: pointer;
       }
 
@@ -66,11 +61,9 @@
          text-align: right;
       }
    </style>
-
 </head>
 
 <body>
-
    <div class="wrapper ">
       <div class="nav-menu">
          <nav class="menu">
@@ -89,55 +82,35 @@
                                  <img id="userIcon" width="80" alt="프로필사진">
                               </a>
                            </div>
-                        <td> </td>
                         </th>
                      </tr>
                      <tr>
-                        <td> </td>
-                     </tr>
-                     <tr>
-                        <td><a href="profile.html">
-                              <h3 id="userName" style="margin-left: 25px;">이름<h3>
-                           </a></td>
-                     </tr>
-                     <tr>
-                        <td id="groupName" style="padding-left: 30px;">그룹이름</td>
+                        <td><a href="profile.html"><h3 id="userName" style="margin-left: 25px;">이름<h3></a></td>
                      </tr>
                   </table>
                </div>
                <hr>
-               <ul class="main-menu">
+               <ul class="main-menu" style="margin-left: 10px;">
                   <!-- 블록 추가해서 프로필 넣기 -->
-
                   <li class="">
-                     <a href="index.html"><img src="img/content/icons/1.png" alt=""><strong>구성원 관리</strong> </a>
+                     <a href="index.html"><img src="/img/content/icons/1.png"><strong>구성원 관리</strong></a>
                   </li>
                   <li class="">
-                     <a href="wallet.html"><img src="img/content/icons/2.png" alt=""><strong>지난 내역 보기</strong>
+                     <a href="wallet.html"><img src="/img/content/icons/2.png"><strong>지난 내역 보기</strong>
                      </a>
                   </li>
                   <li class="">
-                     <a href="trading.html"><img src="img/content/icons/3.png" alt=""><strong>고객센터</strong> </a>
+                     <a href="trading.html"><img src="/img/content/icons/3.png"><strong>고객센터</strong></a>
                   </li>
                   <li class="">
-                     <a href="signup.html"><img src="img/content/icons/6.png" alt=""><strong>로그아웃</strong> </a>
-                     <!--
-                            <ul>
-                              <li><a href="login.html" data-loader="show">Login</a></li>
-                              <li><a href="signup.html" data-loader="show">Register</a></li>
-                              <li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
-                            </ul>-->
+                     <a href="signup.html"><img src="/img/content/icons/6.png"><strong>로그아웃</strong></a>
                   </li>
-
-                  <!-- <li><a href="profile.html" data-loader="show">User Profile</a></li>
-                              <li><a href="search-result.html" data-loader="show">Search Results</a></li>
-                              <li><a href="contact.html" data-loader="show">Contact</a></li>
-                              <li class="active"><a href="blank.html" data-loader="show">Blank Page</a></li> -->
                </ul>
             </div>
             <!-- Menu navigation end -->
          </nav>
       </div>
+
       <div class="wrapper-inline">
          <!-- Header area start -->
          <header>
@@ -166,8 +139,8 @@
                      <div class="content-head">
                         <div class="d-flex align-items-center">
                            <div class="d-flex flex-grow">
-                              <img src="img/content/wroomHor.png" width="100px" class="logo" alt=""
-                                 style="margin: 0 auto; margin-top: 11px;">
+                              <img id="main-logo" src="img/content/wroomHor.png" width="100px" class="logo"
+                                 style="margin: 0 auto; margin-top: 11px;" onclick="location.href='/main'">
                            </div>
                         </div>
                      </div>
@@ -194,33 +167,7 @@
                <div class="swiper-recievers">
                   <div class="swiper-wrapper">
                      <div id="nameCard" class="swiper-slide">
-
                      </div>
-                     <!--<div class="swiper-slide">
-                        <div class="money-receiver">
-                           <img src="img/content/avatar/avatar-3.png" alt="">
-                           <h4>김수지</h4>
-                        </div>
-                     </div>
-                     <div class="swiper-slide">
-                        <div class="money-receiver">
-                           <img src="img/content/avatar/avatar-4.png" alt="">
-                           <h4>윤정인</h4>
-                        </div>
-                     </div>
-                     <div class="swiper-slide">
-                        <div class="money-receiver">
-                           <img src="img/content/avatar/avatar-5.png" alt="">
-                           <h4>최정윤</h4>
-                        </div>
-                     </div>
-                     <div class="swiper-slide">
-                        <div class="money-receiver">
-                           <img src="img/content/avatar/avatar-5.png" alt="">
-                           <h4>최효인</h4>
-                        </div>
-                     </div>
-                     -->
                   </div>
                </div>
             </section>
@@ -273,14 +220,18 @@
                </div>
             </div>
 
-            <!-- 리스트 띄우기 -->
-            <section class="container">
-               <h4 class="title-main">당월 청구서</h4>
-               <div style="width:100%; position: absolute;" >
-                  <a href="main/payment/form">
-                     <img style="position: relative; left: 91%; top: -35px;" class="img-xs" width = "25px" src="img/content/plus1.png">
-                  </a>
+            <section class="container" style="margin-top: 15px;">
+               <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                     <div class="ml-10">
+                        <h4 class="title-main">당월 청구서</h4>
+                     </div>
+                  </div>
+                  <div>
+                     <a href="main/payment/form"><img class="img-xs" width= "25px" src="img/content/plus1.png"></a>
+                  </div>
                </div>
+
                <ul class="transaction-list list-unstyled">
                   <!-- 월세 -->
                   <li>
@@ -329,8 +280,8 @@
                         </div>
                      </div>
                   </li>
-                  <li>
-                     <div class="d-flex align-items-center justify-content-between">
+                  <li class="eClick">
+                     <div id="refresh-liv" class="d-flex align-items-center justify-content-between" data-toggle="modal" data-target="#livingModal">
                         <div class="d-flex align-items-center">
                            <img class="img-xs" src="img/content/main/marketing.png" alt="coin image">
                            <div class="ml-10">
@@ -344,8 +295,8 @@
                         </div>
                      </div>
                   </li>
-                  <li>
-                     <div class="d-flex align-items-center justify-content-between">
+                  <li class="eClick">
+                     <div id="refresh-etc" class="d-flex align-items-center justify-content-between" data-toggle="modal" data-target="#etcModal">
                         <div class="d-flex align-items-center">
                            <img class="img-xs" src="img/content/main/netflix.png" alt="coin image">
                            <div class="ml-10">
@@ -375,12 +326,78 @@
       </div>
    </div>
 
+   <!-- moldal -->
+   <div id="livingModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="livingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">당월 생활비 목록</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- body -->
+            <table class="table table-hover">
+               <thead>
+                 <tr>
+                  <th scope="col">등록일</th>
+                  <th scope="col">납부기한</th>
+                  <th scope="col">총 금액</th>
+                  <th scope="col">내용</th>
+                 </tr>
+               </thead>
+               <tbody id="livingPayment">
+               </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="etcModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="etcModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">당월 기타비용 목록</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- body -->
+            <table class="table table-hover">
+               <thead>
+                 <tr>
+                  <th scope="col">등록일</th>
+                  <th scope="col">납부기한</th>
+                  <th scope="col">총 금액</th>
+                  <th scope="col">내용</th>
+                 </tr>
+               </thead>
+               <tbody id="etcPayment">
+               </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
    <!-- JQuery library file. requared all pages -->
    <script src="js/jquery-3.2.1.min.js"></script>
    <!-- Swiper JS -->
    <script src="js/swiper.min.js"></script>
    <!-- Template global script file. requared all pages -->
    <script src="js/global.script.js"></script>
+   <!-- bootstrap js -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
    <script>
       var jwtToken = sessionStorage.getItem('jwtToken');
@@ -417,7 +434,6 @@
       }
       getImg();
 
-      displayGroup();
       //룸쉐어 멤버 리스트 보여주기
       function displayGroup() {
          $.ajax({
@@ -431,7 +447,6 @@
                   for (var i = 0; i < data.length; i++) {
                      if (!data[i].image) data[i].image = "/img/content/main/user.png";
                      $("#nameCard").append(
-                        //'<div class="swiper-slide">'+
                         '<div id="userList" class="money-receiver friendsBox">' +
                         '<img src="' + data[i].image + '" alt="프로필사진" style="width:52px; height:52px;">' +
                         '<h4>' + data[i].name + '</h4>' +
@@ -440,16 +455,16 @@
                   }
                } else {
                   $("#nameCard").append(
-                     //   '<div class="swiper-slide">'+
                      '<div class="money-receiver" style="width: 100%;">' +
                      '<a href="/makeRoom"><img src="img/plus.png" alt=""></a>' +
-                     '<h4>모임개설</h4>' +
+                     '<h4>구성원 초대하기</h4>' +
                      '</div>'
                   )
                }
             }
-         })
+         });
       }
+      displayGroup();
 
       //전기세 새로고침 버튼
       $('#refreshBtn').click(function () {
@@ -460,11 +475,64 @@
                'x-access-token': jwtToken
             },
             success: function (data) {
-               console.log("data.price :" + data.price);
-               $("#epShare").text(makeComma(data.price) + " 원");
+               // console.log("data.price :" + data.price);
+               $("#epShare").text(makeComma(Math.ceil(data.price)) + " 원");
                $("#ePTotal").text(makeComma(data.Tram) + " 원");
                $("#epDueDate").text(data.dueDate);
             },
+            error: function (request, status, error) {
+               alert("api 호출 오류!");
+            }
+         })
+      });
+
+      // 생활비 목록 가져오기
+      $('#refresh-liv').click(function () {
+         $.ajax({
+            url: 'http://localhost:3000/payment/living',
+            type: 'GET',
+            headers: {
+               'x-access-token': jwtToken
+            },
+            success: function (data) {
+               $("#livingPayment").empty();
+               for(var i=0; i < data.length; i++) {
+                  $("#livingPayment").append(
+                     '<tr>'+
+                        '<td>'+data[i].payDate.substr(0,10)+'</td>'+
+                        '<td>'+data[i].dueDate.substr(0,10)+'</td>'+
+                        '<td>'+data[i].payAmount+'</td>'+
+                        '<td>'+data[i].memo+'</td>'+
+                     '</tr>'
+                  )}
+               },
+            error: function (request, status, error) {
+               alert("api 호출 오류!");
+            }
+         })
+      });
+
+      // 기타 목록 가져오기
+      $('#refresh-etc').click(function () {
+         $.ajax({
+            url: 'http://localhost:3000/payment/etc',
+            type: 'GET',
+            headers: {
+               'x-access-token': jwtToken
+            },
+            success: function (data) {
+               $("#etcPayment").empty();
+               console.log(data)
+               for(var i=0; i < data.length; i++) {
+                  $("#etcPayment").append(
+                     '<tr>'+
+                        '<td>'+data[i].payDate.substr(0,10)+'</td>'+
+                        '<td>'+data[i].dueDate.substr(0,10)+'</td>'+
+                        '<td>'+data[i].payAmount+'</td>'+
+                        '<td>'+data[i].memo+'</td>'+
+                     '</tr>'
+                  )}
+               },
             error: function (request, status, error) {
                alert("api 호출 오류!");
             }
@@ -490,7 +558,8 @@
                            $("#monDueDate").text("납부 기한: " + item[i].dueDate);
                            break;
                         case '전기':
-                           $("#epShare").text(makeComma(item[i].shareAmount) + " 원");
+                           console.log(item)
+                           $("#epShare").text(makeComma(Math.ceil(item[i].shareAmount)) + " 원");
                            $("#ePTotal").text(makeComma(item[i].payAmount) + " 원");
                            $("#epDueDate").text("납부 기한: " + item[i].dueDate);
                            break;
@@ -514,8 +583,13 @@
                }
             },
             error: function (request, status, error) {
-               alert("code:" + request.status + "\n" + "message:" +
-                  request.responseText + "\n" + "error:" + error);
+               if(request.status === 403) {
+                  alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
+                  location.href = "/user/login";
+               } else {
+                  alert("code: " + request.status + "\n"
+                  +"message: " + request.responseText + "\n" +"error: " + error);
+               }
             }
          });
       })

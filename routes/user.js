@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-var connection = require('../mysql-db');
+var connection = require('../database/mysql');
 
 var jwt = require('jsonwebtoken'); // 토큰용 
 var tokenKey = "fintech123456789danahkim"; // 토큰용
@@ -26,13 +26,13 @@ router.get("/signup", function (req, res) {
 
 // 카카오로 로그인 후 받아온 정보를 DB에 저장
 router.post("/kakao", function (req, res) {
-    console.log(req.body);
     var kakaoID = req.body.id;
     var name = req.body.nickname;
     var image = req.body.image;
     var email = req.body.email;
     var age = req.body.age;
     var gender = req.body.gender;
+
     currentUserID = kakaoID;
     connection.query('SELECT * FROM user WHERE kakaoID = ?',
     [kakaoID], function (error, results, fields) {
@@ -75,13 +75,14 @@ router.get("/authResult", function (req, res) {
       url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
       header : "",
       form : {
-        code : authCode, // 인증 코드 받아서  
-        client_id : "앱 키",
-        client_secret : "앱 시크릿키",
+        code : authCode,
+        client_id : "mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu",
+        client_secret : "ed6EcMwoZ11mlHRRzmkmhD33w1Zg4zQ7ggbr0kPj",
         redirect_uri : "http://localhost:3000/user/authResult",
         grant_type : "authorization_code"
       }
   }
+
   request(option, function(error, response, body) {
     var result = JSON.parse(body);
     var access_token = result.access_token;
@@ -129,18 +130,15 @@ router.post("/login", function(req, res) {
                 },
                 tokenKey,
                 {
-                    expiresIn : '10d', // 토큰 유효기간 1d 일, 1h 시, 15m
+                    expiresIn : '100d', // 길게 100일로!
                     issuer : 'wroom.admin',
                     subject : 'user.login.info'
                 },
                 function(err, token){
-                    console.log('로그인 성공', token)
                     res.json(token) // 우리 서비스에 로그인하기 위한 토큰
                     // 액세스 토큰은 오픈 API를 이용하기 위한 토큰!
-                }
-            )
-            }
-          else {
+                });
+            } else {
             res.json(0);
           }
         };

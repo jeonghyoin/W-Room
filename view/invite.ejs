@@ -95,7 +95,7 @@
    		       },
           success:function(data){
 			  if(data){
-				  if(!data[0].image) data[0].image="/img/content/profile.png";
+				  if(!data[0].image) data[0].image="/img/content/main/user.png";
 				  $("#nameCard").append(
 								'<div class="add-member">'+
 									'<img src="'+data[0].image+'" alt="">'+
@@ -110,7 +110,7 @@
 		
 	$('#addSearch').click(function(){
 		if(email==''){
-			alert("친구를 먼저 검색해주세요");
+			alert("친구를 먼저 검색해주세요.");
 		}
 		else{
 		$.ajax({
