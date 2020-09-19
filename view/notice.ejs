@@ -209,7 +209,7 @@
 							'<tr>'+
 								'<th>'+item[i].noticeID+'</th>'+
 								'<td>'+item[i].contents+'</td>'+
-								'<td>'+item[i].created.substr(0,10)+'</td>'+
+								'<td>'+item[i].created+'</td>'+
 								'<td><button id="deleteBtn" type="button" class="btn btn-outline-dark"'+
 								'value="'+item[i].noticeID+'">삭제</button></td>'+
 							'</tr>'
@@ -230,6 +230,7 @@
 		//공지사항 등록
 		$('#noticeInsertBtn').click(function() {
 			var contents = $('#contents').val();
+			console.log(contents);
 			$.ajax({
 				url: '/notice',
 				type: 'POST',

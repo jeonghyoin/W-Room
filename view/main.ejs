@@ -378,7 +378,7 @@
                   <th scope="col">내용</th>
                  </tr>
                </thead>
-               <tbody id="livingPayment">
+               <tbody id="etcPayment">
                </tbody>
             </table>
           </div>
@@ -512,8 +512,8 @@
          })
       });
 
-      // 생활비 목록 가져오기
-      $('#refresh-liv').click(function () {
+      // 기타 목록 가져오기
+      $('#refresh-etc').click(function () {
          $.ajax({
             url: 'http://localhost:3000/payment/etc',
             type: 'GET',
@@ -522,8 +522,9 @@
             },
             success: function (data) {
                $("#etcPayment").empty();
+               console.log(data)
                for(var i=0; i < data.length; i++) {
-                  $("#livingPayment").append(
+                  $("#etcPayment").append(
                      '<tr>'+
                         '<td>'+data[i].payDate.substr(0,10)+'</td>'+
                         '<td>'+data[i].dueDate.substr(0,10)+'</td>'+
@@ -557,7 +558,8 @@
                            $("#monDueDate").text("납부 기한: " + item[i].dueDate);
                            break;
                         case '전기':
-                           $("#epShare").text(makeComma(Math.ceil([i].shareAmount)) + " 원");
+                           console.log(item)
+                           $("#epShare").text(makeComma(Math.ceil(item[i].shareAmount)) + " 원");
                            $("#ePTotal").text(makeComma(item[i].payAmount) + " 원");
                            $("#epDueDate").text("납부 기한: " + item[i].dueDate);
                            break;

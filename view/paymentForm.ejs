@@ -165,6 +165,7 @@
 		var dueDate = moment(tmpDate, 'MM/DD/YYYY').format("YYYY-MM-DD"); 
 		var payAmount = $('#payAmount').val(); //총 납부 금액
 		var memo = $('#memo').val();; //메모
+		
 		$.ajax({
 			url:'http://localhost:3000/payment',
 			type : 'POST',
