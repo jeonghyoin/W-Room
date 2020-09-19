@@ -22,7 +22,7 @@ router.get('/items', auth, function(req, res) {
             throw error;
         } else {
             var roomId = result[0].RoomShare_roomID;
-            connection.query('SELECT * FROM notice WHERE roomID = ?',
+            connection.query('SELECT noticeID, roomID, contents FROM notice WHERE roomID = ?',
             [roomId], function (error, results) {
                 if (error) {
                     throw error;

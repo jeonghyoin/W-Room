@@ -42,11 +42,9 @@ router.post('/add', auth, function(req, res){
             connection.query('SELECT * FROM user WHERE email=?',
             [myEmail], function (error, results, fields) { // 리더의 룸아이디를 가져와서
                     userRoomID = results[0].roomID;
-                    connection.query('UPDATE user SET roomID = ? WHERE email= ?', [userRoomID, addEmail]); // 추가
-                    console.log('추가 완료');
-                    connection.query('INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)' , [userRoomID, adduserID], function (error, results, fields) {
+                    connection.query('UPDATE user SET roomID = ? WHERE email= ?', [10, addEmail]); // 추가
+                    connection.query('INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)' , [10, adduserID], function (error, results, fields) {
                         if (error) throw error;
-                        // INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)     
                         });
 
                     res.send(addEmail);

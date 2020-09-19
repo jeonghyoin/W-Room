@@ -32,7 +32,6 @@ router.post("/kakao", function (req, res) {
     var email = req.body.email;
     var age = req.body.age;
     var gender = req.body.gender;
-
     currentUserID = kakaoID;
     connection.query('SELECT * FROM user WHERE kakaoID = ?',
     [kakaoID], function (error, results, fields) {

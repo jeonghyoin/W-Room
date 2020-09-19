@@ -133,10 +133,7 @@ router.get('/status/:flag', auth, function(req, res) {
         if (error) {
             throw error;
         } else {
-            //TODO: 테이블 payyn 기본값 설정하기, paydate null 수정하기
-            //TODO: 데이터 포멧
-            //var dueDate = moment(results[0].dueDate).format('YYYY-MM-DD hh:mm');
-            //console.log(results);
+            console.log(results)
             res.json(results);
         }
     });
