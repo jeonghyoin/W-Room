@@ -104,13 +104,15 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
     <script>
-		// 환경변수 가져오기
+		
 		var ENV_URL = "localhost";
-		$(document).ready(function() {
+		// 환경변수 가져오기
+		(function () {
 			$.ajax({
 				url: 'http://115.85.183.143:3000/main/env',
 				type: 'GET',
 				success: function(data) {
+					ENV_URL = data;
 					console.log(data);
 					console.log("클라우드에서 접속");
 				},
@@ -118,8 +120,8 @@
 					console.log("로컬에서 접속");
 				}
 			});
-		});
-		 
+		}());
+	
 		$('#authBtn').click(function(){
 			var tmpWindow = window.open("about:blank");
 			tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu&redirect_uri=http://" + ENV_URL + ":3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0";
@@ -130,7 +132,7 @@
 			var password = $('#userPassword').val();
 				
 			$.ajax({
-			url:'http://' + ENV_URL + ':3000/user/passwdUpdate',
+			url: '/user/passwdUpdate',
 			type : 'POST',
 				data : {
 					password : password,

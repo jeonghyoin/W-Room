@@ -14,31 +14,15 @@
     <h2 id="star">테스트페이지</h2>
     <p id="value"></p>
     <script>
-        // 환경변수 가져오기
-        var ENV_URL = "localhost";
-        $(document).ready(function() {
-            $.ajax({
-                url: 'http://115.85.183.143:3000/main/env',
-                type: 'GET',
-                success: function(data) {
-                    console.log(data);
-                    console.log("클라우드에서 접속");
-                },
-                error: function(request, status, error) {
-                    console.log("로컬에서 접속");
-                }
-            });
-        });
-
         $.ajax({
-            url: 'http://' + ENV_URL + ':3000/nh/efpayment',
+            url: '/nh/efpayment',
             type: 'POST',
             success: function (data) {
                 $("#value").text(data.price);
             },
             error: function (request, status, error) {
-                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
-                    "error:" + error);
+                //alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
+                //    "error:" + error);
             }
         })
     </script>

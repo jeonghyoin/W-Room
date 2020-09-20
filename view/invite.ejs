@@ -83,10 +83,13 @@
 </body>
 <script>
 	var jwtToken = sessionStorage.getItem('jwtToken');
-	var ENV_URL = "localhost";
+	// var ENV_URL = "localhost";
 	var email='';
-
-	$(document).ready(function() {
+	
+	var user_invite = '/invite';
+	var invite_add = '/invite/add';
+	
+	/* $(document).ready(function() {
       // 환경변수 가져오기	
 		$.ajax({
 			url: 'http://115.85.183.143:3000/main/env',
@@ -100,13 +103,13 @@
 				console.log("로컬에서 접속");
 			}
          });
-      });
+      }); */
 
 	$('#searchBtn').click(function(){
         email = $('#searchEmail').val();
 
         $.ajax({
-          url:'http://' + ENV_URL + ':3000/invite',
+          url: user_invite,
           type : 'POST',
           data : {
 				findEmail : email
@@ -132,7 +135,7 @@
 		}
 		else{
 		$.ajax({
-			url:'http://' + ENV_URL + ':3000/invite/add',
+			url: invite_add,
 			type : 'POST',
 			headers : {
 					'x-access-token' : jwtToken

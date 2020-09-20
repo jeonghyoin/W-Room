@@ -164,10 +164,13 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 	<script>	  
-		var ENV_URL = "localhost";
 		var jwtToken = sessionStorage.getItem('jwtToken');
+		var ENV_URL = "localhost";
 
-		$(document).ready(function() {
+		var payment_status = '/payment/status/1';
+		var user_image = '/userImg';
+
+		(function () {
 			// 환경변수 가져오기
 			$.ajax({
 				url: 'http://115.85.183.143:3000/main/env',
@@ -181,9 +184,11 @@
 					console.log("로컬에서 접속");
 				}
 			});
+		}());
 
+		$(document).ready(function() {
 			$.ajax({
-				url: 'http://' + ENV_URL + ':3000/payment/status/1',
+				url: payment_status,
 				type: 'GET',
 				headers: {
 					'x-access-token': jwtToken
@@ -213,18 +218,15 @@
 					if(request.status === 403) {
 						alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
 					} else {
-				alert("code: " + request.status + "\n"
-					+"message: " + request.responseText + "\n" +"error: " + error);
+					//alert("code: " + request.status + "\n"
+					//+"message: " + request.responseText + "\n" +"error: " + error);
 					}
 				}
 			});
-		});
 
-		var jwtToken = sessionStorage.getItem('jwtToken');
-		// 이미지 가져오기
-		function getImg() {
+			// 이미지 가져오기
 			$.ajax({
-				url: 'http://' + ENV_URL + ':3000/userImg',
+				url: user_image,
 				type: 'GET',
 				headers: {
 				'x-access-token': jwtToken
@@ -244,9 +246,8 @@
 					userIcon.src = data[0].image;
 				}
 				}
-			})
-		}
-		getImg();
+			});
+		});
 	</script>
 </body>
 </html>

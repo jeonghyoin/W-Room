@@ -404,91 +404,41 @@
 
    <script>
       var jwtToken = sessionStorage.getItem('jwtToken');
-      var ENV_URL = "localhost";
+
+      var nh_efpayment = '/nh/efpayment';
+      var payment_living = '/payment/living';
+      var payment_etc = '/payment/etc';
+      var payment_category = '/payment/category';
+      var user_image = '/userImg';
+      var wroom_main = '/main';
 
       function makeComma(str) {
          var str = String(str);
          return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
       }
 
-      $(document).ready(function() {
+      // $(document).ready(function() {
          // 환경변수 가져오기
-			$.ajax({
-				url: 'http://115.85.183.143:3000/main/env',
-				type: 'GET',
-				success: function(data) {
-					ENV_URL = data;
-					console.log("클라우드에서 접속");
-				},
-				error: function(request, status, error) {
-					console.log("로컬에서 접속");
-				}
-         });
-      });
-
-      // 이미지 가져오기
-      function getImg() {
-         $.ajax({
-            url: 'http://' + ENV_URL + ':3000/userImg',
-            type: 'GET',
-            headers: {
-               'x-access-token': jwtToken
-            },
-            success: function (data) {
-               //이미지
-               //console.log(">>> data : " + data[0].image);
-               $("#userName").text(data[0].name);
-               var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
-               $("#groupName").text(groupYN);
-
-               var userIcon = document.getElementById('userIcon');
-
-               if (data[0].image == null) {
-                  userIcon.src = '/img/content/main/user.png';
-               } else {
-                  userIcon.src = data[0].image;
+		/* (function () {
+            $.ajax({
+               url: 'http://localhost:3000/main/env',
+               type: 'GET',
+               success: function(data) {
+                  ENV_URL = data;
+                  console.log(ENV_URL);
+                  console.log("클라우드에서 접속");
+               },
+               error: function(request, status, error) {
+                  console.log("로컬에서 접속");
                }
-            }
-         })
-      }
-      getImg();
-
-      //룸쉐어 멤버 리스트 보여주기
-      function displayGroup() {
-         $.ajax({
-            url: 'http://' + ENV_URL + ':3000/main',
-            type: 'POST',
-            headers: {
-               'x-access-token': jwtToken
-            },
-            success: function (data) {
-               if (data.length > 0) {
-                  for (var i = 0; i < data.length; i++) {
-                     if (!data[i].image) data[i].image = "/img/content/main/user.png";
-                     $("#nameCard").append(
-                        '<div id="userList" class="money-receiver friendsBox">' +
-                        '<img src="' + data[i].image + '" alt="프로필사진" style="width:52px; height:52px;">' +
-                        '<h4>' + data[i].name + '</h4>' +
-                        '</div>'
-                     )
-                  }
-               } else {
-                  $("#nameCard").append(
-                     '<div class="money-receiver" style="width: 100%;">' +
-                     '<a href="/makeRoom"><img src="img/plus.png" alt=""></a>' +
-                     '<h4>구성원 초대하기</h4>' +
-                     '</div>'
-                  )
-               }
-            }
-         });
-      }
-      displayGroup();
+            });
+         }());
+      // }); */
 
       //전기세 새로고침 버튼
       $('#refreshBtn').click(function () {
          $.ajax({
-            url: 'http://' + ENV_URL + ':3000/nh/efpayment',
+            url: nh_efpayment,
             type: 'POST',
             headers: {
                'x-access-token': jwtToken
@@ -508,7 +458,7 @@
       // 생활비 목록 가져오기
       $('#refresh-liv').click(function () {
          $.ajax({
-            url: 'http://' + ENV_URL + ':3000/payment/living',
+            url: payment_living,
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
@@ -534,7 +484,7 @@
       // 기타 목록 가져오기
       $('#refresh-etc').click(function () {
          $.ajax({
-            url: 'http://' + ENV_URL + ':3000/payment/etc',
+            url: payment_etc,
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
@@ -561,7 +511,7 @@
       //청구서 목록 가져오기
       $(document).ready(function () {
          $.ajax({
-            url: 'http://' + ENV_URL + ':3000/payment/category',
+            url: payment_category,
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
@@ -606,12 +556,69 @@
                   alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
                   location.href = "/user/login";
                } else {
-                  alert("code: " + request.status + "\n"
-                  +"message: " + request.responseText + "\n" +"error: " + error);
+                  // alert("code: " + request.status + "\n"
+                  // +"message: " + request.responseText + "\n" +"error: " + error);
                }
             }
          });
-      })
+
+      // 이미지 가져오기
+      //function getImg() {
+         $.ajax({
+               url: user_image,
+               type: 'GET',
+               headers: {
+                  'x-access-token': jwtToken
+               },
+               success: function (data) {
+                  //이미지
+                  //console.log(">>> data : " + data[0].image);
+                  $("#userName").text(data[0].name);
+                  var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
+                  $("#groupName").text(groupYN);
+
+                  var userIcon = document.getElementById('userIcon');
+
+                  if (data[0].image == null) {
+                     userIcon.src = '/img/content/main/user.png';
+                  } else {
+                     userIcon.src = data[0].image;
+                  }
+               }
+            })
+         //}
+         
+         //룸쉐어 멤버 리스트 보여주기
+         //function displayGroup() {
+            $.ajax({
+               url: wroom_main,
+               type: 'POST',
+               headers: {
+                  'x-access-token': jwtToken
+               },
+               success: function (data) {
+                  if (data.length > 0) {
+                     for (var i = 0; i < data.length; i++) {
+                        if (!data[i].image) data[i].image = "/img/content/main/user.png";
+                        $("#nameCard").append(
+                           '<div id="userList" class="money-receiver friendsBox">' +
+                           '<img src="' + data[i].image + '" alt="프로필사진" style="width:52px; height:52px;">' +
+                           '<h4>' + data[i].name + '</h4>' +
+                           '</div>'
+                        )
+                     }
+                  } else {
+                     $("#nameCard").append(
+                        '<div class="money-receiver" style="width: 100%;">' +
+                        '<a href="/makeRoom"><img src="img/plus.png" alt=""></a>' +
+                        '<h4>구성원 초대하기</h4>' +
+                        '</div>'
+                     )
+                  }
+               }
+            });
+         //}
+      });
    </script>
 </body>
 

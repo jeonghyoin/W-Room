@@ -158,22 +158,7 @@
 
 	<script>
 	var jwtToken = sessionStorage.getItem('jwtToken');
-	var ENV_URL = "localhost";
-
-	// 환경변수 가져오기
-	$.ajax({
-		url: 'http://115.85.183.143:3000/main/env',
-		type: 'GET',
-		success: function(data) {
-			ENV_URL = data;
-			console.log(data);
-			console.log("클라우드에서 접속");
-		},
-		error: function(request, status, error) {
-			console.log("로컬에서 접속");
-		}
-    });
-
+	
 	$('#addBtn').click(function(){
 		var category = $("#category option:selected").val(); //카테고리
 		var tmpDate = $('#datepicker').val(); //마감 일자
@@ -182,7 +167,7 @@
 		var memo = $('#memo').val();; //메모
 		
 		$.ajax({
-			url:'http://' + ENV_URL + ':3000/payment',
+			url:'/payment',
 			type : 'POST',
 			headers: {
 				'x-access-token': jwtToken

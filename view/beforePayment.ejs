@@ -173,23 +173,28 @@
    var jwtToken = sessionStorage.getItem('jwtToken');
    var ENV_URL = "localhost";
    
+   var payment_status_0 = '/payment/status/0';
+   var user_image = '/userImg';
+
    $(document).ready(function() {
       // 환경변수 가져오기
-		$.ajax({
-			url: 'http://115.85.183.143:3000/main/env',
-			type: 'GET',
-			success: function(data) {
-            ENV_URL = data;
-				console.log(data);
-				console.log("클라우드에서 접속");
-			},
-			error: function(request, status, error) {
-				console.log("로컬에서 접속");
-			}
-		});
+      (function () {
+         $.ajax({
+            url: 'http://115.85.183.143:3000/main/env',
+            type: 'GET',
+            success: function(data) {
+               ENV_URL = data;
+               console.log(data);
+               console.log("클라우드에서 접속");
+            },
+            error: function(request, status, error) {
+               console.log("로컬에서 접속");
+            }
+         });
+      }());
 
       $.ajax({
-         url: 'http://'+ ENV_URL +':3000/payment/status/0',
+         url: payment_status_0,
          type: 'GET',
          headers: {
             'x-access-token': jwtToken
@@ -231,14 +236,40 @@
             if(request.status === 403) {
 					alert("사용 권한이 없습니다. 로그인 후 이용해주세요.");
 				} else {
-               alert("code: " + request.status + "\n"
-				   +"message: " + request.responseText + "\n" +"error: " + error);
+               //alert("code: " + request.status + "\n"
+				   //+"message: " + request.responseText + "\n" +"error: " + error);
             }
          }
       });
+
+      // 이미지 가져오기
+		//function getImg() {
+			$.ajax({
+				url: user_image,
+				type: 'GET',
+				headers: {
+				'x-access-token': jwtToken
+				},
+				success: function (data) {
+				//이미지
+				//console.log(">>> data : " + data[0].image);
+				$("#userName").text(data[0].name);
+				var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
+				$("#groupName").text(groupYN);
+
+				var userIcon = document.getElementById('userIcon');
+
+				if (data[0].image == null) {
+					userIcon.src = '/img/content/main/user.png';
+				} else {
+					userIcon.src = data[0].image;
+				}
+			}
+		});
+   //}
    });
 
-   function myFunction(i, dutchpayID, shareAmount){
+   function myFunction(i, dutchpayID, shareAmount) {
       var totalAmount = $('#totalAmount-'+i).text();
       var categoryName = $('#categoryName-'+i).text();
       var payDate = $('#payDate-'+i).text();
@@ -267,34 +298,6 @@
       document.body.appendChild(form);
       form.submit();
    }
-
-   var jwtToken = sessionStorage.getItem('jwtToken');
-		// 이미지 가져오기
-		function getImg() {
-			$.ajax({
-				url: 'http://' + ENV_URL + ':3000/userImg',
-				type: 'GET',
-				headers: {
-				'x-access-token': jwtToken
-				},
-				success: function (data) {
-				//이미지
-				//console.log(">>> data : " + data[0].image);
-				$("#userName").text(data[0].name);
-				var groupYN = (data[0].roomID == null) ?  '' : data[0].roomID + '번 방';
-				$("#groupName").text(groupYN);
-
-				var userIcon = document.getElementById('userIcon');
-
-				if (data[0].image == null) {
-					userIcon.src = '/img/content/main/user.png';
-				} else {
-					userIcon.src = data[0].image;
-				}
-			}
-		});
-	}
-	getImg();
    </script>
 </body>
 </html>
