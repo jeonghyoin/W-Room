@@ -51,7 +51,10 @@ router.post('/withdraw', auth, function(req, res){
                 transfer_purpose : "TR", //이체 용도(TR: 송금, ST: 결제, RC: 충전)                 
                 recv_client_name : "정효인", // 최종 수취고객 성명
                 recv_client_bank_code : "097", // 최종 수취고객 계좌 개설기관. 표준코드
-                recv_client_account_num : "01080069901" // 최종 수취고객 계좌번호
+                recv_client_account_num : "01080069901", // 최종 수취고객 계좌번호
+                bank_tran_id : transId,
+                req_client_fintech_use_num : 199160375057881337454548
+
             }
         }
         request(option, function (error, response, body) {
