@@ -104,30 +104,46 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
     <script>
-    $('#authBtn').click(function(){
-		var tmpWindow = window.open("about:blank");
-		tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu&redirect_uri=http://localhost:3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0";
-	})
-
-	$('#signupBtn').click(function(){
-		var email = $('#userEmail').val();
-		var password = $('#userPassword').val();
-			
-		$.ajax({
-          url:'http://localhost:3000/user/passwdUpdate',
-          type : 'POST',
-              data : {
-    			  password : password,
-    			  email : email,
-   		       },
-          success:function(data){
-    			if(data == 1){
-					alert("가입이 완료되었습니다. 로그인 후 서비스를 이용하세요.");
-					window.location.href = '/user/login';
-      			}
-     		 }
+		// 환경변수 가져오기
+		var ENV_URL = "localhost";
+		$(document).ready(function() {
+			$.ajax({
+				url: 'http://115.85.183.143:3000/main/env',
+				type: 'GET',
+				success: function(data) {
+					console.log(data);
+					console.log("클라우드에서 접속");
+				},
+				error: function(request, status, error) {
+					console.log("로컬에서 접속");
+				}
+			});
+		});
+		 
+		$('#authBtn').click(function(){
+			var tmpWindow = window.open("about:blank");
+			tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu&redirect_uri=http://" + ENV_URL + ":3000/user/authResult&scope=login inquiry transfer&state=12345678901644567890123456789012&auth_type=0";
 		})
-	});
+
+		$('#signupBtn').click(function(){
+			var email = $('#userEmail').val();
+			var password = $('#userPassword').val();
+				
+			$.ajax({
+			url:'http://' + ENV_URL + ':3000/user/passwdUpdate',
+			type : 'POST',
+				data : {
+					password : password,
+					email : email,
+				},
+			success:function(data){
+					if(data == 1){
+						alert("가입이 완료되었습니다. 로그인 후 서비스를 이용하세요.");
+						window.location.href = '/user/login';
+					}
+				}
+			})
+		});
 	</script>
 </body>
 

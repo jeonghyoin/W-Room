@@ -171,10 +171,25 @@
 
    <script>
    var jwtToken = sessionStorage.getItem('jwtToken');
+   var ENV_URL = "localhost";
    
    $(document).ready(function() {
+      // 환경변수 가져오기
+		$.ajax({
+			url: 'http://115.85.183.143:3000/main/env',
+			type: 'GET',
+			success: function(data) {
+            ENV_URL = data;
+				console.log(data);
+				console.log("클라우드에서 접속");
+			},
+			error: function(request, status, error) {
+				console.log("로컬에서 접속");
+			}
+		});
+
       $.ajax({
-         url: 'http://localhost:3000/payment/status/0',
+         url: 'http://'+ ENV_URL +':3000/payment/status/0',
          type: 'GET',
          headers: {
             'x-access-token': jwtToken
@@ -233,7 +248,7 @@
       var parm = new Array();
       var input = new Array();
 
-      form.action = "http://localhost:3000/payment/bill";
+      form.action = "http://" + ENV_URL + ":3000/payment/bill";
       form.method = "get";
 
       parm.push( ['dutchpayID', dutchpayID] );
@@ -257,7 +272,7 @@
 		// 이미지 가져오기
 		function getImg() {
 			$.ajax({
-				url: 'http://localhost:3000/userImg',
+				url: 'http://' + ENV_URL + ':3000/userImg',
 				type: 'GET',
 				headers: {
 				'x-access-token': jwtToken

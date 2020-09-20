@@ -288,17 +288,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
    
-   <script type="text/javascript">
-      function hidestatus(){
-      window.status='http://localhost:3000/payment/bill';
-         return true;
-      }
-      if (document.layers){
-         document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT);
-         document.onmouseover=hidestatus;
-         document.onmouseout=hidestatus;
-      }
-   </script>
 
    <script>
       var dutchpayID = $('#dutchpayID').val();
@@ -306,11 +295,39 @@
 
       var jwtToken = sessionStorage.getItem('jwtToken');
       var transferVal = $('#transferVal').text();
+      var ENV_URL = "localhost";
+
+      $(document).ready(function() {
+         // 환경변수 가져오기
+			$.ajax({
+				url: 'http://115.85.183.143:3000/main/env',
+				type: 'GET',
+				success: function(data) {
+               ENV_URL = data;
+					console.log(data);
+					console.log("클라우드에서 접속");
+				},
+				error: function(request, status, error) {
+					console.log("로컬에서 접속");
+				}
+         });
+      });
+
+      function hidestatus() {
+      window.status='http://' + ENV_URL + ':3000/payment/bill';
+         return true;
+      }
+
+      if (document.layers){
+         document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT);
+         document.onmouseover=hidestatus;
+         document.onmouseout=hidestatus;
+      }
 
       // 로딩될 때 미리 이체용 토큰 받아오기
       $(function() {
          $.ajax({
-            url:'http://localhost:3000/transfer/token',
+            url:'http://' + ENV_URL +':3000/transfer/token',
             type : 'GET',
             headers : {
             'x-access-token' : jwtToken
@@ -350,7 +367,7 @@
       $('#transferBtn').click(function() {
          var check, product_name, available_amt;
          $.ajax({
-            url:'http://localhost:3000/transfer/balance',
+            url:'http://' + ENV_URL +':3000/transfer/balance',
             type : 'POST',
             headers : {
                'x-access-token' : jwtToken
@@ -368,7 +385,7 @@
 
          if (check == true) { // 진짜로 송금한다고 하면
          $.ajax({
-           url:'http://localhost:3000/transfer/withdraw',
+           url:'http://' + ENV_URL + ':3000/transfer/withdraw',
            type : 'POST',
             headers : {
               'x-access-token' : jwtToken
@@ -381,7 +398,7 @@
               if (data == 1){  // 출금이체 완료시 입금이체
                var payed = false;
                $.ajax({
-                    url:'http://localhost:3000/transfer/deposit',
+                    url:'http://' + ENV_URL + ':3000/transfer/deposit',
                     type : 'POST',
                   headers : {
                     'x-access-token' : jwtToken
@@ -407,7 +424,7 @@
 
                if (payed) { // 송금이 모두 완료 되었을 때만 더치페이 업데이트!
                   $.ajax({
-                    url:'http://localhost:3000/transfer/payed',
+                    url:'http://' + ENV_URL + ':3000/transfer/payed',
                     type : 'POST',
                   headers : {
                     'x-access-token' : jwtToken
@@ -436,7 +453,7 @@
       $('#showBalanceBtn').click(function() {
          var product_name, available_amt;
          $.ajax({
-            url:'http://localhost:3000/transfer/balance',
+            url:'http://' + ENV_URL + ':3000/transfer/balance',
             type : 'POST',
             headers : {
                'x-access-token' : jwtToken

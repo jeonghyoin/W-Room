@@ -77,7 +77,7 @@ router.get("/authResult", function (req, res) {
         code : authCode,
         client_id : "mZDDm2gP92FqwdD248kVm83PTJnlJKDIiTwaSSFu",
         client_secret : "ed6EcMwoZ11mlHRRzmkmhD33w1Zg4zQ7ggbr0kPj",
-        redirect_uri : "http://localhost:3000/user/authResult",
+        redirect_uri : "http://+" + process.env.ENV_URL +":3000/user/authResult",
         grant_type : "authorization_code"
       }
   }

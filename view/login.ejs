@@ -102,8 +102,26 @@
 	<script src="/js/global.script.js"></script>
 
 	<script>
+		var ENV_URL = "localhost";
+
 		$('#signupBtn').click(function () {
 			location.href = "/user/signup";
+		});
+
+		$(document).ready(function() {
+		// 환경변수 가져오기
+			$.ajax({
+				url: 'http://115.85.183.143:3000/main/env',
+				type: 'GET',
+				success: function(data) {
+					ENV_URL = data;
+					console.log(data);
+					console.log("클라우드에서 접속");
+				},
+				error: function(request, status, error) {
+					console.log("로컬에서 접속");
+				}
+			});
 		});
 
 		$('#loginBtn').click(function () {
@@ -111,7 +129,7 @@
 			var password = $('#userPassword').val();
 
 			$.ajax({
-				url: 'http://localhost:3000/user/login',
+				url: 'http://'+ ENV_URL + ':3000/user/login',
 				type: 'POST',
 				data: {
 					userEmail: email,
@@ -127,12 +145,9 @@
 				}
 			});
 		});
-	</script>
 
-	<script type='text/javascript'>
 		// 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('e782e062553d3c8c1b5ebcce3ca1cdf0');
-
 		function loginWithKakao() {
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
@@ -142,7 +157,7 @@
 						url: '/v2/user/me',
 						success: function (res) {
 							$.ajax({
-								url: 'http://localhost:3000/user/kakao',
+								url: 'http://' + ENV_URL + ':3000/user/kakao',
 								type: 'POST',
 								data: {
 									token: token,

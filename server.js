@@ -13,6 +13,9 @@ app.use(express.urlencoded({extended:false}));
 var mysql = require('./database/mysql');
 mysql.connect();
 
+// dotenv (환경변수 설정)
+require('dotenv').config();
+
 //라우터 설정
 var invite = require('./routes/invite');
 var notice = require('./routes/notice');

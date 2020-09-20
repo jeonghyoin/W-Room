@@ -192,12 +192,27 @@
 
 	<script>
 		var jwtToken = sessionStorage.getItem('jwtToken');
+		var ENV_URL = "localhost";
 
 		//공지 가져오기
 		$(document).ready(function() {
+			// 환경변수 가져오기
+			$.ajax({
+				url: 'http://115.85.183.143:3000/main/env',
+				type: 'GET',
+				success: function(data) {
+					ENV_URL = data;
+					console.log(data);
+					console.log("클라우드에서 접속");
+				},
+				error: function(request, status, error) {
+					console.log("로컬에서 접속");
+				}
+			});
+			 
 			var jwtToken = sessionStorage.getItem('jwtToken');
 			$.ajax({
-				url: 'http://localhost:3000/notice/items',
+				url: 'http://' + ENV_URL +':3000/notice/items',
 				type: 'GET',
 				headers: {
 					'x-access-token': jwtToken
@@ -261,7 +276,7 @@
 		// 이미지 가져오기
 		function getImg() {
 			$.ajax({
-				url: 'http://localhost:3000/userImg',
+				url: 'http://' + ENV_URL + ':3000/userImg',
 				type: 'GET',
 				headers: {
 				'x-access-token': jwtToken

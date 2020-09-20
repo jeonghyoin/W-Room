@@ -10,6 +10,12 @@ router.get('/', function(req, res) {
     res.render('main');
 });
 
+router.get('/env', function(req, res) {
+    var server_env = process.env.ENV_URL;
+    console.log(process.env.ENV_URL);
+    res.json(server_env);
+});
+
 router.get('/payment/form', function(req, res) {
     res.render('paymentForm');
 });

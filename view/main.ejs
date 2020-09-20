@@ -404,16 +404,32 @@
 
    <script>
       var jwtToken = sessionStorage.getItem('jwtToken');
+      var ENV_URL = "localhost";
 
       function makeComma(str) {
          var str = String(str);
          return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
       }
 
+      $(document).ready(function() {
+         // 환경변수 가져오기
+			$.ajax({
+				url: 'http://115.85.183.143:3000/main/env',
+				type: 'GET',
+				success: function(data) {
+					ENV_URL = data;
+					console.log("클라우드에서 접속");
+				},
+				error: function(request, status, error) {
+					console.log("로컬에서 접속");
+				}
+         });
+      });
+
       // 이미지 가져오기
       function getImg() {
          $.ajax({
-            url: 'http://localhost:3000/userImg',
+            url: 'http://' + ENV_URL + ':3000/userImg',
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
@@ -440,7 +456,7 @@
       //룸쉐어 멤버 리스트 보여주기
       function displayGroup() {
          $.ajax({
-            url: 'http://localhost:3000/main',
+            url: 'http://' + ENV_URL + ':3000/main',
             type: 'POST',
             headers: {
                'x-access-token': jwtToken
@@ -472,7 +488,7 @@
       //전기세 새로고침 버튼
       $('#refreshBtn').click(function () {
          $.ajax({
-            url: 'http://localhost:3000/nh/efpayment',
+            url: 'http://' + ENV_URL + ':3000/nh/efpayment',
             type: 'POST',
             headers: {
                'x-access-token': jwtToken
@@ -492,7 +508,7 @@
       // 생활비 목록 가져오기
       $('#refresh-liv').click(function () {
          $.ajax({
-            url: 'http://localhost:3000/payment/living',
+            url: 'http://' + ENV_URL + ':3000/payment/living',
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
@@ -518,7 +534,7 @@
       // 기타 목록 가져오기
       $('#refresh-etc').click(function () {
          $.ajax({
-            url: 'http://localhost:3000/payment/etc',
+            url: 'http://' + ENV_URL + ':3000/payment/etc',
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
@@ -545,7 +561,7 @@
       //청구서 목록 가져오기
       $(document).ready(function () {
          $.ajax({
-            url: 'http://localhost:3000/payment/category',
+            url: 'http://' + ENV_URL + ':3000/payment/category',
             type: 'GET',
             headers: {
                'x-access-token': jwtToken
