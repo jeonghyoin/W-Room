@@ -165,7 +165,7 @@
                                </div>
                              </div>
                              <div>
-                               <small id="payedAmount3" class="text-muted d-block">￦ 139,058</small>
+                               <small id="payedAmount3" class="text-muted d-block"></small>
                              </div>
                            </div>
                   </li>
@@ -180,7 +180,7 @@
                                </div>
                              </div>
                              <div>
-                               <small id="payedAmount3" class="text-muted d-block">￦ 139,058</small>
+                               <small id="payedAmount4" class="text-muted d-block"></small>
                              </div>
                            </div>
                   </li>
@@ -191,21 +191,6 @@
                            <div class="ml-10">
                               <!--송금을 하면 체크 이미지가 생김-->
                               <h4 id="username" class="coin-name">김단아</h4>
-                              <small id="payedData" class="text-muted">미송금</small>
-                           </div>
-                        </div>
-                        <div>
-                           <small id="payedAmount" class="text-muted d-block">￦ 0</small>
-                        </div>
-                     </div>
-                  </li>
-                  <li>
-                     <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                           <img id="uncheckedD" class="img-xs" src="/img/content/uncheck.png" alt="coin image">
-                           <div class="ml-10">
-                              <!--송금을 하면 체크 이미지가 생김-->
-                              <h4 id="username" class="coin-name">최정윤</h4>
                               <small id="payedData" class="text-muted">미송금</small>
                            </div>
                         </div>
@@ -303,6 +288,10 @@
       var jwtToken = sessionStorage.getItem('jwtToken');
       var transferVal = $('#transferVal').text();
       var ENV_URL = "localhost";
+
+      // 임시 지정
+      $("#payedAmount3").text(transferVal);
+      $("#payedAmount4").text(transferVal);
 
       /* $(document).ready(function() {
          // 환경변수 가져오기
@@ -412,17 +401,18 @@
                   },
                     data : {
                      transferVal : transferVal
-                       },
-                  async: false,
+                  },
+               async: false,
                  success:function(data){
                     if (data == 1){
                      payed = true;
                      console.log("송금 완료");
                      document.getElementById('transferNEED').innerHTML = "송금완료된 금액";
                      document.getElementById('transferBtn').style.display = "none";
+
                      $("#uncheckedD").attr("src", "/img/content/check.png");
                      $("#payedData").text("09-21");
-                     $("#payedAmount").text("￦ 139,058");
+                     $("#payedAmount").text(transferVal);
                     } else { // 송금이체 미완료시
                      alert("송금 실패! 다시 시도해주세요.");
                     }

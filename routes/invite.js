@@ -33,24 +33,24 @@ router.post('/', function(req, res){
 router.post('/add', auth, function(req, res){
     var myEmail = req.decoded.userEmail;//내 이메일
     var addEmail = req.body.addEmail;//친구 이메일
-    var userRoomID='';
+    var userRoomID = '';
     connection.query('SELECT ISNULL(roomID) as roomID, userID FROM user WHERE email=?', //친구 이메일의 룸아이디 확인
      [addEmail], function (error, results, fields) {
         if (error) throw error;
-        var adduserID =results[0].userID;
+        var adduserID = results[0].userID;
         if(results[0].roomID == 1){ // 룸메이트의 룸아이디가 비었으면
             connection.query('SELECT * FROM user WHERE email=?',
             [myEmail], function (error, results, fields) { // 리더의 룸아이디를 가져와서
-                    userRoomID = results[0].roomID;
-                    connection.query('UPDATE user SET roomID = ? WHERE email= ?', [10, addEmail]); // 추가
-                    connection.query('INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)' , [10, adduserID], function (error, results, fields) {
-                        if (error) throw error;
-                        });
-
-                    res.send(addEmail);
+                userRoomID = results[0].roomID;
+                console.log(userRoomID);
+                //connection.query('UPDATE user SET roomID = ? WHERE email= ?', [userRoomID, addEmail]); // 추가
+                //connection.query('INSERT INTO roomshare_has_user (`RoomShare_roomID`, `User_userID`) VALUES (?, ?)' , [userRoomID, adduserID], function (error, results, fields) {
+                //    if (error) throw error;
+                //});
+                res.send(addEmail);
             });
             
-    }else{
+    } else {
         console.log("이미 다른 룸쉐어 중");
         res.send('');
      }    

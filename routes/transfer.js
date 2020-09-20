@@ -176,7 +176,9 @@ router.post('/balance', auth, function(req, res){
 // 송금 완료 후 payYN 1로 바꾸기
 router.post('/payed', auth, function(req, res) {
   var userId = req.decoded.userId ;
-  var dutchpayID = req.body.dutchpayID ;
+  // var dutchpayID = req.body.dutchpayID ;
+  // 임시로 수정함
+  var dutchpayID = 145;
 
   connection.query('UPDATE dutchpayyn SET ' +
     'dutchpayYN = ?, payDate = now() WHERE (dutchpayID = ? and User_userID = ?)', [1, dutchpayID, userId], function (error, results, fields) {
