@@ -59,7 +59,7 @@ router.post('/withdraw', auth, function(req, res){
         }
         request(option, function (error, response, body) {
             var resultObject = body;
-            if (resultObject.rsp_code == "A0000"){
+            if (resultObject.rsp_code == "A0005"){
               res.json(1);
             } else {
               res.json(0);
@@ -134,7 +134,7 @@ router.post('/deposit', auth, function(req, res){
 
         request(option, function(error, response, body) {
             var resultObject = body;
-            if (resultObject.rsp_code == "A0000"){
+            if (resultObject.rsp_code == "A0322"){
               res.json(1);
             } else {
               res.json(0);
